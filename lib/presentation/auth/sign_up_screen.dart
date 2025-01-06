@@ -39,8 +39,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               }, (s) {
                 debugPrint("login success");
 
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (ctx) => CreateHostelScreen()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => SignInScreen()));
               });
             });
           },

@@ -51,10 +51,11 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(onPressed: (){Navigator.of(context).pop();}, icon:Icon(Icons.arrow_back_ios,color: Colors.white,)),
             title: Text('Create Hostel'),
-            centerTitle: true,
-            backgroundColor: Colors.teal,
-            elevation: 5,
+            // centerTitle: true,
+            backgroundColor: Color(0xFF1F1F1F),
+            elevation: 0,
             titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 22,
@@ -64,9 +65,9 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
           body: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.teal.shade300, Colors.blue.shade800],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue.shade200, Colors.blue.shade50],
               ),
             ),
             child: Padding(
@@ -77,146 +78,137 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        elevation: 10,
-                        shadowColor: Colors.black54,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              buildTextField(
-                                controller: hostelNameController,
-                                label: 'Hostel Name',
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: ownerNameController,
-                                label: 'Owner Name',
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: phoneNumberController,
-                                label: 'Phone Number',
-                                inputType: TextInputType.phone,
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: rentController,
-                                label: 'Rent and Mess Details',
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: roomsController,
-                                label: 'Number of Rooms',
-                                inputType: TextInputType.number,
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: personsPerRoomController,
-                                label: 'Persons per Room',
-                                inputType: TextInputType.number,
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: vacancyController,
-                                label: 'Vacancy',
-                                inputType: TextInputType.number,
-                              ),
-                              SizedBox(height: 12),
-                              buildTextField(
-                                controller: descriptionController,
-                                label: 'Description',
-                                maxLines: 3,
-                              ),
-                              SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.teal,
-                                    ),
-                                    onPressed: () => context
-                                        .read<CreateHostelBloc>()
-                                        .add(CreateHostelEvent
-                                            .findLocationButtonPressed()),
-                                    child: Text(
-                                      'Get Location',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  if (state.locationFetched)
-                                    Text(
-                                      'Fetched!',
-                                      style: TextStyle(
-                                        color: Colors.greenAccent,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                              state.isSubmitting
-                                  ? Center(
-                                      child: SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: CircularProgressIndicator()),
-                                    )
-                                  : ElevatedButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          context.read<CreateHostelBloc>().add(
-                                                  CreateHostelEvent
-                                                      .submitButtonPressed(
-                                                hostelName:
-                                                    hostelNameController.text,
-                                                ownerName:
-                                                    ownerNameController.text,
-                                                phoneNumber:
-                                                    phoneNumberController.text,
-                                                rent: rentController.text,
-                                                rooms: roomsController.text,
-                                                location: state.location,
-                                                personsPerRoom:
-                                                    personsPerRoomController
-                                                        .text,
-                                                vacancy: vacancyController.text,
-                                                description:
-                                                    descriptionController.text,
-                                              ));
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.teal,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 14),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ).copyWith(
-                                        minimumSize: WidgetStateProperty.all(
-                                            Size(double.infinity,
-                                                50)), // Full width and height
-                                      ),
-                                      child: Text(
-                                        'Submit',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    )
-                            ],
-                          ),
-                        ),
+                      // Remove the Card and directly create a container for each section
+                      buildTextField(
+                        controller: hostelNameController,
+                        label: 'Hostel Name',
                       ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: ownerNameController,
+                        label: 'Owner Name',
+                      ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: phoneNumberController,
+                        label: 'Phone Number',
+                        inputType: TextInputType.phone,
+                      ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: rentController,
+                        label: 'Rent and Mess Details',
+                      ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: roomsController,
+                        label: 'Number of Rooms',
+                        inputType: TextInputType.number,
+                      ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: personsPerRoomController,
+                        label: 'Persons per Room',
+                        inputType: TextInputType.number,
+                      ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: vacancyController,
+                        label: 'Vacancy',
+                        inputType: TextInputType.number,
+                      ),
+                      SizedBox(height: 12),
+                      buildTextField(
+                        controller: descriptionController,
+                        label: 'Description',
+                        maxLines: 3,
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.teal,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () => context
+                                .read<CreateHostelBloc>()
+                                .add(CreateHostelEvent
+                                    .findLocationButtonPressed()),
+                            child: Text(
+                              'Get Location',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          if (state.locationFetched)
+                            Text(
+                              'Location Fetched!',
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      state.isSubmitting
+                          ? Center(
+                              child: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator()),
+                            )
+                          : ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<CreateHostelBloc>().add(
+                                          CreateHostelEvent
+                                              .submitButtonPressed(
+                                        hostelName:
+                                            hostelNameController.text,
+                                        ownerName:
+                                            ownerNameController.text,
+                                        phoneNumber:
+                                            phoneNumberController.text,
+                                        rent: rentController.text,
+                                        rooms: roomsController.text,
+                                        location: state.location,
+                                        personsPerRoom:
+                                            personsPerRoomController
+                                                .text,
+                                        vacancy: vacancyController.text,
+                                        description:
+                                            descriptionController.text,
+                                      ));
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.teal,
+                                padding: EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ).copyWith(
+                                minimumSize: WidgetStateProperty.all(
+                                    Size(double.infinity,
+                                        50)), // Full width and height
+                              ),
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
                     ],
                   ),
                 ),
@@ -234,30 +226,44 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
     TextInputType inputType = TextInputType.text,
     int maxLines = 1,
   }) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(color: Colors.teal),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.teal),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        border: OutlineInputBorder(),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.1),
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            spreadRadius: 2,
+            blurRadius: 5,
+          ),
+        ],
       ),
-      keyboardType: inputType,
-      maxLines: maxLines,
-      style: TextStyle(color: Colors.black),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter $label';
-        }
-        return null;
-      },
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(color: Colors.teal),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.teal),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          border: OutlineInputBorder(),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.1),
+        ),
+        keyboardType: inputType,
+        maxLines: maxLines,
+        style: TextStyle(color: Colors.black),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter $label';
+          }
+          return null;
+        },
+      ),
     );
   }
 }
