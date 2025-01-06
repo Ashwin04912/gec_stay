@@ -9,4 +9,6 @@ abstract class AuthFailures with _$AuthFailures{
   const factory AuthFailures.noInternetConnection() = _noInternetConnection;
   const factory AuthFailures.emailAlreadyInUse() = _emailAlreadyInUse;
   const factory AuthFailures.invalidEmailAndPasswordCombinationFailure() = _invalidEmailAndPasswordCombinationFailure;
+  const factory AuthFailures.insufficientPermission() = _insufficientPermission;
+  
 }

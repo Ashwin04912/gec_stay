@@ -23,6 +23,7 @@ mixin _$AuthFailures {
     required TResult Function() noInternetConnection,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$AuthFailures {
     TResult? Function()? noInternetConnection,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +43,7 @@ mixin _$AuthFailures {
     TResult Function()? noInternetConnection,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +55,8 @@ mixin _$AuthFailures {
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,6 +67,7 @@ mixin _$AuthFailures {
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,6 +78,7 @@ mixin _$AuthFailures {
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -144,6 +151,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     required TResult Function() noInternetConnection,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
   }) {
     return cancelledByUser();
   }
@@ -156,6 +164,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult? Function()? noInternetConnection,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
   }) {
     return cancelledByUser?.call();
   }
@@ -168,6 +177,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult Function()? noInternetConnection,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
     required TResult orElse(),
   }) {
     if (cancelledByUser != null) {
@@ -185,6 +195,8 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
   }) {
     return cancelledByUser(this);
   }
@@ -198,6 +210,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
   }) {
     return cancelledByUser?.call(this);
   }
@@ -211,6 +224,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
     required TResult orElse(),
   }) {
     if (cancelledByUser != null) {
@@ -270,6 +284,7 @@ class _$serverErrorImpl implements _serverError {
     required TResult Function() noInternetConnection,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
   }) {
     return serverError();
   }
@@ -282,6 +297,7 @@ class _$serverErrorImpl implements _serverError {
     TResult? Function()? noInternetConnection,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
   }) {
     return serverError?.call();
   }
@@ -294,6 +310,7 @@ class _$serverErrorImpl implements _serverError {
     TResult Function()? noInternetConnection,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -311,6 +328,8 @@ class _$serverErrorImpl implements _serverError {
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
   }) {
     return serverError(this);
   }
@@ -324,6 +343,7 @@ class _$serverErrorImpl implements _serverError {
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
   }) {
     return serverError?.call(this);
   }
@@ -337,6 +357,7 @@ class _$serverErrorImpl implements _serverError {
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -397,6 +418,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     required TResult Function() noInternetConnection,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
   }) {
     return noInternetConnection();
   }
@@ -409,6 +431,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult? Function()? noInternetConnection,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
   }) {
     return noInternetConnection?.call();
   }
@@ -421,6 +444,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult Function()? noInternetConnection,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
     required TResult orElse(),
   }) {
     if (noInternetConnection != null) {
@@ -438,6 +462,8 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
   }) {
     return noInternetConnection(this);
   }
@@ -451,6 +477,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
   }) {
     return noInternetConnection?.call(this);
   }
@@ -464,6 +491,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
     required TResult orElse(),
   }) {
     if (noInternetConnection != null) {
@@ -523,6 +551,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     required TResult Function() noInternetConnection,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
   }) {
     return emailAlreadyInUse();
   }
@@ -535,6 +564,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult? Function()? noInternetConnection,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
   }) {
     return emailAlreadyInUse?.call();
   }
@@ -547,6 +577,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult Function()? noInternetConnection,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
     required TResult orElse(),
   }) {
     if (emailAlreadyInUse != null) {
@@ -564,6 +595,8 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
   }) {
     return emailAlreadyInUse(this);
   }
@@ -577,6 +610,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
   }) {
     return emailAlreadyInUse?.call(this);
   }
@@ -590,6 +624,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
     required TResult orElse(),
   }) {
     if (emailAlreadyInUse != null) {
@@ -654,6 +689,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     required TResult Function() noInternetConnection,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
   }) {
     return invalidEmailAndPasswordCombinationFailure();
   }
@@ -666,6 +702,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult? Function()? noInternetConnection,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
   }) {
     return invalidEmailAndPasswordCombinationFailure?.call();
   }
@@ -678,6 +715,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult Function()? noInternetConnection,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
     required TResult orElse(),
   }) {
     if (invalidEmailAndPasswordCombinationFailure != null) {
@@ -695,6 +733,8 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
   }) {
     return invalidEmailAndPasswordCombinationFailure(this);
   }
@@ -708,6 +748,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
   }) {
     return invalidEmailAndPasswordCombinationFailure?.call(this);
   }
@@ -721,6 +762,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
     required TResult orElse(),
   }) {
     if (invalidEmailAndPasswordCombinationFailure != null) {
@@ -734,4 +776,140 @@ abstract class _invalidEmailAndPasswordCombinationFailure
     implements AuthFailures {
   const factory _invalidEmailAndPasswordCombinationFailure() =
       _$invalidEmailAndPasswordCombinationFailureImpl;
+}
+
+/// @nodoc
+abstract class _$$insufficientPermissionImplCopyWith<$Res> {
+  factory _$$insufficientPermissionImplCopyWith(
+          _$insufficientPermissionImpl value,
+          $Res Function(_$insufficientPermissionImpl) then) =
+      __$$insufficientPermissionImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$insufficientPermissionImplCopyWithImpl<$Res>
+    extends _$AuthFailuresCopyWithImpl<$Res, _$insufficientPermissionImpl>
+    implements _$$insufficientPermissionImplCopyWith<$Res> {
+  __$$insufficientPermissionImplCopyWithImpl(
+      _$insufficientPermissionImpl _value,
+      $Res Function(_$insufficientPermissionImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AuthFailures
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$insufficientPermissionImpl implements _insufficientPermission {
+  const _$insufficientPermissionImpl();
+
+  @override
+  String toString() {
+    return 'AuthFailures.insufficientPermission()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$insufficientPermissionImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() cancelledByUser,
+    required TResult Function() serverError,
+    required TResult Function() noInternetConnection,
+    required TResult Function() emailAlreadyInUse,
+    required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
+  }) {
+    return insufficientPermission();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? cancelledByUser,
+    TResult? Function()? serverError,
+    TResult? Function()? noInternetConnection,
+    TResult? Function()? emailAlreadyInUse,
+    TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
+  }) {
+    return insufficientPermission?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? cancelledByUser,
+    TResult Function()? serverError,
+    TResult Function()? noInternetConnection,
+    TResult Function()? emailAlreadyInUse,
+    TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
+    required TResult orElse(),
+  }) {
+    if (insufficientPermission != null) {
+      return insufficientPermission();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_cancelledByUser value) cancelledByUser,
+    required TResult Function(_serverError value) serverError,
+    required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
+    required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
+        invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
+  }) {
+    return insufficientPermission(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_cancelledByUser value)? cancelledByUser,
+    TResult? Function(_serverError value)? serverError,
+    TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
+    TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
+        invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
+  }) {
+    return insufficientPermission?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_cancelledByUser value)? cancelledByUser,
+    TResult Function(_serverError value)? serverError,
+    TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
+    TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
+        invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
+    required TResult orElse(),
+  }) {
+    if (insufficientPermission != null) {
+      return insufficientPermission(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _insufficientPermission implements AuthFailures {
+  const factory _insufficientPermission() = _$insufficientPermissionImpl;
 }

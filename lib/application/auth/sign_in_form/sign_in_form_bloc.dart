@@ -19,11 +19,13 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
       await event.map(
           emailAddressChangedEvent: (value) {
             emit(state.copyWith(
+              signInFailureOrSuccessOption:none(),
                 emailAddress: EmailAddress(input: value.emailStr),
                 authFailureOrSuccessOption: none()));
           },
           passwordChangedEvent: (value) {
             emit(state.copyWith(
+              signInFailureOrSuccessOption:none(),
                 authFailureOrSuccessOption: none(),
                 password: Password(input: value.passwordStr)));
           },
@@ -34,6 +36,7 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
 
             if (isEmailValid && isPasswordValid) {
               emit(state.copyWith(
+                signInFailureOrSuccessOption:none(),
                 isSubmitting: true,
                 authFailureOrSuccessOption: none(),
               ));
@@ -41,37 +44,50 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
               authFailureOrSuccess =
                   await _authFacade.registerWithEmailAndPassword(
                       emailAddress: state.emailAddress,
+                      role: value.role,
                       password: state.password);
-            } else {
-              emit(state.copyWith(
-                showErrorMessages: true,
-                authFailureOrSuccessOption: optionOf(authFailureOrSuccess),
-              ));
             }
+
+            emit(state.copyWith(
+              isSubmitting: false,
+              showErrorMessages: true,
+              signInFailureOrSuccessOption:none(),
+              authFailureOrSuccessOption: optionOf(authFailureOrSuccess),
+            ));
           },
           signInWithEmailAndPasswordPressed: (value) async {
             Either<AuthFailures, Unit>? authFailureOrSuccess;
+           Either<AuthFailures, String>? signInFailureOrSuccessOption;
             final isEmailValid = state.emailAddress.isValid();
             final isPasswordValid = state.password.isValid();
 
             if (isEmailValid && isPasswordValid) {
               emit(state.copyWith(
+                signInFailureOrSuccessOption:none(),
                 isSubmitting: true,
                 authFailureOrSuccessOption: none(),
               ));
 
-              authFailureOrSuccess =
-                  await _authFacade.sighInWithEmailAndPassword(
+              signInFailureOrSuccessOption =
+                  await _authFacade.signInWithEmailAndPassword(
                       emailAddress: state.emailAddress,
                       password: state.password);
             }
             emit(state.copyWith(
               isSubmitting: false,
               showErrorMessages: true,
+              signInFailureOrSuccessOption: optionOf(signInFailureOrSuccessOption),
               authFailureOrSuccessOption: optionOf(authFailureOrSuccess),
             ));
           },
-          signInWithGooglePressed: (value) {});
+          signInWithGooglePressed: (value) {},
+          resetValues: ( value) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              signInFailureOrSuccessOption:none(),
+              authFailureOrSuccessOption: none()
+            ));
+          });
     });
   }
 }

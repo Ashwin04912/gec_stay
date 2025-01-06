@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:gecw_lakx/presentation/auth/sign_up_screen.dart';
 import 'package:gecw_lakx/presentation/create_hostel_form/create_hostel_screen.dart';
+import 'package:gecw_lakx/presentation/owner_home/owner_home_screen.dart';
+import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -12,7 +14,7 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<SignInFormBloc, SignInFormState>(
         listener: (context, state) {
-          state.authFailureOrSuccessOption.fold(() {}, (some) {
+          state.signInFailureOrSuccessOption.fold(() {}, (some) {
             some.fold((f) {
               final message = f.maybeWhen(
                 invalidEmailAndPasswordCombinationFailure: () =>
@@ -24,9 +26,13 @@ class SignInScreen extends StatelessWidget {
                   .showSnackBar(SnackBar(content: Text(message)));
             }, (s) {
               debugPrint("login success");
-
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => CreateHostelScreen()));
+              if (s == 'student') {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => StudentHomeScreen()));
+              } else {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => OwnerHomeScreen()));
+              }
             });
           });
         },
@@ -154,23 +160,23 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 // Signup Section
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     const Text("Don't have an account? "),
-                //     TextButton(
-                //       onPressed: () {
-                //         Navigator.of(context).push(MaterialPageRoute(
-                //           builder: (ctx) => const SignUpScreen(),
-                //         ));
-                //       },
-                //       child: const Text(
-                //         "Sign Up",
-                //         style: TextStyle(color: Colors.purple),
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account? "),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => const SignUpScreen(),
+                        ));
+                      },
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(color: Colors.purple),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           );
