@@ -16,11 +16,11 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i966;
 import 'application/create_hostel_form/create_hostel_bloc.dart' as _i162;
 import 'domain/auth/i_auth_facade.dart' as _i878;
-import 'domain/create_hostel_form/i_create_hostel_form_facade.dart' as _i858;
+import 'domain/hostel_process/i_hostel_process_facade.dart' as _i922;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i1019;
 import 'infrastructure/core/firebase_injectable_module.dart' as _i462;
-import 'infrastructure/create_hostel_form/firebase_hostel_create_facade.dart'
-    as _i200;
+import 'infrastructure/hostel_process/firebase_hostel_process_facade.dart'
+    as _i903;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -37,12 +37,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i59.FirebaseAuth>(() => injectableModule.firebaseAuth);
     gh.lazySingleton<_i974.FirebaseFirestore>(
         () => injectableModule.firebaseFire);
-    gh.lazySingleton<_i858.ICreateHostelFormFacade>(
-        () => _i200.FirebaseHostelCreateFacade());
+    gh.lazySingleton<_i922.ICreateHostelFormFacade>(() =>
+        _i903.FirebaseHostelCreateFacade(
+            fireStore: gh<_i974.FirebaseFirestore>()));
     gh.lazySingleton<_i878.IAuthFacade>(
         () => _i1019.FirebaseAuthFacade(gh<_i59.FirebaseAuth>()));
     gh.factory<_i162.CreateHostelBloc>(
-        () => _i162.CreateHostelBloc(gh<_i858.ICreateHostelFormFacade>()));
+        () => _i162.CreateHostelBloc(gh<_i922.ICreateHostelFormFacade>()));
     gh.factory<_i966.SignInFormBloc>(
         () => _i966.SignInFormBloc(gh<_i878.IAuthFacade>()));
     return this;

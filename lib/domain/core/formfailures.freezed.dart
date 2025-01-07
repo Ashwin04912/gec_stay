@@ -20,18 +20,21 @@ mixin _$FormFailures {
   TResult when<TResult extends Object?>({
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
+    required TResult Function() noDataFound,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
+    TResult? Function()? noDataFound,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
+    TResult Function()? noDataFound,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$FormFailures {
   TResult map<TResult extends Object?>({
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
+    required TResult Function(_noDataFound value) noDataFound,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult? Function(_noDataFound value)? noDataFound,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult Function(_noDataFound value)? noDataFound,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,6 +126,7 @@ class _$ServerErrorImpl implements _ServerError {
   TResult when<TResult extends Object?>({
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
+    required TResult Function() noDataFound,
   }) {
     return serverError();
   }
@@ -129,6 +136,7 @@ class _$ServerErrorImpl implements _ServerError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
+    TResult? Function()? noDataFound,
   }) {
     return serverError?.call();
   }
@@ -138,6 +146,7 @@ class _$ServerErrorImpl implements _ServerError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
+    TResult Function()? noDataFound,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -151,6 +160,7 @@ class _$ServerErrorImpl implements _ServerError {
   TResult map<TResult extends Object?>({
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
+    required TResult Function(_noDataFound value) noDataFound,
   }) {
     return serverError(this);
   }
@@ -160,6 +170,7 @@ class _$ServerErrorImpl implements _ServerError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult? Function(_noDataFound value)? noDataFound,
   }) {
     return serverError?.call(this);
   }
@@ -169,6 +180,7 @@ class _$ServerErrorImpl implements _ServerError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult Function(_noDataFound value)? noDataFound,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -225,6 +237,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
   TResult when<TResult extends Object?>({
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
+    required TResult Function() noDataFound,
   }) {
     return serviceUnavailable();
   }
@@ -234,6 +247,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
+    TResult? Function()? noDataFound,
   }) {
     return serviceUnavailable?.call();
   }
@@ -243,6 +257,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
+    TResult Function()? noDataFound,
     required TResult orElse(),
   }) {
     if (serviceUnavailable != null) {
@@ -256,6 +271,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
   TResult map<TResult extends Object?>({
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
+    required TResult Function(_noDataFound value) noDataFound,
   }) {
     return serviceUnavailable(this);
   }
@@ -265,6 +281,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult? Function(_noDataFound value)? noDataFound,
   }) {
     return serviceUnavailable?.call(this);
   }
@@ -274,6 +291,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult Function(_noDataFound value)? noDataFound,
     required TResult orElse(),
   }) {
     if (serviceUnavailable != null) {
@@ -285,4 +303,115 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
 
 abstract class _serviceUnavailable implements FormFailures {
   const factory _serviceUnavailable() = _$serviceUnavailableImpl;
+}
+
+/// @nodoc
+abstract class _$$noDataFoundImplCopyWith<$Res> {
+  factory _$$noDataFoundImplCopyWith(
+          _$noDataFoundImpl value, $Res Function(_$noDataFoundImpl) then) =
+      __$$noDataFoundImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$noDataFoundImplCopyWithImpl<$Res>
+    extends _$FormFailuresCopyWithImpl<$Res, _$noDataFoundImpl>
+    implements _$$noDataFoundImplCopyWith<$Res> {
+  __$$noDataFoundImplCopyWithImpl(
+      _$noDataFoundImpl _value, $Res Function(_$noDataFoundImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of FormFailures
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$noDataFoundImpl implements _noDataFound {
+  const _$noDataFoundImpl();
+
+  @override
+  String toString() {
+    return 'FormFailures.noDataFound()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$noDataFoundImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() serverError,
+    required TResult Function() serviceUnavailable,
+    required TResult Function() noDataFound,
+  }) {
+    return noDataFound();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? serverError,
+    TResult? Function()? serviceUnavailable,
+    TResult? Function()? noDataFound,
+  }) {
+    return noDataFound?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? serverError,
+    TResult Function()? serviceUnavailable,
+    TResult Function()? noDataFound,
+    required TResult orElse(),
+  }) {
+    if (noDataFound != null) {
+      return noDataFound();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ServerError value) serverError,
+    required TResult Function(_serviceUnavailable value) serviceUnavailable,
+    required TResult Function(_noDataFound value) noDataFound,
+  }) {
+    return noDataFound(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ServerError value)? serverError,
+    TResult? Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult? Function(_noDataFound value)? noDataFound,
+  }) {
+    return noDataFound?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ServerError value)? serverError,
+    TResult Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult Function(_noDataFound value)? noDataFound,
+    required TResult orElse(),
+  }) {
+    if (noDataFound != null) {
+      return noDataFound(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _noDataFound implements FormFailures {
+  const factory _noDataFound() = _$noDataFoundImpl;
 }
