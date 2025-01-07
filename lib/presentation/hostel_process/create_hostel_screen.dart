@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/create_hostel_form/create_hostel_bloc.dart';
-import 'package:gecw_lakx/presentation/success_page/success_page.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:geolocator/geolocator.dart';
-import 'dart:io';
+import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation.dart';
 
 class CreateHostelScreen extends StatefulWidget {
+  const CreateHostelScreen({super.key});
+
   @override
   _CreateHostelScreenState createState() => _CreateHostelScreenState();
 }
@@ -43,15 +42,24 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
           }, (s) {
             debugPrint("login success");
 
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (ctx) => SuccessPage()));
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (ctx) => BottomNavigationBarWidget()),
+              (route) => false,
+            );
           });
         });
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            leading: IconButton(onPressed: (){Navigator.of(context).pop();}, icon:Icon(Icons.arrow_back_ios,color: Colors.white,)),
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                )),
             title: Text('Create Hostel'),
             // centerTitle: true,
             backgroundColor: Color(0xFF1F1F1F),
@@ -125,8 +133,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                       ),
                       SizedBox(height: 12),
                       Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -169,23 +176,17 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<CreateHostelBloc>().add(
-                                          CreateHostelEvent
-                                              .submitButtonPressed(
-                                        hostelName:
-                                            hostelNameController.text,
-                                        ownerName:
-                                            ownerNameController.text,
-                                        phoneNumber:
-                                            phoneNumberController.text,
+                                          CreateHostelEvent.submitButtonPressed(
+                                        hostelName: hostelNameController.text,
+                                        ownerName: ownerNameController.text,
+                                        phoneNumber: phoneNumberController.text,
                                         rent: rentController.text,
                                         rooms: roomsController.text,
                                         location: state.location,
                                         personsPerRoom:
-                                            personsPerRoomController
-                                                .text,
+                                            personsPerRoomController.text,
                                         vacancy: vacancyController.text,
-                                        description:
-                                            descriptionController.text,
+                                        description: descriptionController.text,
                                       ));
                                 }
                               },
@@ -196,9 +197,9 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ).copyWith(
-                                minimumSize: WidgetStateProperty.all(
-                                    Size(double.infinity,
-                                        50)), // Full width and height
+                                minimumSize: WidgetStateProperty.all(Size(
+                                    double.infinity,
+                                    50)), // Full width and height
                               ),
                               child: Text(
                                 'Submit',

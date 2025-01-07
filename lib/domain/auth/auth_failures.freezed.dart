@@ -21,6 +21,7 @@ mixin _$AuthFailures {
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -31,6 +32,7 @@ mixin _$AuthFailures {
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -41,6 +43,7 @@ mixin _$AuthFailures {
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -52,6 +55,7 @@ mixin _$AuthFailures {
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -64,6 +68,7 @@ mixin _$AuthFailures {
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -75,6 +80,7 @@ mixin _$AuthFailures {
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -149,6 +155,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -162,6 +169,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -175,6 +183,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -192,6 +201,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -207,6 +217,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -221,6 +232,7 @@ class _$cancelledByUserImpl implements _cancelledByUser {
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -282,6 +294,7 @@ class _$serverErrorImpl implements _serverError {
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -295,6 +308,7 @@ class _$serverErrorImpl implements _serverError {
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -308,6 +322,7 @@ class _$serverErrorImpl implements _serverError {
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -325,6 +340,7 @@ class _$serverErrorImpl implements _serverError {
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -340,6 +356,7 @@ class _$serverErrorImpl implements _serverError {
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -354,6 +371,7 @@ class _$serverErrorImpl implements _serverError {
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -416,6 +434,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -429,6 +448,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -442,6 +462,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -459,6 +480,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -474,6 +496,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -488,6 +511,7 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -503,6 +527,145 @@ class _$noInternetConnectionImpl implements _noInternetConnection {
 
 abstract class _noInternetConnection implements AuthFailures {
   const factory _noInternetConnection() = _$noInternetConnectionImpl;
+}
+
+/// @nodoc
+abstract class _$$userNotFoundImplCopyWith<$Res> {
+  factory _$$userNotFoundImplCopyWith(
+          _$userNotFoundImpl value, $Res Function(_$userNotFoundImpl) then) =
+      __$$userNotFoundImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$userNotFoundImplCopyWithImpl<$Res>
+    extends _$AuthFailuresCopyWithImpl<$Res, _$userNotFoundImpl>
+    implements _$$userNotFoundImplCopyWith<$Res> {
+  __$$userNotFoundImplCopyWithImpl(
+      _$userNotFoundImpl _value, $Res Function(_$userNotFoundImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AuthFailures
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$userNotFoundImpl implements _userNotFound {
+  const _$userNotFoundImpl();
+
+  @override
+  String toString() {
+    return 'AuthFailures.userNotFound()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$userNotFoundImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() cancelledByUser,
+    required TResult Function() serverError,
+    required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
+    required TResult Function() emailAlreadyInUse,
+    required TResult Function() invalidEmailAndPasswordCombinationFailure,
+    required TResult Function() insufficientPermission,
+  }) {
+    return userNotFound();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? cancelledByUser,
+    TResult? Function()? serverError,
+    TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
+    TResult? Function()? emailAlreadyInUse,
+    TResult? Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult? Function()? insufficientPermission,
+  }) {
+    return userNotFound?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? cancelledByUser,
+    TResult Function()? serverError,
+    TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
+    TResult Function()? emailAlreadyInUse,
+    TResult Function()? invalidEmailAndPasswordCombinationFailure,
+    TResult Function()? insufficientPermission,
+    required TResult orElse(),
+  }) {
+    if (userNotFound != null) {
+      return userNotFound();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_cancelledByUser value) cancelledByUser,
+    required TResult Function(_serverError value) serverError,
+    required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
+    required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
+    required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
+        invalidEmailAndPasswordCombinationFailure,
+    required TResult Function(_insufficientPermission value)
+        insufficientPermission,
+  }) {
+    return userNotFound(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_cancelledByUser value)? cancelledByUser,
+    TResult? Function(_serverError value)? serverError,
+    TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
+    TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
+    TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
+        invalidEmailAndPasswordCombinationFailure,
+    TResult? Function(_insufficientPermission value)? insufficientPermission,
+  }) {
+    return userNotFound?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_cancelledByUser value)? cancelledByUser,
+    TResult Function(_serverError value)? serverError,
+    TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
+    TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
+    TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
+        invalidEmailAndPasswordCombinationFailure,
+    TResult Function(_insufficientPermission value)? insufficientPermission,
+    required TResult orElse(),
+  }) {
+    if (userNotFound != null) {
+      return userNotFound(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _userNotFound implements AuthFailures {
+  const factory _userNotFound() = _$userNotFoundImpl;
 }
 
 /// @nodoc
@@ -549,6 +712,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -562,6 +726,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -575,6 +740,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -592,6 +758,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -607,6 +774,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -621,6 +789,7 @@ class _$emailAlreadyInUseImpl implements _emailAlreadyInUse {
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -687,6 +856,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -700,6 +870,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -713,6 +884,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -730,6 +902,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -745,6 +918,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -759,6 +933,7 @@ class _$invalidEmailAndPasswordCombinationFailureImpl
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -825,6 +1000,7 @@ class _$insufficientPermissionImpl implements _insufficientPermission {
     required TResult Function() cancelledByUser,
     required TResult Function() serverError,
     required TResult Function() noInternetConnection,
+    required TResult Function() userNotFound,
     required TResult Function() emailAlreadyInUse,
     required TResult Function() invalidEmailAndPasswordCombinationFailure,
     required TResult Function() insufficientPermission,
@@ -838,6 +1014,7 @@ class _$insufficientPermissionImpl implements _insufficientPermission {
     TResult? Function()? cancelledByUser,
     TResult? Function()? serverError,
     TResult? Function()? noInternetConnection,
+    TResult? Function()? userNotFound,
     TResult? Function()? emailAlreadyInUse,
     TResult? Function()? invalidEmailAndPasswordCombinationFailure,
     TResult? Function()? insufficientPermission,
@@ -851,6 +1028,7 @@ class _$insufficientPermissionImpl implements _insufficientPermission {
     TResult Function()? cancelledByUser,
     TResult Function()? serverError,
     TResult Function()? noInternetConnection,
+    TResult Function()? userNotFound,
     TResult Function()? emailAlreadyInUse,
     TResult Function()? invalidEmailAndPasswordCombinationFailure,
     TResult Function()? insufficientPermission,
@@ -868,6 +1046,7 @@ class _$insufficientPermissionImpl implements _insufficientPermission {
     required TResult Function(_cancelledByUser value) cancelledByUser,
     required TResult Function(_serverError value) serverError,
     required TResult Function(_noInternetConnection value) noInternetConnection,
+    required TResult Function(_userNotFound value) userNotFound,
     required TResult Function(_emailAlreadyInUse value) emailAlreadyInUse,
     required TResult Function(_invalidEmailAndPasswordCombinationFailure value)
         invalidEmailAndPasswordCombinationFailure,
@@ -883,6 +1062,7 @@ class _$insufficientPermissionImpl implements _insufficientPermission {
     TResult? Function(_cancelledByUser value)? cancelledByUser,
     TResult? Function(_serverError value)? serverError,
     TResult? Function(_noInternetConnection value)? noInternetConnection,
+    TResult? Function(_userNotFound value)? userNotFound,
     TResult? Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult? Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,
@@ -897,6 +1077,7 @@ class _$insufficientPermissionImpl implements _insufficientPermission {
     TResult Function(_cancelledByUser value)? cancelledByUser,
     TResult Function(_serverError value)? serverError,
     TResult Function(_noInternetConnection value)? noInternetConnection,
+    TResult Function(_userNotFound value)? userNotFound,
     TResult Function(_emailAlreadyInUse value)? emailAlreadyInUse,
     TResult Function(_invalidEmailAndPasswordCombinationFailure value)?
         invalidEmailAndPasswordCombinationFailure,

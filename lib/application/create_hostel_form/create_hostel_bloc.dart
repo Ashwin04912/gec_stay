@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gecw_lakx/domain/core/formfailures.dart';
 import 'package:gecw_lakx/domain/core/location_fetch_failures.dart';
-import 'package:gecw_lakx/domain/create_hostel_form/i_create_hostel_form_facade.dart';
+import 'package:gecw_lakx/domain/hostel_process/i_hostel_process_facade.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 

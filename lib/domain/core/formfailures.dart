@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 abstract class FormFailures with _$FormFailures {
   const factory FormFailures.serverError() = _ServerError;
   const factory FormFailures.serviceUnavailable() = _serviceUnavailable;
+  const factory FormFailures.noDataFound() = _noDataFound;
   
   
 }
