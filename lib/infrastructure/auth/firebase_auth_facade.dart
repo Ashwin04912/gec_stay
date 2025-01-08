@@ -78,6 +78,7 @@ Future<Either<AuthFailures, String>> signInWithEmailAndPassword({
     // Get current user
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
+      debugPrint(user.uid);
       // Store user ID in SharedPreferences
       prefs.setString('owner_userid', user.uid);
 

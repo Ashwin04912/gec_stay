@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gecw_lakx/application/create_hostel_form/create_hostel_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/create_hostel/create_hostel_bloc.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation.dart';
 
 class CreateHostelScreen extends StatefulWidget {

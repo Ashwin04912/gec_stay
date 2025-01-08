@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:gecw_lakx/presentation/auth/sign_up_screen.dart';
-import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
+import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation.dart';
 import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -30,8 +30,11 @@ class SignInScreen extends StatelessWidget {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (ctx) => StudentHomeScreen()));
               } else {
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (ctx) => CreateHostelScreen()));
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => CreateHostelScreen()));
+                    MaterialPageRoute(builder: (ctx) => BottomNavigationBarWidget()));
+                
               }
             });
           });

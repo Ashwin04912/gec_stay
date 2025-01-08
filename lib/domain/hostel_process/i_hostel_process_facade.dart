@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 
 import '../core/location_fetch_failures.dart';
 
-abstract class ICreateHostelFormFacade {
+abstract class IHostelProcessFacade {
   Future<Either<LocationFetchFailures, Position>> getCurrentLocation();
   Future<Either<FormFailures, Unit>> saveDataToDb({
     required String hostelName,
