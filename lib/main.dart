@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/auth/sign_in_form/sign_in_form_bloc.dart';
-import 'package:gecw_lakx/application/create_hostel_form/create_hostel_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/create_hostel/create_hostel_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/owner_home/owner_home_bloc.dart';
 import 'package:gecw_lakx/firebase_options.dart';
 import 'package:gecw_lakx/injection.dart';
 import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
       
       providers: [
         BlocProvider<SignInFormBloc>(create: (context)=>getIt<SignInFormBloc>()),
-        BlocProvider<CreateHostelBloc>(create: (context)=>getIt<CreateHostelBloc>())
+        BlocProvider<CreateHostelBloc>(create: (context)=>getIt<CreateHostelBloc>()),
+        BlocProvider<OwnerHomeBloc>(create: (context)=>getIt<OwnerHomeBloc>())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

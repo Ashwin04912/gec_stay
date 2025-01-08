@@ -11,10 +11,10 @@ import 'package:gecw_lakx/domain/core/formfailures.dart';
 import 'package:gecw_lakx/domain/core/location_fetch_failures.dart';
 import 'package:gecw_lakx/domain/hostel_process/i_hostel_process_facade.dart';
 
-@LazySingleton(as: ICreateHostelFormFacade)
-class FirebaseHostelCreateFacade extends ICreateHostelFormFacade {
+@LazySingleton(as: IHostelProcessFacade)
+class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   FirebaseFirestore fireStore;
-  FirebaseHostelCreateFacade({
+  FirebaseHostelProcessFacade({
     required this.fireStore,
   });
 
@@ -109,68 +109,76 @@ class FirebaseHostelCreateFacade extends ICreateHostelFormFacade {
     }
   }
 
-@override
-Future<Either<FormFailures, List<HostelResponseModel>>> getAllHostelList() async {
-  try {
-    // Reference to the `all_hostelList` collection
-    final CollectionReference hostelCollection =
-        FirebaseFirestore.instance.collection('all_hostelList');
+  @override
+  Future<Either<FormFailures, List<HostelResponseModel>>>
+      getAllHostelList() async {
+    try {
+      // Reference to the `all_hostelList` collection
+      final CollectionReference hostelCollection =
+          FirebaseFirestore.instance.collection('all_hostelList');
 
-    // Fetch all documents from the `all_hostelList` collection
-    QuerySnapshot querySnapshot = await hostelCollection.get();
+      // Fetch all documents from the `all_hostelList` collection
+      QuerySnapshot querySnapshot = await hostelCollection.get();
 
-    // Check if any documents exist
-    if (querySnapshot.docs.isEmpty) {
-      return left(const FormFailures.noDataFound());
+      // Check if any documents exist
+      if (querySnapshot.docs.isEmpty) {
+        return left(const FormFailures.noDataFound());
+      }
+
+      // Convert each document into a HostelResponseModel
+      List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return HostelResponseModel.fromJson(data);
+      }).toList();
+
+      // Return the list of hostels
+      return right(hostels);
+    } catch (e) {
+      // Log and return a server failure in case of exceptions
+      print("Error fetching all hostel list: $e");
+      return left(const FormFailures.serverError());
     }
-
-    // Convert each document into a HostelResponseModel
-    List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return HostelResponseModel.fromJson(data);
-    }).toList();
-
-    // Return the list of hostels
-    return right(hostels);
-  } catch (e) {
-    // Log and return a server failure in case of exceptions
-    print("Error fetching all hostel list: $e");
-    return left(const FormFailures.serverError());
   }
-}
-
 
   @override
-Future<Either<FormFailures, List<HostelResponseModel>>> getOwnerHostelList(
-    {required String userId}) async {
-  try {
-    // Reference to the 'myhostel' subcollection for the specific user
-    final CollectionReference hostelCollection = FirebaseFirestore.instance
-        .collection('hostels')
-        .doc(userId)
-        .collection('myhostel');
+  Future<Either<FormFailures, List<HostelResponseModel>>> getOwnerHostelList(
+      {required String userId}) async {
+    try {
+      print("api requesting uid $userId");
+      // Reference to the 'myhostel' subcollection for the specific user
+      final CollectionReference<Map<String, dynamic>> hostelCollection =
+          FirebaseFirestore.instance
+              .collection('hostels')
+              .doc(userId)
+              .collection('my_hostels')
+              .withConverter<Map<String, dynamic>>(
+                fromFirestore: (snapshot, _) => snapshot.data()!,
+                toFirestore: (data, _) => data,
+              );
 
-    // Fetch all documents from the 'myhostel' subcollection
-    QuerySnapshot querySnapshot = await hostelCollection.get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await hostelCollection.get();
+      final hostels = querySnapshot.docs.map((doc) {
+        return HostelResponseModel.fromJson(doc.data());
+      }).toList();
 
-    // Check if any documents exist
-    if (querySnapshot.docs.isEmpty) {
-      return left(const FormFailures.noDataFound());
+      debugPrint(hostels.toString());
+
+      // debugPrint(hostelCollection.toString());
+
+      // Check if any documents exist
+      if (querySnapshot.docs.isEmpty) {
+        return left(const FormFailures.noDataFound());
+      }
+
+      // Convert each document into a HostelResponseModel
+
+      // Return the list of hostels
+      return right(hostels);
+    } catch (e) {
+      // Log and return a server failure in case of exceptions
+      print("Error fetching owner hostel list: $e");
+      return left(const FormFailures.serverError());
     }
-
-    // Convert each document into a HostelResponseModel
-    List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return HostelResponseModel.fromJson(data);
-    }).toList();
-
-    // Return the list of hostels
-    return right(hostels);
-  } catch (e) {
-    // Log and return a server failure in case of exceptions
-    print("Error fetching owner hostel list: $e");
-    return left(const FormFailures.serverError());
   }
-}
-
 }

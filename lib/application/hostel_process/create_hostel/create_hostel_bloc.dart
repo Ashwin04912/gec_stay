@@ -7,15 +7,14 @@ import 'package:gecw_lakx/domain/hostel_process/i_hostel_process_facade.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/auth/auth_failures.dart';
-
 part 'create_hostel_event.dart';
 part 'create_hostel_state.dart';
 part 'create_hostel_bloc.freezed.dart';
 
+
 @injectable
 class CreateHostelBloc extends Bloc<CreateHostelEvent, CreateHostelState> {
-  final ICreateHostelFormFacade iHostelFacade;
+  final IHostelProcessFacade iHostelFacade;
   CreateHostelBloc(this.iHostelFacade) : super(CreateHostelState.initial()) {
     on<CreateHostelEvent>((event, emit) async{
      await event.map(findLocationButtonPressed: (value) async {
