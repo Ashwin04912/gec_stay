@@ -129,13 +129,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
           if (hostelResponseModel == null || hostelResponseModel!.isEmpty) {
             return Column(
               children: [
-                ElevatedButton(
-                    onPressed: () {
-                      debugPrint(ownerUserId);
-                      context.read<OwnerHomeBloc>().add(
-                          OwnerHomeEvent.getOwnersHostelList(userId: ownerUserId!));
-                    },
-                    child: Text("fetch")),
+                
                 const Center(
                   child: Text(
                     "No hostels found.",

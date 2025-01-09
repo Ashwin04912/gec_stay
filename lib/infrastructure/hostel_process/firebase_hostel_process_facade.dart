@@ -117,6 +117,8 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       final CollectionReference hostelCollection =
           FirebaseFirestore.instance.collection('all_hostelList');
 
+
+
       // Fetch all documents from the `all_hostelList` collection
       QuerySnapshot querySnapshot = await hostelCollection.get();
 
@@ -131,6 +133,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         return HostelResponseModel.fromJson(data);
       }).toList();
 
+print(hostels);
       // Return the list of hostels
       return right(hostels);
     } catch (e) {
