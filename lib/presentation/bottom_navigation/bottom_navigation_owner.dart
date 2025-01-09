@@ -4,15 +4,15 @@ import 'package:gecw_lakx/presentation/owner_home/owner_home_screen.dart';
 
 import '../owner_profile/owner_profile_screen.dart';
 
-class BottomNavigationBarWidget extends StatefulWidget {
-  const BottomNavigationBarWidget({super.key});
+class BottomNavigationBarOwnerWidget extends StatefulWidget {
+  const BottomNavigationBarOwnerWidget({super.key});
 
   @override
-  BottomNavigationBarWidgetState createState() =>
-      BottomNavigationBarWidgetState();
+  BottomNavigationBarOwnerWidgetState createState() =>
+      BottomNavigationBarOwnerWidgetState();
 }
 
-class BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
+class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwnerWidget> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [

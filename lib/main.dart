@@ -7,6 +7,7 @@ import 'package:gecw_lakx/application/hostel_process/owner_home/owner_home_bloc.
 import 'package:gecw_lakx/firebase_options.dart';
 import 'package:gecw_lakx/injection.dart';
 import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
+import 'package:gecw_lakx/presentation/splash_screen/splash_screen.dart';
 
 import 'presentation/auth/sign_up_screen.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SignInScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

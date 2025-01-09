@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:gecw_lakx/presentation/auth/sign_up_screen.dart';
-import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation.dart';
+import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
+import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_student.dart';
 import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -28,12 +29,12 @@ class SignInScreen extends StatelessWidget {
               debugPrint("login success");
               if (s == 'student') {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => StudentHomeScreen()));
+                    MaterialPageRoute(builder: (ctx) => BottomNavigationBarStudentWidget()));
               } else {
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (ctx) => CreateHostelScreen()));
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => BottomNavigationBarWidget()));
+                    MaterialPageRoute(builder: (ctx) => BottomNavigationBarOwnerWidget()));
                 
               }
             });

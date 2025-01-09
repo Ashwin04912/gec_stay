@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/create_hostel/create_hostel_bloc.dart';
-import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation.dart';
+import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 
 class CreateHostelScreen extends StatefulWidget {
   const CreateHostelScreen({super.key});
@@ -43,7 +43,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
             debugPrint("login success");
 
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (ctx) => BottomNavigationBarWidget()),
+              MaterialPageRoute(builder: (ctx) => BottomNavigationBarOwnerWidget()),
               (route) => false,
             );
           });
