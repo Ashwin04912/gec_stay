@@ -18,8 +18,25 @@ abstract class IHostelProcessFacade {
     required String vacancy,
     required String description,
   });
-  Future<Either<FormFailures, List<HostelResponseModel>>> getOwnerHostelList({
-    required String userId
+  Future<Either<FormFailures, List<HostelResponseModel>>> getOwnerHostelList(
+      {required String userId});
+  Future<Either<FormFailures, List<HostelResponseModel>>> getAllHostelList();
+
+  Future<Either<FormFailures, Unit>> rateTheHostel({
+    required String hostelId,
+    required String star,
+    required String comment,
+    required String userId,
+    required String userName,
   });
-  Future<Either<FormFailures,List<HostelResponseModel>>> getAllHostelList();
+
+  Future<Either<FormFailures, List<Map<String, String>>>>
+      getAllratingsAndReview({
+    required String hostelId,
+  });
+
+  // Future<void> ratingCalculation({
+  //   required String hostelId,
+  //   required double rating,
+  // });
 }

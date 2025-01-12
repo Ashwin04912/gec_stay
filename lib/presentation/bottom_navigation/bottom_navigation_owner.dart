@@ -37,7 +37,7 @@ class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwner
         children: _pages,
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
+        color: backgroundColor,
         elevation: 0,
         child: Stack(
           children: [

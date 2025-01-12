@@ -6,7 +6,7 @@ import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:uuid/uuid.dart';
 import 'package:gecw_lakx/domain/core/formfailures.dart';
 import 'package:gecw_lakx/domain/core/location_fetch_failures.dart';
 import 'package:gecw_lakx/domain/hostel_process/i_hostel_process_facade.dart';
@@ -77,6 +77,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
 
       Map<String, dynamic> hostelData = {
         'hostel_name': hostelName,
+        'hostelId': Uuid().v1(),
         'owner_name': ownerName,
         'phone_number': phoneNumber,
         'description': description,
@@ -117,8 +118,6 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       final CollectionReference hostelCollection =
           FirebaseFirestore.instance.collection('all_hostelList');
 
-
-
       // Fetch all documents from the `all_hostelList` collection
       QuerySnapshot querySnapshot = await hostelCollection.get();
 
@@ -133,7 +132,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         return HostelResponseModel.fromJson(data);
       }).toList();
 
-print(hostels);
+      print(hostels);
       // Return the list of hostels
       return right(hostels);
     } catch (e) {
@@ -165,7 +164,7 @@ print(hostels);
         return HostelResponseModel.fromJson(doc.data());
       }).toList();
 
-      debugPrint(hostels.toString());
+      debugPrint("i got hostels${hostels.toString()}");
 
       // debugPrint(hostelCollection.toString());
 
@@ -180,8 +179,77 @@ print(hostels);
       return right(hostels);
     } catch (e) {
       // Log and return a server failure in case of exceptions
-      print("Error fetching owner hostel list: $e");
+      debugPrint("Error fetching owner hostel list: $e");
       return left(const FormFailures.serverError());
     }
   }
+
+  @override
+  Future<Either<FormFailures, Unit>> rateTheHostel({
+    required String hostelId,
+    required String star,
+    required String comment,
+    required String userId,
+    required String userName,
+  }) async {
+    try {
+      // Create a new rating object
+      final rating = {
+        'userId': userId,
+        'userName': userName,
+        'stars': star,
+        'comment': comment,
+      };
+
+      await fireStore
+          .collection('hostel_rating')
+          .doc(hostelId)
+          .collection('ratings')
+          .add(rating);
+
+      debugPrint("rating added successfully");
+
+      return right(unit);
+    } catch (e) {
+      debugPrint('Error rating hostel: $e');
+      return left(FormFailures.serverError());
+    }
+  }
+
+  @override
+  Future<Either<FormFailures, List<Map<String, String>>>>
+      getAllratingsAndReview({
+    required String hostelId,
+  }) async {
+    debugPrint("hostel id = $hostelId");
+    try {
+      // Reference to the Firestore collection
+      final reviewCollection = FirebaseFirestore.instance
+          .collection('hostel_rating')
+          .doc(hostelId)
+          .collection('ratings');
+
+      // Fetch the reviews
+      final querySnapshot = await reviewCollection.get();
+
+      // Process the reviews into a structured format
+      final reviews = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        return {
+          'comment': data["comment"] as String,
+          'stars': data["stars"] as String,
+          'userId': data["userId"] as String,
+          'userName': data["userName"] as String,
+        };
+      }).toList();
+      print(reviews);
+
+      return right(reviews); // Return the list of reviews in the correct format
+    } catch (e) {
+      // Log the error and return a server error
+      debugPrint('Error fetching reviews: $e');
+      return left(FormFailures.serverError());
+    }
+  }
+
 }
