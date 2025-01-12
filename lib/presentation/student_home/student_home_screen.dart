@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gecw_lakx/application/hostel_process/owner_home/owner_home_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/hostel_details/hostel_details_student_app_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   const StudentHomeScreen({super.key});
@@ -116,7 +119,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                             try {
                               final rent = double.parse(hostel.rent);
                               return rent >= _minFees &&
-                                  rent <= _maxFees; // Add rating filter here if needed
+                                  rent <=
+                                      _maxFees; // Add rating filter here if needed
                             } catch (e) {
                               return false;
                             }
@@ -227,7 +231,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
           builder: (context, state) {
             if (hostelResponseModel == null) {
               return const Center(
-                child: CircularProgressIndicator(color: Colors.deepPurpleAccent),
+                child:
+                    CircularProgressIndicator(color: Colors.deepPurpleAccent),
               );
             }
 
@@ -253,8 +258,19 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
               itemBuilder: (context, index) {
                 final hostel = filteredHostels[index];
                 return GestureDetector(
-                  onTap: () {
-                    // Handle tap on hostel card
+                  onTap: () async{
+                   final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    String? userId = prefs.getString("owner_userid");
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => HostelDetailsStudentAppScreen(
+                              hostelName: hostel.hostelName,
+                              ownerName: hostel.ownerName,
+                              mess: "Available",
+                              phNumber: hostel.phoneNumber,
+                              rent: hostel.rent,
+                               hostelId: hostel.hostelId,
+                               userId: userId.toString(),
+                            )));
                   },
                   child: Card(
                     color: Colors.grey[850],

@@ -18,6 +18,7 @@ class HostelResponseModel {
     String rent;
     String rooms;
     String vacancy;
+    String hostelId;
 
     HostelResponseModel({
         required this.description,
@@ -29,6 +30,7 @@ class HostelResponseModel {
         required this.rent,
         required this.rooms,
         required this.vacancy,
+        required this.hostelId,
     });
 
     factory HostelResponseModel.fromJson(Map<String, dynamic> json) => HostelResponseModel(
@@ -41,6 +43,7 @@ class HostelResponseModel {
         rent: json["rent"],
         rooms: json["rooms"],
         vacancy: json["vacancy"],
+        hostelId:json["hostelId"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -53,6 +56,7 @@ class HostelResponseModel {
         "rent": rent,
         "rooms": rooms,
         "vacancy": vacancy,
+        "hostelId": hostelId
     };
 }
 

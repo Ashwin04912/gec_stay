@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
 class OwnerProfileScreen extends StatelessWidget {
@@ -8,7 +10,6 @@ class OwnerProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -27,7 +28,6 @@ class OwnerProfileScreen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 children: [
                   const OwnerInfoCard(),
-                  
                 ],
               ),
               const SizedBox(height: 20),
@@ -86,8 +86,13 @@ class OwnerProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton.icon(
-                        onPressed: () {
-                          // Add your logout functionality here
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignInScreen()),
+                              (route) => false);
                         },
                         icon: const Icon(Icons.logout,
                             color:
@@ -99,7 +104,8 @@ class OwnerProfileScreen extends StatelessWidget {
                                   .black), // Text color matching the theme
                         ),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black, backgroundColor: Colors.white, // Text color
+                          foregroundColor: Colors.black,
+                          backgroundColor: Colors.white, // Text color
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 12),
                           shape: RoundedRectangleBorder(

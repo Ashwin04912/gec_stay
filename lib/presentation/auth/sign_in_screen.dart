@@ -19,7 +19,7 @@ class SignInScreen extends StatelessWidget {
               final message = f.maybeWhen(
                 invalidEmailAndPasswordCombinationFailure: () =>
                     "Invalid Password or Email Combination",
-                    userNotFound:()=> "User not found",
+                userNotFound: () => "User not found",
                 emailAlreadyInUse: () => "Email already in use",
                 orElse: () => "Some Error Occured",
               );
@@ -28,14 +28,16 @@ class SignInScreen extends StatelessWidget {
             }, (s) {
               debugPrint("login success");
               if (s == 'student') {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => BottomNavigationBarStudentWidget()));
-              } else {
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (ctx) => CreateHostelScreen()));
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => BottomNavigationBarOwnerWidget()));
                 
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (ctx) => BottomNavigationBarStudentWidget()),
+                    (route) => false);
+              } else {
+                 Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (ctx) => BottomNavigationBarOwnerWidget()),
+                    (route) => false);
               }
             });
           });
