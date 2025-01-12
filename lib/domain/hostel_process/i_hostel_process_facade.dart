@@ -30,7 +30,13 @@ abstract class IHostelProcessFacade {
     required String userName,
   });
 
-  Future<Either<FormFailures, List<Map<String, String>>>> getAllratingsAndReview({
+  Future<Either<FormFailures, List<Map<String, String>>>>
+      getAllratingsAndReview({
     required String hostelId,
   });
+
+  // Future<void> ratingCalculation({
+  //   required String hostelId,
+  //   required double rating,
+  // });
 }

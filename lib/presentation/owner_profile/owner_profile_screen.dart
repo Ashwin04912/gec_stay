@@ -11,11 +11,11 @@ class OwnerProfileScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.lightBlue.shade100, Colors.white],
+            colors: [Color(0xFF1E1E2C), Color(0xFF121212)], // Dark gradient
           ),
         ),
         child: SafeArea(
@@ -34,36 +34,23 @@ class OwnerProfileScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Contact Information",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
+                  const SectionTitle(title: "Contact Information"),
                   const ListTile(
-                    leading: Icon(Icons.phone, color: Colors.black),
+                    leading: Icon(Icons.phone, color: Colors.white70),
                     title: Text(
                       "+1-123-456-7890",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white70),
                     ),
                   ),
                   const ListTile(
-                    leading: Icon(Icons.email, color: Colors.black),
+                    leading: Icon(Icons.email, color: Colors.white70),
                     title: Text(
                       "owner@example.com",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white70),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    "Hostels Managed",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  const SectionTitle(title: "Hostels Managed"),
                   const SizedBox(height: 10),
                   ListView.separated(
                     shrinkWrap: true,
@@ -76,12 +63,10 @@ class OwnerProfileScreen extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (ctx, i) =>
-                        const Divider(color: Colors.black26),
+                        Divider(color: Colors.white.withOpacity(0.2)),
                     itemCount: 2,
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -91,32 +76,28 @@ class OwnerProfileScreen extends StatelessWidget {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignInScreen()),
+                                  builder: (context) => const SignInScreen()),
                               (route) => false);
                         },
                         icon: const Icon(Icons.logout,
-                            color:
-                                Colors.black), // Logout icon with black color
+                            color: Colors.redAccent), // Logout icon
                         label: const Text(
                           "Logout",
-                          style: TextStyle(
-                              color: Colors
-                                  .black), // Text color matching the theme
+                          style: TextStyle(color: Colors.redAccent),
                         ),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white, // Text color
+                          backgroundColor: Colors.transparent, // Transparent
+                          foregroundColor: Colors.redAccent,
+                          elevation: 0,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 12),
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // Rounded corners
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(
+                                color: Colors.redAccent.withOpacity(0.5)),
                           ),
-                          side: BorderSide(
-                              color: Colors.black
-                                  .withOpacity(0.3)), // Border color
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],
@@ -138,14 +119,16 @@ class OwnerInfoCard extends StatelessWidget {
       width: double.maxFinite,
       height: 150,
       borderRadius: 10,
-      blur: 17,
+      blur: 20,
       border: 0,
       alignment: Alignment.center,
       borderGradient: LinearGradient(
-        colors: [Colors.white.withAlpha(45), Colors.white.withAlpha(45)],
+        colors: [Colors.white.withAlpha(30), Colors.white.withAlpha(30)],
       ),
       linearGradient: LinearGradient(
-        colors: [Colors.white.withAlpha(45), Colors.white.withAlpha(45)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Colors.black.withOpacity(0.2), Colors.black.withOpacity(0.1)],
       ),
       child: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -155,17 +138,17 @@ class OwnerInfoCard extends StatelessWidget {
             Text(
               "John Doe",
               style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Divider(color: Colors.black),
+            Divider(color: Colors.white70),
             SizedBox(height: 10),
             Text(
               "Managing Hostels Since 2015",
               style: TextStyle(
-                color: Colors.black54,
+                color: Colors.white70,
                 fontSize: 16,
               ),
             ),
@@ -197,7 +180,7 @@ class HostelTile extends StatelessWidget {
       title: Text(
         hostelName,
         style: const TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
@@ -205,11 +188,29 @@ class HostelTile extends StatelessWidget {
       subtitle: Text(
         location,
         style: const TextStyle(
-          color: Colors.black54,
+          color: Colors.white70,
           fontSize: 14,
         ),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black54),
+      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white70),
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  final String title;
+
+  const SectionTitle({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

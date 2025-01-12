@@ -164,7 +164,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         return HostelResponseModel.fromJson(doc.data());
       }).toList();
 
-      debugPrint(hostels.toString());
+      debugPrint("i got hostels${hostels.toString()}");
 
       // debugPrint(hostelCollection.toString());
 
@@ -251,4 +251,5 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       return left(FormFailures.serverError());
     }
   }
+
 }

@@ -149,7 +149,7 @@ class HostelDetailsStudentAppScreenState
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (reviewController.text.trim().isNotEmpty) {
                           setState(() {
                             reviews.add({
@@ -167,6 +167,9 @@ class HostelDetailsStudentAppScreenState
                                 hostelId: widget.hostelId,
                               ));
                           Navigator.pop(context);
+                          context.read<CommonHostelProcessBloc>().add(
+                              CommonHostelProcessEvent.getAllratingsAndReview(
+                                  hostelId: widget.hostelId));
                         }
                       },
                       child: const Text(
@@ -210,7 +213,7 @@ class HostelDetailsStudentAppScreenState
           state.getAllRatingsSuccessOrFailure.fold(() {}, (either) {
             either.fold((f) {}, (s) {
               setState(() {
-                reviews = s ;
+                reviews = s;
               });
             });
           });
