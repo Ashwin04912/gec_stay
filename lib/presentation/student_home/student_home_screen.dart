@@ -236,7 +236,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       hostelId: hostel.hostelId,
                       userId: userId.toString(),
                       hostelImage: hostel.hostelImages,
-                      hostelOwnerUserId: hostel.hostelOwnerUserId,
+                      hostelOwnerUserId: hostel.hostelOwnerUserId, messAvailability: hostel.isMessAvailable,
                     )));
           },
           child: Card(
