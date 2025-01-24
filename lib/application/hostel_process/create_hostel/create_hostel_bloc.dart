@@ -59,6 +59,7 @@ class CreateHostelBloc extends Bloc<CreateHostelEvent, CreateHostelState> {
           description: value.description,
           distFromCollege: value.distFromCollege,
           isMessAvailable: value.isMessAvailable,
+isMensHostel:value.isMensHostel, 
           hostelImages: value.hostelImages,
         );
 
