@@ -17,6 +17,7 @@ class CreateHostelEvent with _$CreateHostelEvent {
     required String description,
     required String distFromCollege,
     required String isMessAvailable,
+required String isMensHostel, 
     required List<XFile> hostelImages,
   }) = _submitButtonPressed;
 }
