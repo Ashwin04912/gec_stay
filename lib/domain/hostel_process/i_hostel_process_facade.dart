@@ -17,6 +17,7 @@ abstract class IHostelProcessFacade {
     required String rent,
     required String distFromCollege,
     required String isMessAvailable,
+required String isMensHostel,
     required String rooms,
     required Position location,
 
