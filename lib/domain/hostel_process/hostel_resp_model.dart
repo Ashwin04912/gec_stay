@@ -16,6 +16,7 @@ class HostelResponseModel {
   String ownerName;
   String distFromCollege;
   String isMessAvailable;
+String isMensHostel;
   String phoneNumber;
   String rent;
   String rooms;
@@ -31,6 +32,7 @@ class HostelResponseModel {
     required this.ownerName,
     required this.distFromCollege,
     required this.isMessAvailable,
+required this.isMensHostel,
     required this.phoneNumber,
     required this.rent,
     required this.rooms,
@@ -46,7 +48,7 @@ class HostelResponseModel {
         location: Location.fromJson(json["location"]),
         ownerName: json["owner_name"],
         distFromCollege: json["dist_from_college"],
-        isMessAvailable: json["isMess_available"],
+        isMessAvailable: json["isMess_available"],isMensHostel:json["isMensHostel"]
         phoneNumber: json["phone_number"],
         rent: json["rent"],
         rooms: json["rooms"],
@@ -63,6 +65,7 @@ class HostelResponseModel {
         "owner_name": ownerName,
         "dist_from_college": distFromCollege,
         "isMess_available": isMessAvailable,
+isMensHostel:isMensHostel
         "phone_number": phoneNumber,
         "rent": rent,
         "rooms": rooms,
