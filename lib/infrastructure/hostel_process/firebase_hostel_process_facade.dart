@@ -71,6 +71,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     required String vacancy,
     required String distFromCollege,
     required String isMessAvailable,
+required String isMensHostel,
     required List<XFile> hostelImages,
     required String description,
   }) async {
@@ -125,6 +126,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         },
         'dist_from_college': distFromCollege,
         'isMess_available': isMessAvailable,
+'isMensHostel':isMensHostel, 
         'rent': rent,
         'rooms': rooms,
         'vacancy': vacancy,
