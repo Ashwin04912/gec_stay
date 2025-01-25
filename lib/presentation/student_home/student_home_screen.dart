@@ -32,22 +32,24 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   }
 
   void _openFilterModal() {
-    double _minFees = 0;
-    double _maxFees = 10000;
-    double _selectedRating = 0;
-    bool? _withMess;
+  double _minFees = 0;
+  double _maxFees = 10000;
+  double _selectedRating = 0;
+  bool? _withMess;
+  bool? _isMensHostel;
 
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.grey[900],
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            return Container(
-              padding: const EdgeInsets.all(20),
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.grey[900],
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setModalState) {
+          return Container(
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,6 +144,47 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
+                  const Text(
+                    "Hostel Type:",
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: RadioListTile<bool?>(
+                          value: true,
+                          groupValue: _isMensHostel,
+                          title: const Text(
+                            "Men's Hostel",
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                          onChanged: (value) {
+                            setModalState(() {
+                              _isMensHostel = value;
+                            });
+                          },
+                          activeColor: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile<bool?>(
+                          value: false,
+                          groupValue: _isMensHostel,
+                          title: const Text(
+                            "Women's Hostel",
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                          onChanged: (value) {
+                            setModalState(() {
+                              _isMensHostel = value;
+                            });
+                          },
+                          activeColor: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -158,10 +201,15 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                                 ? true
                                 : hostel.isMessAvailable.toLowerCase() ==
                                     (_withMess! ? "yes" : "no");
+                            final hostelTypeCondition = _isMensHostel == null
+                                ? true
+                                : hostel.isMensHostel.toLowerCase() ==
+                                    (_isMensHostel! ? "yes" : "no");
 
                             return rent >= _minFees &&
                                 rent <= _maxFees &&
-                                messCondition;
+                                messCondition &&
+                                hostelTypeCondition;
                           }).toList();
                         });
                         Navigator.pop(context);
@@ -174,12 +222,13 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                   ),
                 ],
               ),
-            );
-          },
-        );
-      },
-    );
-  }
+            ),
+          );
+        },
+      );
+    },
+  );
+}
 
   Widget _buildNoDataFoundWidget() {
     return Center(
