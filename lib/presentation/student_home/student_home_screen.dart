@@ -206,9 +206,12 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                                 : hostel.isMensHostel.toLowerCase() ==
                                     (_isMensHostel! ? "yes" : "no");
 
+                                    final ratingCondition = double.parse(hostel.rating) >= _selectedRating ;
+
                             return rent >= _minFees &&
                                 rent <= _maxFees &&
                                 messCondition &&
+                                ratingCondition&&
                                 hostelTypeCondition;
                           }).toList();
                         });
@@ -366,12 +369,13 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                               ],
                             ),
                           ),
-                          const Row(
+                           Row(
                             children: [
                               Icon(Icons.star, color: Colors.amber, size: 20),
                               SizedBox(width: 4),
                               Text(
-                                '4.5',
+                                double.parse(hostel.rating).toStringAsFixed(2),
+                               
                                 style: TextStyle(
                                     color: Colors.white70, fontSize: 14),
                               ),

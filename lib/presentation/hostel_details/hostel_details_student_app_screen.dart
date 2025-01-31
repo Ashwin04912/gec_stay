@@ -166,7 +166,7 @@ class HostelDetailsStudentAppScreenState
                                 userId: widget.userId,
                                 userName: "Anonymous",
                                 comment: reviewController.text.trim(),
-                                hostelId: widget.hostelId,
+                                hostelId: widget.hostelId, hostelOwnerUserId: widget.hostelOwnerUserId,
                               ));
                           Navigator.pop(context);
                           context.read<CommonHostelProcessBloc>().add(

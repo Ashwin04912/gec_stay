@@ -201,7 +201,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                           isMessAvailable:
                                               messAvailableController.text,
                                           hostelImages: _imageFiles!,
-                                          isMensHostel: '',
+                                          isMensHostel: _selectedHostelType.toString(),
                                         ),
                                       );
                                 }

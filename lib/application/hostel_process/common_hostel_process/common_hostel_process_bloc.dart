@@ -27,7 +27,7 @@ class CommonHostelProcessBloc
           star: value.stars,
           comment: value.comment,
           userId: value.userId,
-          userName: value.userName,
+          userName: value.userName, hostelOwnerUserId: value.hostelOwnerUserId,
         );
         // await ihostelFacade.ratingCalculation(hostelId: value.hostelId, rating: double.parse(value.stars));
         resp.fold((f) {

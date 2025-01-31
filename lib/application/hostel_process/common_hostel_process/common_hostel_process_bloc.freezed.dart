@@ -19,24 +19,29 @@ mixin _$CommonHostelProcessEvent {
   String get hostelId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String stars, String userId, String userName,
-            String comment, String hostelId)
+    required TResult Function(
+            String stars,
+            String userId,
+            String hostelOwnerUserId,
+            String userName,
+            String comment,
+            String hostelId)
         submitReviewButtonPressed,
     required TResult Function(String hostelId) getAllratingsAndReview,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String stars, String userId, String userName,
-            String comment, String hostelId)?
+    TResult? Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult? Function(String hostelId)? getAllratingsAndReview,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String stars, String userId, String userName,
-            String comment, String hostelId)?
+    TResult Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult Function(String hostelId)? getAllratingsAndReview,
     required TResult orElse(),
@@ -121,6 +126,7 @@ abstract class _$$submitReviewButtonPressedImplCopyWith<$Res>
   $Res call(
       {String stars,
       String userId,
+      String hostelOwnerUserId,
       String userName,
       String comment,
       String hostelId});
@@ -143,6 +149,7 @@ class __$$submitReviewButtonPressedImplCopyWithImpl<$Res>
   $Res call({
     Object? stars = null,
     Object? userId = null,
+    Object? hostelOwnerUserId = null,
     Object? userName = null,
     Object? comment = null,
     Object? hostelId = null,
@@ -155,6 +162,10 @@ class __$$submitReviewButtonPressedImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      hostelOwnerUserId: null == hostelOwnerUserId
+          ? _value.hostelOwnerUserId
+          : hostelOwnerUserId // ignore: cast_nullable_to_non_nullable
               as String,
       userName: null == userName
           ? _value.userName
@@ -178,6 +189,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
   const _$submitReviewButtonPressedImpl(
       {required this.stars,
       required this.userId,
+      required this.hostelOwnerUserId,
       required this.userName,
       required this.comment,
       required this.hostelId});
@@ -187,6 +199,8 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
   @override
   final String userId;
   @override
+  final String hostelOwnerUserId;
+  @override
   final String userName;
   @override
   final String comment;
@@ -195,7 +209,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
 
   @override
   String toString() {
-    return 'CommonHostelProcessEvent.submitReviewButtonPressed(stars: $stars, userId: $userId, userName: $userName, comment: $comment, hostelId: $hostelId)';
+    return 'CommonHostelProcessEvent.submitReviewButtonPressed(stars: $stars, userId: $userId, hostelOwnerUserId: $hostelOwnerUserId, userName: $userName, comment: $comment, hostelId: $hostelId)';
   }
 
   @override
@@ -205,6 +219,8 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             other is _$submitReviewButtonPressedImpl &&
             (identical(other.stars, stars) || other.stars == stars) &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.hostelOwnerUserId, hostelOwnerUserId) ||
+                other.hostelOwnerUserId == hostelOwnerUserId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.comment, comment) || other.comment == comment) &&
@@ -213,8 +229,8 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, stars, userId, userName, comment, hostelId);
+  int get hashCode => Object.hash(runtimeType, stars, userId, hostelOwnerUserId,
+      userName, comment, hostelId);
 
   /// Create a copy of CommonHostelProcessEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -228,39 +244,44 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String stars, String userId, String userName,
-            String comment, String hostelId)
+    required TResult Function(
+            String stars,
+            String userId,
+            String hostelOwnerUserId,
+            String userName,
+            String comment,
+            String hostelId)
         submitReviewButtonPressed,
     required TResult Function(String hostelId) getAllratingsAndReview,
   }) {
     return submitReviewButtonPressed(
-        stars, userId, userName, comment, hostelId);
+        stars, userId, hostelOwnerUserId, userName, comment, hostelId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String stars, String userId, String userName,
-            String comment, String hostelId)?
+    TResult? Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult? Function(String hostelId)? getAllratingsAndReview,
   }) {
     return submitReviewButtonPressed?.call(
-        stars, userId, userName, comment, hostelId);
+        stars, userId, hostelOwnerUserId, userName, comment, hostelId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String stars, String userId, String userName,
-            String comment, String hostelId)?
+    TResult Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult Function(String hostelId)? getAllratingsAndReview,
     required TResult orElse(),
   }) {
     if (submitReviewButtonPressed != null) {
       return submitReviewButtonPressed(
-          stars, userId, userName, comment, hostelId);
+          stars, userId, hostelOwnerUserId, userName, comment, hostelId);
     }
     return orElse();
   }
@@ -305,12 +326,14 @@ abstract class _submitReviewButtonPressed implements CommonHostelProcessEvent {
   const factory _submitReviewButtonPressed(
       {required final String stars,
       required final String userId,
+      required final String hostelOwnerUserId,
       required final String userName,
       required final String comment,
       required final String hostelId}) = _$submitReviewButtonPressedImpl;
 
   String get stars;
   String get userId;
+  String get hostelOwnerUserId;
   String get userName;
   String get comment;
   @override
@@ -399,8 +422,13 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String stars, String userId, String userName,
-            String comment, String hostelId)
+    required TResult Function(
+            String stars,
+            String userId,
+            String hostelOwnerUserId,
+            String userName,
+            String comment,
+            String hostelId)
         submitReviewButtonPressed,
     required TResult Function(String hostelId) getAllratingsAndReview,
   }) {
@@ -410,8 +438,8 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String stars, String userId, String userName,
-            String comment, String hostelId)?
+    TResult? Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult? Function(String hostelId)? getAllratingsAndReview,
   }) {
@@ -421,8 +449,8 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String stars, String userId, String userName,
-            String comment, String hostelId)?
+    TResult Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult Function(String hostelId)? getAllratingsAndReview,
     required TResult orElse(),

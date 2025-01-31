@@ -5,6 +5,7 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
   const factory CommonHostelProcessEvent.submitReviewButtonPressed({
     required String stars,
     required String userId,
+    required String hostelOwnerUserId,
     required String userName,
     required String comment,
     required String hostelId,

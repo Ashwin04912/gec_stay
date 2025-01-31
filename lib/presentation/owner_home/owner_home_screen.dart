@@ -295,7 +295,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                           color: Colors.amber, size: 18),
                                       const SizedBox(width: 5),
                                       Text(
-                                        '20',
+                                        double.parse(hostel.rating).toStringAsFixed(2),
                                         style: const TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,

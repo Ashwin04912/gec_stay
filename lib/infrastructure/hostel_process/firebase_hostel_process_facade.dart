@@ -71,7 +71,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     required String vacancy,
     required String distFromCollege,
     required String isMessAvailable,
-required String isMensHostel,
+    required String isMensHostel,
     required List<XFile> hostelImages,
     required String description,
   }) async {
@@ -126,11 +126,12 @@ required String isMensHostel,
         },
         'dist_from_college': distFromCollege,
         'isMess_available': isMessAvailable,
-'isMensHostel':isMensHostel, 
+        'isMensHostel': isMensHostel,
         'rent': rent,
         'rooms': rooms,
         'vacancy': vacancy,
         'imageList': imageUrls,
+        'rating' : '0'
       };
 
       // Save hostel data to Firestore
@@ -158,46 +159,45 @@ required String isMensHostel,
   }
 
   @override
-Future<Either<FormFailures, List<HostelResponseModel>>>
-    getAllHostelList() async {
-  try {
-    // Reference the collection
-    final CollectionReference hostelCollection =
-        FirebaseFirestore.instance.collection('all_hostel_list');
+  Future<Either<FormFailures, List<HostelResponseModel>>>
+      getAllHostelList() async {
+    try {
+      // Reference the collection
+      final CollectionReference hostelCollection =
+          FirebaseFirestore.instance.collection('all_hostel_list');
 
-    // Query the collection
-    QuerySnapshot querySnapshot = await hostelCollection.get();
+      // Query the collection
+      QuerySnapshot querySnapshot = await hostelCollection.get();
 
-    // Check if the collection is empty
-    if (querySnapshot.docs.isEmpty) {
-      debugPrint("No data found in all_hostel_list collection");
-      return left(const FormFailures.noDataFound());
+      // Check if the collection is empty
+      if (querySnapshot.docs.isEmpty) {
+        debugPrint("No data found in all_hostel_list collection");
+        return left(const FormFailures.noDataFound());
+      }
+
+      // Map the querySnapshot to the list of HostelResponseModel
+      List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
+        // Safely parse document data
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return HostelResponseModel.fromJson(data);
+      }).toList();
+
+      debugPrint("Fetched hostels: $hostels");
+
+      return right(hostels);
+    } catch (e) {
+      // Handle any exceptions
+      debugPrint("Error fetching all hostel list: $e");
+
+      // If the error might be related to a missing collection
+      if (e.toString().contains('Null is not a subtype of type')) {
+        debugPrint("Likely cause: Collection does not exist or has no data.");
+        return left(const FormFailures.noDataFound());
+      }
+
+      return left(const FormFailures.serverError());
     }
-
-    // Map the querySnapshot to the list of HostelResponseModel
-    List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
-      // Safely parse document data
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return HostelResponseModel.fromJson(data);
-    }).toList();
-
-    debugPrint("Fetched hostels: $hostels");
-
-    return right(hostels);
-  } catch (e) {
-    // Handle any exceptions
-    debugPrint("Error fetching all hostel list: $e");
-
-    // If the error might be related to a missing collection
-    if (e.toString().contains('Null is not a subtype of type')) {
-      debugPrint("Likely cause: Collection does not exist or has no data.");
-      return left(const FormFailures.noDataFound());
-    }
-
-    return left(const FormFailures.serverError());
   }
-}
-
 
   @override
   Future<Either<FormFailures, List<HostelResponseModel>>> getOwnerHostelList(
@@ -233,6 +233,7 @@ Future<Either<FormFailures, List<HostelResponseModel>>>
   @override
   Future<Either<FormFailures, Unit>> rateTheHostel({
     required String hostelId,
+    required String hostelOwnerUserId,
     required String star,
     required String comment,
     required String userId,
@@ -254,6 +255,7 @@ Future<Either<FormFailures, List<HostelResponseModel>>>
           .add(rating);
 
       debugPrint("rating added successfully");
+      ratingAvgCalculation(hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
 
       return right(unit);
     } catch (e) {
@@ -343,6 +345,62 @@ Future<Either<FormFailures, List<HostelResponseModel>>>
     } catch (e) {
       debugPrint("Image uploading exception: ${e.toString()}");
       return left(FormFailures.serverError());
+    }
+  }
+
+  @override
+  Future<void> ratingAvgCalculation({required String hostelId,required String hostelOwnerUserId}) async {
+    // final fireStore = FirebaseFirestore.instance;
+
+    try {
+      QuerySnapshot snapshot = await fireStore
+          .collection('hostel_rating')
+          .doc(hostelId)
+          .collection('ratings')
+          .get();
+
+      List<int> starRatings = snapshot.docs.map((doc) {
+        final starValue = doc['stars'];
+        debugPrint("Raw starValue: $starValue (${starValue.runtimeType})");
+
+        if (starValue is num) {
+          return starValue.toDouble().round(); // Convert to double and round
+        } else if (starValue is String) {
+          return double.tryParse(starValue)?.round() ??
+              0; // Convert string to double & round
+        } else {
+          return 0;
+        }
+      }).toList();
+      print(starRatings);
+
+      double averageRating = starRatings.isNotEmpty
+          ? starRatings.reduce((a, b) => a + b) / starRatings.length
+          : 0.0;
+
+      // Update 'hostel_rating' collection
+      await fireStore.collection('hostel_rating').doc(hostelId).set({
+        'averageRating': averageRating.toString(),
+      }, SetOptions(merge: true));
+
+      // Update 'all_hostel_list' collection with the calculated rating
+      await fireStore.collection('all_hostel_list').doc(hostelId).set({
+        'rating': averageRating.toString(),
+      }, SetOptions(merge: true));
+
+       
+
+    await fireStore
+        .collection('my_hostels')
+        .doc(hostelOwnerUserId)
+        .collection('hostels')
+        .doc(hostelId)
+        .update({'rating':averageRating});
+
+
+      debugPrint("avg success");
+    } catch (e) {
+      debugPrint("Error: ${e.toString()}");
     }
   }
 }

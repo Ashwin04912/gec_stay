@@ -9,6 +9,7 @@ class ReviewList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: ClampingScrollPhysics(),
       shrinkWrap: true,
       itemCount: reviews.length,
       itemBuilder: (context, index) {
