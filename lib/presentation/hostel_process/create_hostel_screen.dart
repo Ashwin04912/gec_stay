@@ -38,6 +38,8 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
   final ImagePicker _picker = ImagePicker();
   List<XFile>? _imageFiles = [];
 
+  String? _selectedHostelType;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateHostelBloc, CreateHostelState>(
@@ -84,6 +86,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                         inputType: TextInputType.phone),
                     const SizedBox(height: 12),
                     _buildTextField(hostelNameController, 'Hostel Name'),
+                    _buildHostelSelection(),
                     const SizedBox(height: 12),
                     _buildTextField(rentController, 'Rent',
                         inputType: TextInputType.number),
@@ -198,6 +201,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                           isMessAvailable:
                                               messAvailableController.text,
                                           hostelImages: _imageFiles!,
+                                          isMensHostel: '',
                                         ),
                                       );
                                 }
@@ -227,6 +231,47 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
           backgroundColor: const Color(0xFF121212),
         );
       },
+    );
+  }
+
+  Widget _buildHostelSelection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10,),
+        const Text('Select Hostel Type',
+            style: TextStyle(color: Colors.white70)),
+        Row(
+          children: [
+            Expanded(
+              child: RadioListTile<String>(
+                title: const Text("Men's Hostel",style: TextStyle(color: Colors.white),),
+                value: 'Yes',
+                groupValue: _selectedHostelType,
+                onChanged: (value) =>
+                    setState(() => _selectedHostelType = value),
+              ),
+            ),
+            Expanded(
+              child: RadioListTile<String>(
+                title: const Text("Women's Hostel",style: TextStyle(color: Colors.white),),
+                value: 'No',
+                groupValue: _selectedHostelType,
+                onChanged: (value) =>
+                    setState(() => _selectedHostelType = value),
+              ),
+            ),
+          ],
+        ),
+        if (_selectedHostelType == null)
+          const Padding(
+            padding: EdgeInsets.only(top: 5),
+            child: Text(
+              'Please select a hostel type',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+      ],
     );
   }
 
