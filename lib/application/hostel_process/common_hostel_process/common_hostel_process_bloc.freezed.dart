@@ -28,6 +28,8 @@ mixin _$CommonHostelProcessEvent {
             String hostelId)
         submitReviewButtonPressed,
     required TResult Function(String hostelId) getAllratingsAndReview,
+    required TResult Function(String hostelId, String hostelOwnerUserId)
+        deleteButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +38,8 @@ mixin _$CommonHostelProcessEvent {
             String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult? Function(String hostelId)? getAllratingsAndReview,
+    TResult? Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +48,8 @@ mixin _$CommonHostelProcessEvent {
             String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult Function(String hostelId)? getAllratingsAndReview,
+    TResult Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -53,6 +59,7 @@ mixin _$CommonHostelProcessEvent {
         submitReviewButtonPressed,
     required TResult Function(_getAllratingsAndReview value)
         getAllratingsAndReview,
+    required TResult Function(_deleteButtonPressed value) deleteButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +67,7 @@ mixin _$CommonHostelProcessEvent {
     TResult? Function(_submitReviewButtonPressed value)?
         submitReviewButtonPressed,
     TResult? Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult? Function(_deleteButtonPressed value)? deleteButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +75,7 @@ mixin _$CommonHostelProcessEvent {
     TResult Function(_submitReviewButtonPressed value)?
         submitReviewButtonPressed,
     TResult Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult Function(_deleteButtonPressed value)? deleteButtonPressed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -253,6 +262,8 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             String hostelId)
         submitReviewButtonPressed,
     required TResult Function(String hostelId) getAllratingsAndReview,
+    required TResult Function(String hostelId, String hostelOwnerUserId)
+        deleteButtonPressed,
   }) {
     return submitReviewButtonPressed(
         stars, userId, hostelOwnerUserId, userName, comment, hostelId);
@@ -265,6 +276,8 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult? Function(String hostelId)? getAllratingsAndReview,
+    TResult? Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
   }) {
     return submitReviewButtonPressed?.call(
         stars, userId, hostelOwnerUserId, userName, comment, hostelId);
@@ -277,6 +290,8 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult Function(String hostelId)? getAllratingsAndReview,
+    TResult Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
     required TResult orElse(),
   }) {
     if (submitReviewButtonPressed != null) {
@@ -293,6 +308,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
         submitReviewButtonPressed,
     required TResult Function(_getAllratingsAndReview value)
         getAllratingsAndReview,
+    required TResult Function(_deleteButtonPressed value) deleteButtonPressed,
   }) {
     return submitReviewButtonPressed(this);
   }
@@ -303,6 +319,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
     TResult? Function(_submitReviewButtonPressed value)?
         submitReviewButtonPressed,
     TResult? Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult? Function(_deleteButtonPressed value)? deleteButtonPressed,
   }) {
     return submitReviewButtonPressed?.call(this);
   }
@@ -313,6 +330,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
     TResult Function(_submitReviewButtonPressed value)?
         submitReviewButtonPressed,
     TResult Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult Function(_deleteButtonPressed value)? deleteButtonPressed,
     required TResult orElse(),
   }) {
     if (submitReviewButtonPressed != null) {
@@ -431,6 +449,8 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
             String hostelId)
         submitReviewButtonPressed,
     required TResult Function(String hostelId) getAllratingsAndReview,
+    required TResult Function(String hostelId, String hostelOwnerUserId)
+        deleteButtonPressed,
   }) {
     return getAllratingsAndReview(hostelId);
   }
@@ -442,6 +462,8 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
             String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult? Function(String hostelId)? getAllratingsAndReview,
+    TResult? Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
   }) {
     return getAllratingsAndReview?.call(hostelId);
   }
@@ -453,6 +475,8 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
             String userName, String comment, String hostelId)?
         submitReviewButtonPressed,
     TResult Function(String hostelId)? getAllratingsAndReview,
+    TResult Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
     required TResult orElse(),
   }) {
     if (getAllratingsAndReview != null) {
@@ -468,6 +492,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
         submitReviewButtonPressed,
     required TResult Function(_getAllratingsAndReview value)
         getAllratingsAndReview,
+    required TResult Function(_deleteButtonPressed value) deleteButtonPressed,
   }) {
     return getAllratingsAndReview(this);
   }
@@ -478,6 +503,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
     TResult? Function(_submitReviewButtonPressed value)?
         submitReviewButtonPressed,
     TResult? Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult? Function(_deleteButtonPressed value)? deleteButtonPressed,
   }) {
     return getAllratingsAndReview?.call(this);
   }
@@ -488,6 +514,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
     TResult Function(_submitReviewButtonPressed value)?
         submitReviewButtonPressed,
     TResult Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult Function(_deleteButtonPressed value)? deleteButtonPressed,
     required TResult orElse(),
   }) {
     if (getAllratingsAndReview != null) {
@@ -510,6 +537,190 @@ abstract class _getAllratingsAndReview implements CommonHostelProcessEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$getAllratingsAndReviewImplCopyWith<_$getAllratingsAndReviewImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$deleteButtonPressedImplCopyWith<$Res>
+    implements $CommonHostelProcessEventCopyWith<$Res> {
+  factory _$$deleteButtonPressedImplCopyWith(_$deleteButtonPressedImpl value,
+          $Res Function(_$deleteButtonPressedImpl) then) =
+      __$$deleteButtonPressedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String hostelId, String hostelOwnerUserId});
+}
+
+/// @nodoc
+class __$$deleteButtonPressedImplCopyWithImpl<$Res>
+    extends _$CommonHostelProcessEventCopyWithImpl<$Res,
+        _$deleteButtonPressedImpl>
+    implements _$$deleteButtonPressedImplCopyWith<$Res> {
+  __$$deleteButtonPressedImplCopyWithImpl(_$deleteButtonPressedImpl _value,
+      $Res Function(_$deleteButtonPressedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CommonHostelProcessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hostelId = null,
+    Object? hostelOwnerUserId = null,
+  }) {
+    return _then(_$deleteButtonPressedImpl(
+      hostelId: null == hostelId
+          ? _value.hostelId
+          : hostelId // ignore: cast_nullable_to_non_nullable
+              as String,
+      hostelOwnerUserId: null == hostelOwnerUserId
+          ? _value.hostelOwnerUserId
+          : hostelOwnerUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$deleteButtonPressedImpl implements _deleteButtonPressed {
+  const _$deleteButtonPressedImpl(
+      {required this.hostelId, required this.hostelOwnerUserId});
+
+  @override
+  final String hostelId;
+  @override
+  final String hostelOwnerUserId;
+
+  @override
+  String toString() {
+    return 'CommonHostelProcessEvent.deleteButtonPressed(hostelId: $hostelId, hostelOwnerUserId: $hostelOwnerUserId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteButtonPressedImpl &&
+            (identical(other.hostelId, hostelId) ||
+                other.hostelId == hostelId) &&
+            (identical(other.hostelOwnerUserId, hostelOwnerUserId) ||
+                other.hostelOwnerUserId == hostelOwnerUserId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, hostelId, hostelOwnerUserId);
+
+  /// Create a copy of CommonHostelProcessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$deleteButtonPressedImplCopyWith<_$deleteButtonPressedImpl> get copyWith =>
+      __$$deleteButtonPressedImplCopyWithImpl<_$deleteButtonPressedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String stars,
+            String userId,
+            String hostelOwnerUserId,
+            String userName,
+            String comment,
+            String hostelId)
+        submitReviewButtonPressed,
+    required TResult Function(String hostelId) getAllratingsAndReview,
+    required TResult Function(String hostelId, String hostelOwnerUserId)
+        deleteButtonPressed,
+  }) {
+    return deleteButtonPressed(hostelId, hostelOwnerUserId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
+        submitReviewButtonPressed,
+    TResult? Function(String hostelId)? getAllratingsAndReview,
+    TResult? Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
+  }) {
+    return deleteButtonPressed?.call(hostelId, hostelOwnerUserId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String stars, String userId, String hostelOwnerUserId,
+            String userName, String comment, String hostelId)?
+        submitReviewButtonPressed,
+    TResult Function(String hostelId)? getAllratingsAndReview,
+    TResult Function(String hostelId, String hostelOwnerUserId)?
+        deleteButtonPressed,
+    required TResult orElse(),
+  }) {
+    if (deleteButtonPressed != null) {
+      return deleteButtonPressed(hostelId, hostelOwnerUserId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_submitReviewButtonPressed value)
+        submitReviewButtonPressed,
+    required TResult Function(_getAllratingsAndReview value)
+        getAllratingsAndReview,
+    required TResult Function(_deleteButtonPressed value) deleteButtonPressed,
+  }) {
+    return deleteButtonPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_submitReviewButtonPressed value)?
+        submitReviewButtonPressed,
+    TResult? Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult? Function(_deleteButtonPressed value)? deleteButtonPressed,
+  }) {
+    return deleteButtonPressed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_submitReviewButtonPressed value)?
+        submitReviewButtonPressed,
+    TResult Function(_getAllratingsAndReview value)? getAllratingsAndReview,
+    TResult Function(_deleteButtonPressed value)? deleteButtonPressed,
+    required TResult orElse(),
+  }) {
+    if (deleteButtonPressed != null) {
+      return deleteButtonPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _deleteButtonPressed implements CommonHostelProcessEvent {
+  const factory _deleteButtonPressed(
+      {required final String hostelId,
+      required final String hostelOwnerUserId}) = _$deleteButtonPressedImpl;
+
+  @override
+  String get hostelId;
+  String get hostelOwnerUserId;
+
+  /// Create a copy of CommonHostelProcessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$deleteButtonPressedImplCopyWith<_$deleteButtonPressedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

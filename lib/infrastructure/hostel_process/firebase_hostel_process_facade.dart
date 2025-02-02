@@ -131,7 +131,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         'rooms': rooms,
         'vacancy': vacancy,
         'imageList': imageUrls,
-        'rating' : '0'
+        'rating': '0'
       };
 
       // Save hostel data to Firestore
@@ -255,7 +255,8 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           .add(rating);
 
       debugPrint("rating added successfully");
-      ratingAvgCalculation(hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
+      ratingAvgCalculation(
+          hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
 
       return right(unit);
     } catch (e) {
@@ -349,7 +350,8 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   }
 
   @override
-  Future<void> ratingAvgCalculation({required String hostelId,required String hostelOwnerUserId}) async {
+  Future<void> ratingAvgCalculation(
+      {required String hostelId, required String hostelOwnerUserId}) async {
     // final fireStore = FirebaseFirestore.instance;
 
     try {
@@ -378,29 +380,50 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           ? starRatings.reduce((a, b) => a + b) / starRatings.length
           : 0.0;
 
+      String avgRatingStr = averageRating.toStringAsFixed(2);
+
       // Update 'hostel_rating' collection
       await fireStore.collection('hostel_rating').doc(hostelId).set({
-        'averageRating': averageRating.toString(),
+        'averageRating': avgRatingStr,
       }, SetOptions(merge: true));
 
       // Update 'all_hostel_list' collection with the calculated rating
       await fireStore.collection('all_hostel_list').doc(hostelId).set({
-        'rating': averageRating.toString(),
+        'rating': avgRatingStr,
       }, SetOptions(merge: true));
 
-       
-
-    await fireStore
-        .collection('my_hostels')
-        .doc(hostelOwnerUserId)
-        .collection('hostels')
-        .doc(hostelId)
-        .update({'rating':averageRating});
-
+      await fireStore
+          .collection('my_hostels')
+          .doc(hostelOwnerUserId)
+          .collection('hostels')
+          .doc(hostelId)
+          .update({'rating': avgRatingStr});
 
       debugPrint("avg success");
     } catch (e) {
       debugPrint("Error: ${e.toString()}");
+    }
+  }
+
+  @override
+  Future<Either<Exception, Unit>> deleteHostel(
+      {required String hostelId, required String hostelOwnerUserId}) async {
+    try {
+      await fireStore
+          .collection('my_hostels')
+          .doc(hostelOwnerUserId)
+          .collection('hostels')
+          .doc(hostelId)
+          .delete();
+
+      fireStore.collection('all_hostel_list').doc(hostelId).delete();
+
+      fireStore.collection('hostel_rating').doc(hostelId).delete();
+
+      fireStore.collection('hostel_rating').doc(hostelId).delete();
+      return right(unit);
+    } catch (e) {
+      return left(Exception(e));
     }
   }
 }

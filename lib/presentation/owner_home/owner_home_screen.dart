@@ -221,157 +221,165 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                 colors: [Color(0xFF232A34), Color(0xFF1A1A2E)],
               ),
             ),
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              itemCount: filteredHostels.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final hostel = filteredHostels[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HostelDetailsOwnerAppScreen(
-                              hostelId: hostel.hostelId,
-                              hostelImages: hostel.hostelImages,
-                            )));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: const Color(0xFF2B2B40),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 8,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(12)),
-                          child: CachedNetworkImage(
-                            height: 150,
-                            imageUrl: hostel.hostelImages[0],
-                            width: MediaQuery.of(context).size.width - 40,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.deepPurpleAccent,
+            child: RefreshIndicator(
+              onRefresh: _loadUserIdAndFetchHostels,
+              child: ListView.separated(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                itemCount: filteredHostels.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final hostel = filteredHostels[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HostelDetailsOwnerAppScreen(
+                                hostelResp: hostel,
+                                hostelId: hostel.hostelId,
+                                hostelImages: hostel.hostelImages,
+                              )));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: const Color(0xFF2B2B40),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 8,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(12)),
+                            child: CachedNetworkImage(
+                              height: 150,
+                              imageUrl: hostel.hostelImages[0],
+                              width: MediaQuery.of(context).size.width - 40,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.deepPurpleAccent,
+                                ),
                               ),
-                            ),
-                            errorWidget: (context, url, error) => Container(
-                              color: Colors.grey[850],
-                              child: const Icon(
-                                Icons.broken_image,
-                                color: Colors.white70,
-                                size: 50,
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors.grey[850],
+                                child: const Icon(
+                                  Icons.broken_image,
+                                  color: Colors.white70,
+                                  size: 50,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      hostel.hostelName,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.star,
-                                          color: Colors.amber, size: 18),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        double.parse(hostel.rating).toStringAsFixed(2),
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        hostel.hostelName,
                                         style: const TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white70,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                hostel.description,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: '₹${hostel.rent}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.deepPurpleAccent,
-                                      ),
-                                      children: const [
-                                        TextSpan(
-                                          text: ' / month',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.star,
+                                            color: Colors.amber, size: 18),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          double.parse(hostel.rating)
+                                              .toStringAsFixed(2),
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
                                             color: Colors.white70,
                                           ),
                                         ),
                                       ],
                                     ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  hostel.description,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white70,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HostelDetailsOwnerAppScreen(
-                                                    hostelId: hostel.hostelId,
-                                                    hostelImages:
-                                                        hostel.hostelImages,
-                                                  )));
-                                    },
-                                    child: const Text(
-                                      "View Details",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.deepPurpleAccent,
+                                ),
+                                const SizedBox(height: 12),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        text: '₹${hostel.rent}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.deepPurpleAccent,
+                                        ),
+                                        children: const [
+                                          TextSpan(
+                                            text: ' / month',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w300,
+                                              color: Colors.white70,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HostelDetailsOwnerAppScreen(
+                                                      hostelResp: hostel,
+                                                      hostelId: hostel.hostelId,
+                                                      hostelImages:
+                                                          hostel.hostelImages,
+                                                    )));
+                                      },
+                                      child: const Text(
+                                        "View Details",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.deepPurpleAccent,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           );
         },

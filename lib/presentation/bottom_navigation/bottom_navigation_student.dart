@@ -16,10 +16,10 @@ class BottomNavigationBarStudentWidgetState
 
   final List<Widget> _pages = [
     StudentHomeScreen(), // Home screen
-    Scaffold(
-      body:
-          Center(child: Text("Edit Screen")), // Settings screen placeholder
-    ),
+    // Scaffold(
+    //   body:
+    //       Center(child: Text("Edit Screen")), // Settings screen placeholder
+    // ),
     Scaffold(
       body: Center(
           child:
@@ -64,23 +64,23 @@ class BottomNavigationBarStudentWidgetState
                   isSelected: _selectedIndex == 0,
                   onPressed: () => _onNavBarItemTapped(0),
                 ),
+                // NavBarIcon(
+                //   text: "Create",
+                //   icon: Icons.create,
+                //   isSelected: _selectedIndex == 1,
+                //   onPressed: () => _onNavBarItemTapped(1),
+                // ),
                 NavBarIcon(
-                  text: "Create",
-                  icon: Icons.create,
+                  text: "Notifications",
+                  icon: Icons.notifications,
                   isSelected: _selectedIndex == 1,
                   onPressed: () => _onNavBarItemTapped(1),
                 ),
                 NavBarIcon(
-                  text: "Notifications",
-                  icon: Icons.notifications,
-                  isSelected: _selectedIndex == 2,
-                  onPressed: () => _onNavBarItemTapped(2),
-                ),
-                NavBarIcon(
                   text: "Profile",
                   icon: Icons.person,
-                  isSelected: _selectedIndex == 3,
-                  onPressed: () => _onNavBarItemTapped(3),
+                  isSelected: _selectedIndex == 2,
+                  onPressed: () => _onNavBarItemTapped(2),
                 ),
               ],
             ),

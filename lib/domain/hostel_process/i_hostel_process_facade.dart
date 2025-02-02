@@ -36,10 +36,8 @@ abstract class IHostelProcessFacade {
     required String userName,
   });
 
-  Future<void> ratingAvgCalculation({
-    required String hostelId,
-    required String hostelOwnerUserId
-  });
+  Future<void> ratingAvgCalculation(
+      {required String hostelId, required String hostelOwnerUserId});
 
   Future<Either<FormFailures, List<Map<String, String>>>>
       getAllratingsAndReview({
@@ -50,4 +48,8 @@ abstract class IHostelProcessFacade {
     required List<XFile> hostelImages,
   });
 
+  Future<Either<Exception, Unit>> deleteHostel({
+    required String hostelId,
+    required String hostelOwnerUserId,
+  });
 }

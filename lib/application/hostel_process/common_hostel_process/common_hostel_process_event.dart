@@ -15,5 +15,8 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
   const factory CommonHostelProcessEvent.getAllratingsAndReview({
     required String hostelId,
   }) = _getAllratingsAndReview;
+
+  const factory CommonHostelProcessEvent.deleteButtonPressed({required String hostelId, required String hostelOwnerUserId}) = _deleteButtonPressed;
+  
   
 }

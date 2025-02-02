@@ -27,7 +27,8 @@ class CommonHostelProcessBloc
           star: value.stars,
           comment: value.comment,
           userId: value.userId,
-          userName: value.userName, hostelOwnerUserId: value.hostelOwnerUserId,
+          userName: value.userName,
+          hostelOwnerUserId: value.hostelOwnerUserId,
         );
         // await ihostelFacade.ratingCalculation(hostelId: value.hostelId, rating: double.parse(value.stars));
         resp.fold((f) {
@@ -50,14 +51,33 @@ class CommonHostelProcessBloc
         );
         resp.fold((f) {
           emit(state.copyWith(
+              isSubmitting: false,
+              getAllRatingsSuccessOrFailure: some(left(f))));
+        }, (s) {
+          emit(state.copyWith(
+              isSubmitting: false,
+              respList: s,
+              getAllRatingsSuccessOrFailure: some(right(s))));
+        });
+      }, deleteButtonPressed: (_deleteButtonPressed value) async {
+        emit(state.copyWith(
+          isSubmitting: true,
+          successOrFailure: none(),
+        ));
+
+        final resp = await ihostelFacade.deleteHostel(
+            hostelId: value.hostelId,
+            hostelOwnerUserId: value.hostelOwnerUserId);
+
+        resp.fold((f) {
+          emit(state.copyWith(
             isSubmitting: false,
-            getAllRatingsSuccessOrFailure: some(left(f))
+            successOrFailure: some(left(FormFailures.serverError())),
           ));
         }, (s) {
           emit(state.copyWith(
             isSubmitting: false,
-            respList: s,
-            getAllRatingsSuccessOrFailure: some(right(s))
+            successOrFailure: some(right(s)),
           ));
         });
       });

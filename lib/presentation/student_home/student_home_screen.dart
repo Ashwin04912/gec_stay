@@ -267,130 +267,129 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   }
 
   Widget _buildHostelList(List<HostelResponseModel> filteredHostels) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(12),
-      itemCount: filteredHostels.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 10),
-      itemBuilder: (context, index) {
-        final hostel = filteredHostels[index];
-        return GestureDetector(
-          onTap: () async {
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            String? userId = prefs.getString("owner_userid");
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HostelDetailsStudentAppScreen(
-                      hostelName: hostel.hostelName,
-                      ownerName: hostel.ownerName,
-                      mess: "Available",
-                      phNumber: hostel.phoneNumber,
-                      rent: hostel.rent,
-                      hostelId: hostel.hostelId,
-                      userId: userId.toString(),
-                      hostelImage: hostel.hostelImages,
-                      hostelOwnerUserId: hostel.hostelOwnerUserId, messAvailability: hostel.isMessAvailable,
-                    )));
-          },
-          child: Card(
-            color: Colors.grey[850],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            elevation: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
-                  ),
-                  child: CachedNetworkImage(
-                    height: 150,
-                    imageUrl: hostel.hostelImages[0],
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.deepPurpleAccent,
-                      ),
+    return RefreshIndicator(
+      
+    onRefresh: () async {
+      context.read<OwnerHomeBloc>().add(OwnerHomeEvent.getAllHostelList());
+    },
+      child: ListView.separated(
+        padding: const EdgeInsets.all(12),
+        itemCount: filteredHostels.length,
+        separatorBuilder: (context, index) => const SizedBox(height: 10),
+        itemBuilder: (context, index) {
+          final hostel = filteredHostels[index];
+          return GestureDetector(
+            onTap: () async {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              String? userId = prefs.getString("owner_userid");
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => HostelDetailsStudentAppScreen(
+                       hostelResp: hostel,
+                       userId: userId.toString(),
+                      )));
+            },
+            child: Card(
+              color: Colors.grey[850],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12),
                     ),
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[850],
-                      child: const Icon(
-                        Icons.broken_image,
-                        color: Colors.white70,
-                        size: 50,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        hostel.hostelName,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    child: CachedNetworkImage(
+                      height: 150,
+                      imageUrl: hostel.hostelImages[0],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.deepPurpleAccent,
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        hostel.description,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 14,
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[850],
+                        child: const Icon(
+                          Icons.broken_image,
                           color: Colors.white70,
+                          size: 50,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              text: '₹${hostel.rent}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.deepPurpleAccent,
-                              ),
-                              children: const [
-                                TextSpan(
-                                  text: ' /month',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white70,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          hostel.hostelName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          hostel.description,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: '₹${hostel.rent}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.deepPurpleAccent,
+                                ),
+                                children: const [
+                                  TextSpan(
+                                    text: ' /month',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white70,
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ),
+                             Row(
+                              children: [
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                                SizedBox(width: 4),
+                                Text(
+                                  double.parse(hostel.rating).toStringAsFixed(2),
+                                 
+                                  style: TextStyle(
+                                      color: Colors.white70, fontSize: 14),
                                 ),
                               ],
-                            ),
-                          ),
-                           Row(
-                            children: [
-                              Icon(Icons.star, color: Colors.amber, size: 20),
-                              SizedBox(width: 4),
-                              Text(
-                                double.parse(hostel.rating).toStringAsFixed(2),
-                               
-                                style: TextStyle(
-                                    color: Colors.white70, fontSize: 14),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

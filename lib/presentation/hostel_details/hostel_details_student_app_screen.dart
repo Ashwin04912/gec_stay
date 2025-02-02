@@ -4,39 +4,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
+import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/chat/chat_page.dart';
 import 'package:gecw_lakx/presentation/hostel_details/widgets/build_detail_widget.dart';
 import 'package:gecw_lakx/presentation/hostel_details/widgets/build_review_widget.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @immutable
 class HostelDetailsStudentAppScreen extends StatefulWidget {
-  final String hostelName;
-  final String hostelOwnerUserId;
-  final String ownerName;
-  final String phNumber;
-  final String rent;
-  final String mess;
-  final String hostelId;
+  final HostelResponseModel hostelResp;
   final String userId;
-  final String messAvailability;
-  final List<String> hostelImage;
 
-  const HostelDetailsStudentAppScreen({
-    super.key,
-    required this.hostelName,
-    required this.ownerName,
-    required this.phNumber,
-    required this.rent,
-    required this.mess,
-    required this.hostelId,
-    required this.userId,
-    required this.hostelImage,
-    required this.hostelOwnerUserId,
-    required this.messAvailability,
-  });
+  const HostelDetailsStudentAppScreen(
+      {super.key, required this.userId, required this.hostelResp});
 
   @override
   HostelDetailsStudentAppScreenState createState() =>
@@ -69,7 +54,7 @@ class HostelDetailsStudentAppScreenState
     super.initState();
     context.read<CommonHostelProcessBloc>().add(
         CommonHostelProcessEvent.getAllratingsAndReview(
-            hostelId: widget.hostelId));
+            hostelId: widget.hostelResp.hostelId));
   }
 
   void _openAddReviewModal() {
@@ -166,12 +151,14 @@ class HostelDetailsStudentAppScreenState
                                 userId: widget.userId,
                                 userName: "Anonymous",
                                 comment: reviewController.text.trim(),
-                                hostelId: widget.hostelId, hostelOwnerUserId: widget.hostelOwnerUserId,
+                                hostelId: widget.hostelResp.hostelId,
+                                hostelOwnerUserId:
+                                    widget.hostelResp.hostelOwnerUserId,
                               ));
                           Navigator.pop(context);
                           context.read<CommonHostelProcessBloc>().add(
                               CommonHostelProcessEvent.getAllratingsAndReview(
-                                  hostelId: widget.hostelId));
+                                  hostelId: widget.hostelResp.hostelId));
                         }
                       },
                       child: const Text(
@@ -197,7 +184,7 @@ class HostelDetailsStudentAppScreenState
         foregroundColor: Colors.white,
         backgroundColor: Colors.grey[900],
         title: Text(
-          widget.hostelName,
+          widget.hostelResp.hostelName,
           style: const TextStyle(color: Colors.white),
         ),
         actions: [
@@ -206,8 +193,8 @@ class HostelDetailsStudentAppScreenState
               IconButton(
                 icon: const Icon(Icons.call),
                 onPressed: () async {
-                  final phoneNumber =
-                      widget.phNumber; // Use your desired phone number
+                  final phoneNumber = widget
+                      .hostelResp.phoneNumber; // Use your desired phone number
                   final url = 'tel:$phoneNumber';
                   if (await canLaunch(url)) {
                     await launch(url);
@@ -227,7 +214,8 @@ class HostelDetailsStudentAppScreenState
                 onPressed: () {
                   // Chat button functionality
                   _handlePressed(
-                      types.User(id: widget.hostelOwnerUserId), context);
+                      types.User(id: widget.hostelResp.hostelOwnerUserId),
+                      context);
                 },
                 color: Colors.white,
               ),
@@ -260,6 +248,7 @@ class HostelDetailsStudentAppScreenState
                       // Hostel Details Section
                       _buildDetailsSection(),
                       const SizedBox(height: 25),
+
                       reviews.isEmpty
                           ? const Center(
                               child: Padding(
@@ -285,7 +274,7 @@ class HostelDetailsStudentAppScreenState
       height: 250,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: widget.hostelImage.length,
+        itemCount: widget.hostelResp.hostelImages.length,
         itemBuilder: (context, index) {
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -294,7 +283,7 @@ class HostelDetailsStudentAppScreenState
               child: CachedNetworkImage(
                 cacheManager: DefaultCacheManager(),
                 key: UniqueKey(),
-                imageUrl: widget.hostelImage[index],
+                imageUrl: widget.hostelResp.hostelImages[index],
                 width: MediaQuery.of(context).size.width - 40,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Center(
@@ -324,26 +313,86 @@ class HostelDetailsStudentAppScreenState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildDetail("Owner Name", widget.ownerName),
-          buildDetail("Rent", "₹${widget.rent}/month"),
+          buildDetail("Owner Name", widget.hostelResp.ownerName),
+          buildDetail("Rent", "₹${widget.hostelResp.rent}/month"),
           buildDetail(
             "Mess Availability",
-            widget.messAvailability.toLowerCase() == "yes"
+            widget.hostelResp.isMessAvailable.toLowerCase() == "yes"
                 ? "Mess Available"
                 : "Mess Not Available",
           ),
           const SizedBox(height: 20),
-          // const Text(
-          //   "Select Room and Bed",
-          //   style: TextStyle(
-          //     color: Colors.white,
-          //     fontSize: 20,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          // ),
-          // const SizedBox(height: 10),
-          // ...rooms.map((room) => _buildRoomCard(room)),
           const SizedBox(
+            height: 15,
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.grey[850],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: FlutterMap(
+                    options: MapOptions(
+                      initialCenter: LatLng(widget.hostelResp.location.latitude,
+                          widget.hostelResp.location.longitude),
+                      initialZoom: 15.0,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: ['a', 'b', 'c'],
+                      ),
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            width: 40.0,
+                            height: 40.0,
+                            point: LatLng(widget.hostelResp.location.latitude,
+                                widget.hostelResp.location.longitude),
+                            child: Icon(
+                              Icons.location_pin,
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    MapsLauncher.launchCoordinates(
+                        widget.hostelResp.location.latitude,
+                        widget.hostelResp.location.longitude);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: const Icon(Icons.directions, color: Colors.white),
+                  label: const Text(
+                    "Get Directions",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
             height: 15,
           ),
           ElevatedButton.icon(
