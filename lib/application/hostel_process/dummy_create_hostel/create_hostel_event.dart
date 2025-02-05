@@ -12,6 +12,7 @@ class CreateHostelEvent with _$CreateHostelEvent {
     required String rent,
     required String rooms,
     required Position location,
+    required bool? isEdit,
     // required String personsPerRoom,
     required String vacancy,
     required String description,

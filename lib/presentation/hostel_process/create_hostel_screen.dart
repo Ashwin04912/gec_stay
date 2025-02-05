@@ -1,16 +1,15 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
+import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:imagekit_io/imagekit_io.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:gecw_lakx/application/hostel_process/create_hostel/create_hostel_bloc.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 
 class CreateHostelScreen extends StatefulWidget {
-  const CreateHostelScreen({super.key});
+  final bool? isEdit;
+  final HostelResponseModel? hostelData;
+  const CreateHostelScreen({super.key, this.isEdit, this.hostelData});
 
   @override
   _CreateHostelScreenState createState() => _CreateHostelScreenState();
@@ -20,7 +19,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // Firestore instance
-  final FirebaseFirestore db = FirebaseFirestore.instance;
+  // final FirebaseFirestore db = FirebaseFirestore.instance;
 
   // Text controllers
   final TextEditingController ownerNameController = TextEditingController();
@@ -34,6 +33,27 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController distanceController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isEdit == true && widget.hostelData != null) {
+      ownerNameController.text = widget.hostelData!.ownerName;
+      phoneNumberController.text = widget.hostelData!.phoneNumber;
+      hostelNameController.text = widget.hostelData!.hostelName;
+      rentController.text = widget.hostelData!.rent;
+      roomsController.text = widget.hostelData!.rooms;
+      vacancyController.text = widget.hostelData!.vacancy;
+      descriptionController.text = widget.hostelData!.description;
+      distanceController.text = widget.hostelData!.distFromCollege;
+      messAvailableController.text = widget.hostelData!.isMessAvailable;
+
+      // Ensure correct selection for hostel type
+      _selectedHostelType =
+          widget.hostelData!.isMensHostel == 'Yes' ? 'Yes' : 'No';
+    }
+  }
+
   // Image picker
   final ImagePicker _picker = ImagePicker();
   List<XFile>? _imageFiles = [];
@@ -42,7 +62,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreateHostelBloc, CreateHostelState>(
+    return BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
       listener: (context, state) {
         state.submitFailureOrSuccessOption.fold(() {}, (some) {
           some.fold((failure) {
@@ -122,8 +142,10 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          onPressed: () => context.read<CreateHostelBloc>().add(
-                              CreateHostelEvent.findLocationButtonPressed()),
+                          onPressed: () => context
+                              .read<CommonHostelProcessBloc>()
+                              .add(CommonHostelProcessEvent
+                                  .findLocationButtonPressed()),
                           child: Text(
                             'Get Location',
                             style: TextStyle(color: Colors.white),
@@ -180,33 +202,65 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                             onPressed: () async {
                               // print(messAvailableController.text);
                               // print(distanceController.text);
-                              if (_formKey.currentState!.validate()) {
-                                if (_imageFiles == null) {
-                                  print('add_images');
-                                } else {
-                                  context.read<CreateHostelBloc>().add(
-                                        CreateHostelEvent.submitButtonPressed(
-                                          hostelName: hostelNameController.text,
-                                          ownerName: ownerNameController.text,
-                                          phoneNumber:
-                                              phoneNumberController.text,
-                                          rent: rentController.text,
-                                          rooms: roomsController.text,
-                                          vacancy: vacancyController.text,
-                                          description:
-                                              descriptionController.text,
-                                          location: state.location,
-                                          distFromCollege:
-                                              distanceController.text,
-                                          isMessAvailable:
-                                              messAvailableController.text,
-                                          hostelImages: _imageFiles!,
-                                          isMensHostel: _selectedHostelType.toString(),
-                                        ),
-                                      );
-                                }
+                              if (widget.isEdit == true) {
+                                print("true is working in ui${state.hostelDataById.hostelId}");
+                                context.read<CommonHostelProcessBloc>().add(
+                                      CommonHostelProcessEvent
+                                          .submitButtonPressed(
+                                      hostelId: state.hostelDataById.hostelId,
+                                        hostelName: hostelNameController.text,
+                                        ownerName: ownerNameController.text,
+                                        phoneNumber: phoneNumberController.text,
+                                        rent: rentController.text,
+                                        rooms: roomsController.text,
+                                        vacancy: vacancyController.text,
+                                        description: descriptionController.text,
+                                        location: state.location,
+                                        distFromCollege:
+                                            distanceController.text,
+                                        isMessAvailable:
+                                            messAvailableController.text,
+                                        hostelImages: _imageFiles!,
+                                        isMensHostel:
+                                            _selectedHostelType.toString(),
+                                        isEdit: true,
+                                      ),
+                                    );
+                              } else {
+                                  print("false is working");
+                                if (_formKey.currentState!.validate()) {
+                                  if (_imageFiles == null) {
+                                    print('add_images');
+                                  } else {
+                                    context.read<CommonHostelProcessBloc>().add(
+                                          CommonHostelProcessEvent
+                                              .submitButtonPressed(
+                                                // hostelId: '',
+                                            hostelName:
+                                                hostelNameController.text,
+                                            ownerName: ownerNameController.text,
+                                            phoneNumber:
+                                                phoneNumberController.text,
+                                            rent: rentController.text,
+                                            rooms: roomsController.text,
+                                            vacancy: vacancyController.text,
+                                            description:
+                                                descriptionController.text,
+                                            location: state.location,
+                                            distFromCollege:
+                                                distanceController.text,
+                                            isMessAvailable:
+                                                messAvailableController.text,
+                                            hostelImages: _imageFiles!,
+                                            isMensHostel:
+                                                _selectedHostelType.toString(),
+                                            isEdit:false,
+                                          ),
+                                        );
+                                  }
 
-                                // Dispatching the event to the Bloc
+                                  // Dispatching the event to the Bloc
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -238,14 +292,19 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         const Text('Select Hostel Type',
             style: TextStyle(color: Colors.white70)),
         Row(
           children: [
             Expanded(
               child: RadioListTile<String>(
-                title: const Text("Men's Hostel",style: TextStyle(color: Colors.white),),
+                title: const Text(
+                  "Men's Hostel",
+                  style: TextStyle(color: Colors.white),
+                ),
                 value: 'Yes',
                 groupValue: _selectedHostelType,
                 onChanged: (value) =>
@@ -254,7 +313,10 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
             ),
             Expanded(
               child: RadioListTile<String>(
-                title: const Text("Women's Hostel",style: TextStyle(color: Colors.white),),
+                title: const Text(
+                  "Women's Hostel",
+                  style: TextStyle(color: Colors.white),
+                ),
                 value: 'No',
                 groupValue: _selectedHostelType,
                 onChanged: (value) =>

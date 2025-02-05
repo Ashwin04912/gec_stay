@@ -26,6 +26,7 @@ mixin _$CreateHostelEvent {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -45,6 +46,7 @@ mixin _$CreateHostelEvent {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -64,6 +66,7 @@ mixin _$CreateHostelEvent {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -172,6 +175,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -194,6 +198,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -216,6 +221,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -283,6 +289,7 @@ abstract class _$$submitButtonPressedImplCopyWith<$Res> {
       String rent,
       String rooms,
       Position location,
+      bool? isEdit,
       String vacancy,
       String description,
       String distFromCollege,
@@ -310,6 +317,7 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
     Object? rent = null,
     Object? rooms = null,
     Object? location = null,
+    Object? isEdit = freezed,
     Object? vacancy = null,
     Object? description = null,
     Object? distFromCollege = null,
@@ -342,6 +350,10 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as Position,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool?,
       vacancy: null == vacancy
           ? _value.vacancy
           : vacancy // ignore: cast_nullable_to_non_nullable
@@ -380,6 +392,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
       required this.rent,
       required this.rooms,
       required this.location,
+      required this.isEdit,
       required this.vacancy,
       required this.description,
       required this.distFromCollege,
@@ -400,6 +413,8 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
   final String rooms;
   @override
   final Position location;
+  @override
+  final bool? isEdit;
 // required String personsPerRoom,
   @override
   final String vacancy;
@@ -421,7 +436,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
 
   @override
   String toString() {
-    return 'CreateHostelEvent.submitButtonPressed(hostelName: $hostelName, ownerName: $ownerName, phoneNumber: $phoneNumber, rent: $rent, rooms: $rooms, location: $location, vacancy: $vacancy, description: $description, distFromCollege: $distFromCollege, isMessAvailable: $isMessAvailable, isMensHostel: $isMensHostel, hostelImages: $hostelImages)';
+    return 'CreateHostelEvent.submitButtonPressed(hostelName: $hostelName, ownerName: $ownerName, phoneNumber: $phoneNumber, rent: $rent, rooms: $rooms, location: $location, isEdit: $isEdit, vacancy: $vacancy, description: $description, distFromCollege: $distFromCollege, isMessAvailable: $isMessAvailable, isMensHostel: $isMensHostel, hostelImages: $hostelImages)';
   }
 
   @override
@@ -439,6 +454,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             (identical(other.rooms, rooms) || other.rooms == rooms) &&
             (identical(other.location, location) ||
                 other.location == location) &&
+            (identical(other.isEdit, isEdit) || other.isEdit == isEdit) &&
             (identical(other.vacancy, vacancy) || other.vacancy == vacancy) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -461,6 +477,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
       rent,
       rooms,
       location,
+      isEdit,
       vacancy,
       description,
       distFromCollege,
@@ -488,6 +505,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -503,6 +521,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
         rent,
         rooms,
         location,
+        isEdit,
         vacancy,
         description,
         distFromCollege,
@@ -522,6 +541,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -537,6 +557,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
         rent,
         rooms,
         location,
+        isEdit,
         vacancy,
         description,
         distFromCollege,
@@ -556,6 +577,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             String rent,
             String rooms,
             Position location,
+            bool? isEdit,
             String vacancy,
             String description,
             String distFromCollege,
@@ -573,6 +595,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
           rent,
           rooms,
           location,
+          isEdit,
           vacancy,
           description,
           distFromCollege,
@@ -626,6 +649,7 @@ abstract class _submitButtonPressed implements CreateHostelEvent {
       required final String rent,
       required final String rooms,
       required final Position location,
+      required final bool? isEdit,
       required final String vacancy,
       required final String description,
       required final String distFromCollege,
@@ -638,7 +662,8 @@ abstract class _submitButtonPressed implements CreateHostelEvent {
   String get phoneNumber;
   String get rent;
   String get rooms;
-  Position get location; // required String personsPerRoom,
+  Position get location;
+  bool? get isEdit; // required String personsPerRoom,
   String get vacancy;
   String get description;
   String get distFromCollege;

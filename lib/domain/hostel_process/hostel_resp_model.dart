@@ -80,6 +80,8 @@ class HostelResponseModel {
         "hostelOwnerUserId": hostelOwnerUserId,
         "rating":rating,
       };
+
+      
 }
 
 class Location {

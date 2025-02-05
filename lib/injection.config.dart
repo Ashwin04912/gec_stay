@@ -16,8 +16,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i966;
 import 'application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart'
     as _i1039;
-import 'application/hostel_process/create_hostel/create_hostel_bloc.dart'
-    as _i129;
+import 'application/hostel_process/dummy_create_hostel/create_hostel_bloc.dart'
+    as _i833;
 import 'application/hostel_process/owner_home/owner_home_bloc.dart' as _i595;
 import 'domain/auth/i_auth_facade.dart' as _i878;
 import 'domain/hostel_process/i_hostel_process_facade.dart' as _i922;
@@ -44,10 +44,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i922.IHostelProcessFacade>(() =>
         _i903.FirebaseHostelProcessFacade(
             fireStore: gh<_i974.FirebaseFirestore>()));
-    gh.factory<_i129.CreateHostelBloc>(
-        () => _i129.CreateHostelBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i595.OwnerHomeBloc>(
         () => _i595.OwnerHomeBloc(gh<_i922.IHostelProcessFacade>()));
+    gh.factory<_i833.CreateHostelBloc>(
+        () => _i833.CreateHostelBloc(gh<_i922.IHostelProcessFacade>()));
     gh.lazySingleton<_i878.IAuthFacade>(
         () => _i1019.FirebaseAuthFacade(gh<_i59.FirebaseAuth>()));
     gh.factory<_i1039.CommonHostelProcessBloc>(

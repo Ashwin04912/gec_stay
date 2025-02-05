@@ -17,6 +17,30 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
   }) = _getAllratingsAndReview;
 
   const factory CommonHostelProcessEvent.deleteButtonPressed({required String hostelId, required String hostelOwnerUserId}) = _deleteButtonPressed;
+
+  const factory CommonHostelProcessEvent.findLocationButtonPressed() =
+      _findLocationButtonPressed;
+
+      const factory CommonHostelProcessEvent.getHostelById({required String hostelId}) = _getHostelById;
+      
+
+  const factory CommonHostelProcessEvent.submitButtonPressed({
+    required String hostelName,
+     String? hostelId,
+    required String ownerName,
+    required String phoneNumber,
+    required String rent,
+    required String rooms,
+    required Position location,
+    required bool isEdit,
+    // required String personsPerRoom,
+    required String vacancy,
+    required String description,
+    required String distFromCollege,
+    required String isMessAvailable,
+required String isMensHostel, 
+    required List<XFile> hostelImages,
+  }) = _submitButtonPressed;
   
   
 }

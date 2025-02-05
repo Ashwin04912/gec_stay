@@ -5,11 +5,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/core/loading_screen.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
-
 import 'package:gecw_lakx/presentation/hostel_details/all_reviews_screen.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HostelDetailsOwnerAppScreen extends StatelessWidget {
   final HostelResponseModel hostelResp;
@@ -183,7 +181,9 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Handle edit details
+                    print(hostelId);
+                    context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getHostelById(hostelId: hostelId));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>LoadingScreen(isEdit:true)));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purpleAccent,

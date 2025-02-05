@@ -1,13 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
-import 'package:gecw_lakx/presentation/owner_home/owner_home_screen.dart';
-import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
+import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({super.key});
+  final bool? isEdit;
+
+  const LoadingScreen({
+    super.key,
+    this.isEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +24,18 @@ class LoadingScreen extends StatelessWidget {
           listener: (context, state) {
             state.successOrFailure.fold(() {}, (either) {
               either.fold((f) {}, (s) {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (ctx) => BottomNavigationBarOwnerWidget(),
-                    ),
-                    (route) => false);
+                if (isEdit == true) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => CreateHostelScreen(
+                        isEdit: true,
+                          hostelData: state.hostelDataById)));
+                } else {
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (ctx) => BottomNavigationBarOwnerWidget(),
+                      ),
+                      (route) => false);
+                }
               });
             });
           },

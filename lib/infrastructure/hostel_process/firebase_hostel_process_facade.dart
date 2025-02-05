@@ -61,38 +61,42 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   }
 
   @override
-  Future<Either<FormFailures, Unit>> saveDataToDb({
-    required String hostelName,
-    required String ownerName,
-    required String phoneNumber,
-    required String rent,
-    required String rooms,
-    required Position location,
-    required String vacancy,
-    required String distFromCollege,
-    required String isMessAvailable,
-    required String isMensHostel,
-    required List<XFile> hostelImages,
-    required String description,
-  }) async {
-    try {
-      print("In API call: $distFromCollege and $isMessAvailable");
+Future<Either<FormFailures, Unit>> saveDataToDb({
+  bool? isEdit,
+  String? hostelIdForEdit,
+  required String hostelName,
+  required String ownerName,
+  required String phoneNumber,
+  required String rent,
+  required String rooms,
+  required Position location,
+  required String vacancy,
+  required String distFromCollege,
+  required String isMessAvailable,
+  required String isMensHostel,
+  required List<XFile> hostelImages,
+  required String description,
+}) async {
+  try {
+  
 
-      // Retrieve user ID from shared preferences
-      final prefs = await SharedPreferences.getInstance();
-      final String? userId = prefs.getString('owner_userid');
+    List<String>? images;
+    print("In API call: $distFromCollege and $isMessAvailable");
 
-      if (userId == null || userId.isEmpty) {
-        debugPrint("User ID is null or empty");
-        return left(const FormFailures.serviceUnavailable());
-      }
+    // Retrieve user ID from shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    final String? userId = prefs.getString('owner_userid');
 
-      // Initialize Firestore
-      final firebaseDb = FirebaseFirestore.instance;
+    if (userId == null || userId.isEmpty) {
+      debugPrint("User ID is null or empty");
+      return left(const FormFailures.serviceUnavailable());
+    }
 
-      // Upload images and get the URLs
-      final imageListResult =
-          await uploadHostelImages(hostelImages: hostelImages);
+    final firebaseDb = FirebaseFirestore.instance;
+
+    // Upload images if new images are provided
+    if (isEdit == false && hostelImages.isNotEmpty) {
+      final imageListResult = await uploadHostelImages(hostelImages: hostelImages);
       late List<String> imageUrls;
 
       imageListResult.fold(
@@ -101,6 +105,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           return left(const FormFailures.serverError());
         },
         (urls) {
+          images = urls;
           imageUrls = urls;
         },
       );
@@ -109,32 +114,47 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         debugPrint("No images uploaded successfully");
         return left(const FormFailures.serverError());
       }
+    }
 
-      final String hostelId = Uuid().v1();
+    final String hostelId = hostelIdForEdit ?? Uuid().v1();
 
-      // Prepare hostel data
-      final hostelData = {
-        'hostelOwnerUserId': userId,
-        'hostel_name': hostelName,
-        'hostelId': hostelId,
-        'owner_name': ownerName,
-        'phone_number': phoneNumber,
-        'description': description,
-        'location': {
-          'latitude': location.latitude,
-          'longitude': location.longitude,
-        },
-        'dist_from_college': distFromCollege,
-        'isMess_available': isMessAvailable,
-        'isMensHostel': isMensHostel,
-        'rent': rent,
-        'rooms': rooms,
-        'vacancy': vacancy,
-        'imageList': imageUrls,
-        'rating': '0'
-      };
+    // Create a map of only non-null fields
+    final Map<String, dynamic> hostelData = {
+      if (hostelName.isNotEmpty) 'hostel_name': hostelName,
+      if (ownerName.isNotEmpty) 'owner_name': ownerName,
+      if (phoneNumber.isNotEmpty) 'phone_number': phoneNumber,
+      if (description.isNotEmpty) 'description': description,
+      if (distFromCollege.isNotEmpty) 'dist_from_college': distFromCollege,
+      if (isMessAvailable.isNotEmpty) 'isMess_available': isMessAvailable,
+      if (isMensHostel.isNotEmpty) 'isMensHostel': isMensHostel,
+      if (rent.isNotEmpty) 'rent': rent,
+      if (rooms.isNotEmpty) 'rooms': rooms,
+      if (vacancy.isNotEmpty) 'vacancy': vacancy,
+      if (images != null) 'imageList': images,
+      'location': {
+        'latitude': location.latitude,
+        'longitude': location.longitude,
+      },
+    };
 
-      // Save hostel data to Firestore
+    // Save or update hostel data
+    if (isEdit == true) {
+      await firebaseDb
+          .collection('my_hostels')
+          .doc(userId)
+          .collection('hostels')
+          .doc(hostelId)
+          .set(hostelData, SetOptions(merge: true));  // 🔥 Update only changed fields
+
+      await firebaseDb
+          .collection('all_hostel_list')
+          .doc(hostelId)
+          .set(hostelData, SetOptions(merge: true));  // 🔥 Update only changed fields
+    } else {
+      hostelData['hostelOwnerUserId'] = userId;
+      hostelData['hostelId'] = hostelId;
+      hostelData['rating'] = '0';
+
       await firebaseDb
           .collection('my_hostels')
           .doc(userId)
@@ -146,17 +166,19 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           .collection('all_hostel_list')
           .doc(hostelId)
           .set(hostelData);
-
-      debugPrint('Document added with ID: $hostelId');
-      return right(unit);
-    } on FirebaseException catch (e) {
-      debugPrint("FirebaseException [${e.code}]: ${e.message}");
-      return left(const FormFailures.serverError());
-    } catch (e) {
-      debugPrint("An unexpected error occurred: $e");
-      return left(const FormFailures.serviceUnavailable());
     }
+
+    debugPrint('Document ${isEdit == true ? "updated" : "added"} with ID: $hostelId');
+    return right(unit);
+  } on FirebaseException catch (e) {
+    debugPrint("FirebaseException [${e.code}]: ${e.message}");
+    return left(const FormFailures.serverError());
+  } catch (e) {
+    debugPrint("An unexpected error occurred: $e");
+    return left(const FormFailures.serviceUnavailable());
   }
+}
+
 
   @override
   Future<Either<FormFailures, List<HostelResponseModel>>>
@@ -424,6 +446,44 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       return right(unit);
     } catch (e) {
       return left(Exception(e));
+    }
+  }
+
+  @override
+  Future<Either<FormFailures, HostelResponseModel>> getHostelById({
+    required String hostelId,
+  }) async {
+    print("api reached $hostelId");
+    try {
+      print(hostelId);
+      final prefs = await SharedPreferences.getInstance();
+      final String? userId = prefs.getString('owner_userid');
+      // Reference to the specific hostel document
+      final DocumentReference<Map<String, dynamic>> hostelDocRef =
+          FirebaseFirestore.instance
+              .collection('my_hostels')
+              .doc(userId)
+              .collection('hostels')
+              .doc(hostelId);
+
+      final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await hostelDocRef.get();
+
+      // Check if the document exists
+      if (!documentSnapshot.exists || documentSnapshot.data() == null) {
+        debugPrint("No hostel data found");
+        return left(const FormFailures.noDataFound());
+      }
+
+      // Convert Firestore data to model
+      final hostel = HostelResponseModel.fromJson(documentSnapshot.data()!);
+      debugPrint("Fetched hostel: ${hostel.toString()}");
+
+      return right(hostel);
+    } catch (e) {
+      // Log error and return server failure
+      debugPrint("Error fetching hostel: $e");
+      return left(const FormFailures.serverError());
     }
   }
 }
