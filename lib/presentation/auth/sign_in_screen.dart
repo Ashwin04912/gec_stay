@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:gecw_lakx/presentation/admin_app/home/admin_home_screen.dart';
 import 'package:gecw_lakx/presentation/auth/sign_up_screen.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_student.dart';
@@ -30,6 +31,12 @@ class SignInScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (ctx) =>
                             const BottomNavigationBarStudentWidget()),
+                    (route) => false);
+              } else if (s == 'admin') {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (ctx) =>
+                            const AdminHomeScreen()),
                     (route) => false);
               } else {
                 Navigator.of(context).pushAndRemoveUntil(
@@ -93,11 +100,13 @@ class SignInScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(18),
                             borderSide: BorderSide.none,
                           ),
-                          prefixIcon: const Icon(Icons.email, color: Colors.white70),
+                          prefixIcon:
+                              const Icon(Icons.email, color: Colors.white70),
                         ),
                         onChanged: (value) => context
                             .read<SignInFormBloc>()
-                            .add(SignInFormEvent.emailAddressChangedEvent(value)),
+                            .add(SignInFormEvent.emailAddressChangedEvent(
+                                value)),
                         validator: (value) {
                           final emailValidation = context
                               .read<SignInFormBloc>()
@@ -129,7 +138,8 @@ class SignInScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(18),
                             borderSide: BorderSide.none,
                           ),
-                          prefixIcon: const Icon(Icons.lock, color: Colors.white70),
+                          prefixIcon:
+                              const Icon(Icons.lock, color: Colors.white70),
                         ),
                         obscureText: true,
                         onChanged: (value) => context
@@ -169,7 +179,8 @@ class SignInScreen extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: const StadiumBorder(),
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
                                 backgroundColor: Colors.purple,
                               ),
                               child: const Text(

@@ -105,7 +105,10 @@ class FirebaseAuthFacade implements IAuthFacade {
           if (role == "Student") {
             debugPrint("Student");
             return right('student');
-          } else {
+          } else if(role == 'admin') {
+            return right('admin');
+            
+          }else{
             debugPrint("Hostel Owner");
             return right('hostel_owner');
           }

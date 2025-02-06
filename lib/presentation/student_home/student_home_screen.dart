@@ -35,6 +35,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   double _minFees = 0;
   double _maxFees = 10000;
   double _selectedRating = 0;
+  double _selectedDistance = 5000; // Default max distance in meters
   bool? _withMess;
   bool? _isMensHostel;
 
@@ -63,6 +64,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
+
+                  // Hostel Fees Filter
                   const Text(
                     "Hostel Fees (₹):",
                     style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -84,6 +87,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     inactiveColor: Colors.white30,
                   ),
                   const SizedBox(height: 20),
+
+                  // Minimum Rating Filter
                   const Text(
                     "Minimum Rating:",
                     style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -103,6 +108,29 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     inactiveColor: Colors.white30,
                   ),
                   const SizedBox(height: 20),
+
+                  // Distance Filter
+                  const Text(
+                    "Maximum Distance (meters):",
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                  Slider(
+                    value: _selectedDistance,
+                    min: 0,
+                    max: 5000,
+                    divisions: 10,
+                    label: "${_selectedDistance.round()} m",
+                    onChanged: (value) {
+                      setModalState(() {
+                        _selectedDistance = value;
+                      });
+                    },
+                    activeColor: Colors.blueAccent,
+                    inactiveColor: Colors.white30,
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Mess Availability Filter
                   const Text(
                     "Mess Availability:",
                     style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -144,6 +172,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
+
+                  // Hostel Type Filter
                   const Text(
                     "Hostel Type:",
                     style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -185,6 +215,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
+
+                  // Apply Filters Button
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -197,6 +229,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         setState(() {
                           hostelResponseModel = allHostels?.where((hostel) {
                             final rent = double.tryParse(hostel.rent) ?? 0;
+                            final distance = double.tryParse(hostel.distFromCollege) ?? 0; // Ensure distance is in meters
                             final messCondition = _withMess == null
                                 ? true
                                 : hostel.isMessAvailable.toLowerCase() ==
@@ -205,13 +238,16 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                                 ? true
                                 : hostel.isMensHostel.toLowerCase() ==
                                     (_isMensHostel! ? "yes" : "no");
-
-                                    final ratingCondition = double.parse(hostel.rating) >= _selectedRating ;
+                            final ratingCondition =
+                                double.parse(hostel.rating) >= _selectedRating;
+                            final distanceCondition =
+                                distance <= _selectedDistance;
 
                             return rent >= _minFees &&
                                 rent <= _maxFees &&
                                 messCondition &&
-                                ratingCondition&&
+                                ratingCondition &&
+                                distanceCondition &&
                                 hostelTypeCondition;
                           }).toList();
                         });
@@ -232,6 +268,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     },
   );
 }
+
 
   Widget _buildNoDataFoundWidget() {
     return Center(
