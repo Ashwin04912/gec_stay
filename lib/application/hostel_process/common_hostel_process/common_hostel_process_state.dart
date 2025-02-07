@@ -8,10 +8,10 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
     required Option<Either<FormFailures, List<Map<String, String>>>>
         getAllRatingsSuccessOrFailure,
     required List<Map<String, String>> respList,
-    required Position location,
+    required LatLng location,
     required bool showErrorMessages,
     required Option<Either<FormFailures, Unit>> submitFailureOrSuccessOption,
-    required Option<Either<LocationFetchFailures, Position>> locationOption,
+    required Option<Either<LocationFetchFailures, LatLng>> locationOption,
     required HostelResponseModel hostelDataById,
     // required bool isSubmitting,
     required bool locationFetched,
@@ -44,17 +44,6 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
         locationOption: none(),
         locationFetched: false,
         showErrorMessages: false,
-        location: Position(
-          latitude: 0.0,
-          longitude: 0.0,
-          timestamp: DateTime.now(),
-          accuracy: 0.0,
-          altitude: 0.0,
-          altitudeAccuracy: 0.0,
-          heading: 0.0,
-          headingAccuracy: 0.0,
-          speed: 0.0,
-          speedAccuracy: 0.0,
-        ),
+        location:LatLng(0, 0)
       );
 }

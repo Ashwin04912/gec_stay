@@ -6,6 +6,7 @@ import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -20,45 +21,53 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     required this.fireStore,
   });
 
-  @override
-  Future<Either<LocationFetchFailures, Position>> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+ @override
+Future<Either<LocationFetchFailures, LatLng>> getCurrentLocation() async {
+  bool serviceEnabled;
+  LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Geolocator.openLocationSettings();
-      debugPrint('Location services are disabled.');
-      return left(LocationFetchFailures.locationServiceDisabled());
-    }
+  // Check if location services are enabled
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    Geolocator.openLocationSettings();
+    debugPrint('Location services are disabled.');
+    return left(LocationFetchFailures.locationServiceDisabled());
+  }
 
-    permission = await Geolocator.checkPermission();
+  // Check for location permission
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        debugPrint("location access denied");
-        left(LocationFetchFailures.LocationPermissionDenied());
-      }
-    }
-
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-      return right(position);
-    } catch (e) {
-      if (e is LocationServiceDisabledException) {
-        debugPrint("Location services are disabled.");
-        return left(LocationFetchFailures.locationServiceDisabled());
-      } else if (e is PermissionDeniedException) {
-        debugPrint("Location permissions are denied.");
-        return left(LocationFetchFailures.LocationPermissionDenied());
-      } else {
-        debugPrint("Failed to get location: $e");
-      }
-      return left(LocationFetchFailures.networkError());
+      debugPrint("Location access denied");
+      return left(LocationFetchFailures.LocationPermissionDenied());
     }
   }
+
+  try {
+    // Get the current position
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    // Convert the Position to LatLng
+    LatLng latLng = LatLng(position.latitude, position.longitude);
+
+    return right(latLng);
+  } catch (e) {
+    if (e is LocationServiceDisabledException) {
+      debugPrint("Location services are disabled.");
+      return left(LocationFetchFailures.locationServiceDisabled());
+    } else if (e is PermissionDeniedException) {
+      debugPrint("Location permissions are denied.");
+      return left(LocationFetchFailures.LocationPermissionDenied());
+    } else {
+      debugPrint("Failed to get location: $e");
+    }
+    return left(LocationFetchFailures.networkError());
+  }
+}
+
 
   @override
 Future<Either<FormFailures, Unit>> saveDataToDb({
@@ -69,7 +78,7 @@ Future<Either<FormFailures, Unit>> saveDataToDb({
   required String phoneNumber,
   required String rent,
   required String rooms,
-  required Position location,
+  required LatLng location,
   required String vacancy,
   required String distFromCollege,
   required String isMessAvailable,
@@ -252,40 +261,64 @@ Future<Either<FormFailures, Unit>> saveDataToDb({
     }
   }
 
-  @override
-  Future<Either<FormFailures, Unit>> rateTheHostel({
-    required String hostelId,
-    required String hostelOwnerUserId,
-    required String star,
-    required String comment,
-    required String userId,
-    required String userName,
-  }) async {
-    try {
-      // Create a new rating object
+@override
+Future<Either<FormFailures, Unit>> rateTheHostel({
+  required String hostelId,
+  required String hostelOwnerUserId,
+  required String star,
+  required String comment,
+  required String userId,
+  required String userName,
+}) async {
+  try {
+    final hostelRatingRef = fireStore
+        .collection('hostel_rating')
+        .doc(hostelId)
+        .collection('ratings');
+
+    // Check if user already rated this hostel
+    final existingReviewQuery = await hostelRatingRef
+        .where('userId', isEqualTo: userId)
+        .get();
+
+    if (existingReviewQuery.docs.isNotEmpty) {
+      // Get the first existing review document
+      final existingReviewDoc = existingReviewQuery.docs.first;
+
+      // Update the existing review
+      await hostelRatingRef.doc(existingReviewDoc.id).update({
+        'stars': star,
+        'comment': comment,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      debugPrint("Review updated successfully.");
+    } else {
+      // Create a new rating object if no previous review exists
       final rating = {
         'userId': userId,
         'userName': userName,
         'stars': star,
         'comment': comment,
+        'timestamp': FieldValue.serverTimestamp(),
       };
 
-      await fireStore
-          .collection('hostel_rating')
-          .doc(hostelId)
-          .collection('ratings')
-          .add(rating);
-
-      debugPrint("rating added successfully");
-      ratingAvgCalculation(
-          hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
-
-      return right(unit);
-    } catch (e) {
-      debugPrint('Error rating hostel: $e');
-      return left(FormFailures.serverError());
+      await hostelRatingRef.add(rating);
+      debugPrint("New rating added successfully.");
     }
+
+    // Recalculate the average rating
+    ratingAvgCalculation(
+        hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
+
+    return right(unit);
+  } catch (e) {
+    debugPrint('Error rating hostel: $e');
+    return left(FormFailures.serverError());
   }
+}
+
+
 
   @override
   Future<Either<FormFailures, List<Map<String, String>>>>

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
 import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
 import '../student_profile/student_profile_screen.dart';
 
@@ -23,7 +25,9 @@ class BottomNavigationBarStudentWidgetState
     Scaffold(
       body: Center(
           child:
-              Text("Notifications Screen")), // Notifications screen placeholder
+              Text("probability checkout Screen",style: TextStyle(
+                color: Colors.white
+              ),)), // Notifications screen placeholder
     ),
     StudentProfileScreen(),
   ];
@@ -71,16 +75,22 @@ class BottomNavigationBarStudentWidgetState
                 //   onPressed: () => _onNavBarItemTapped(1),
                 // ),
                 NavBarIcon(
-                  text: "Notifications",
-                  icon: Icons.notifications,
+                  text: "Probability checker",
+                  icon: Icons.sync_problem_sharp,
                   isSelected: _selectedIndex == 1,
                   onPressed: () => _onNavBarItemTapped(1),
                 ),
                 NavBarIcon(
-                  text: "Profile",
-                  icon: Icons.person,
+                  text: "Log Out",
+                  icon: Icons.logout,
                   isSelected: _selectedIndex == 2,
-                  onPressed: () => _onNavBarItemTapped(2),
+                  onPressed: () {
+   FirebaseAuth.instance.signOut();
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (ctx) => SignInScreen()),
+                              (route) => false);
+                  },
                 ),
               ],
             ),

@@ -21,6 +21,7 @@ mixin _$FormFailures {
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
     required TResult Function() noDataFound,
+    required TResult Function() alreadyReviewed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$FormFailures {
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
     TResult? Function()? noDataFound,
+    TResult? Function()? alreadyReviewed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$FormFailures {
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
     TResult Function()? noDataFound,
+    TResult Function()? alreadyReviewed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$FormFailures {
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
     required TResult Function(_noDataFound value) noDataFound,
+    required TResult Function(_alreadyReviewed value) alreadyReviewed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$FormFailures {
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
     TResult? Function(_noDataFound value)? noDataFound,
+    TResult? Function(_alreadyReviewed value)? alreadyReviewed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$FormFailures {
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
     TResult Function(_noDataFound value)? noDataFound,
+    TResult Function(_alreadyReviewed value)? alreadyReviewed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,6 +133,7 @@ class _$ServerErrorImpl implements _ServerError {
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
     required TResult Function() noDataFound,
+    required TResult Function() alreadyReviewed,
   }) {
     return serverError();
   }
@@ -137,6 +144,7 @@ class _$ServerErrorImpl implements _ServerError {
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
     TResult? Function()? noDataFound,
+    TResult? Function()? alreadyReviewed,
   }) {
     return serverError?.call();
   }
@@ -147,6 +155,7 @@ class _$ServerErrorImpl implements _ServerError {
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
     TResult Function()? noDataFound,
+    TResult Function()? alreadyReviewed,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -161,6 +170,7 @@ class _$ServerErrorImpl implements _ServerError {
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
     required TResult Function(_noDataFound value) noDataFound,
+    required TResult Function(_alreadyReviewed value) alreadyReviewed,
   }) {
     return serverError(this);
   }
@@ -171,6 +181,7 @@ class _$ServerErrorImpl implements _ServerError {
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
     TResult? Function(_noDataFound value)? noDataFound,
+    TResult? Function(_alreadyReviewed value)? alreadyReviewed,
   }) {
     return serverError?.call(this);
   }
@@ -181,6 +192,7 @@ class _$ServerErrorImpl implements _ServerError {
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
     TResult Function(_noDataFound value)? noDataFound,
+    TResult Function(_alreadyReviewed value)? alreadyReviewed,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -238,6 +250,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
     required TResult Function() noDataFound,
+    required TResult Function() alreadyReviewed,
   }) {
     return serviceUnavailable();
   }
@@ -248,6 +261,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
     TResult? Function()? noDataFound,
+    TResult? Function()? alreadyReviewed,
   }) {
     return serviceUnavailable?.call();
   }
@@ -258,6 +272,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
     TResult Function()? noDataFound,
+    TResult Function()? alreadyReviewed,
     required TResult orElse(),
   }) {
     if (serviceUnavailable != null) {
@@ -272,6 +287,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
     required TResult Function(_noDataFound value) noDataFound,
+    required TResult Function(_alreadyReviewed value) alreadyReviewed,
   }) {
     return serviceUnavailable(this);
   }
@@ -282,6 +298,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
     TResult? Function(_noDataFound value)? noDataFound,
+    TResult? Function(_alreadyReviewed value)? alreadyReviewed,
   }) {
     return serviceUnavailable?.call(this);
   }
@@ -292,6 +309,7 @@ class _$serviceUnavailableImpl implements _serviceUnavailable {
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
     TResult Function(_noDataFound value)? noDataFound,
+    TResult Function(_alreadyReviewed value)? alreadyReviewed,
     required TResult orElse(),
   }) {
     if (serviceUnavailable != null) {
@@ -349,6 +367,7 @@ class _$noDataFoundImpl implements _noDataFound {
     required TResult Function() serverError,
     required TResult Function() serviceUnavailable,
     required TResult Function() noDataFound,
+    required TResult Function() alreadyReviewed,
   }) {
     return noDataFound();
   }
@@ -359,6 +378,7 @@ class _$noDataFoundImpl implements _noDataFound {
     TResult? Function()? serverError,
     TResult? Function()? serviceUnavailable,
     TResult? Function()? noDataFound,
+    TResult? Function()? alreadyReviewed,
   }) {
     return noDataFound?.call();
   }
@@ -369,6 +389,7 @@ class _$noDataFoundImpl implements _noDataFound {
     TResult Function()? serverError,
     TResult Function()? serviceUnavailable,
     TResult Function()? noDataFound,
+    TResult Function()? alreadyReviewed,
     required TResult orElse(),
   }) {
     if (noDataFound != null) {
@@ -383,6 +404,7 @@ class _$noDataFoundImpl implements _noDataFound {
     required TResult Function(_ServerError value) serverError,
     required TResult Function(_serviceUnavailable value) serviceUnavailable,
     required TResult Function(_noDataFound value) noDataFound,
+    required TResult Function(_alreadyReviewed value) alreadyReviewed,
   }) {
     return noDataFound(this);
   }
@@ -393,6 +415,7 @@ class _$noDataFoundImpl implements _noDataFound {
     TResult? Function(_ServerError value)? serverError,
     TResult? Function(_serviceUnavailable value)? serviceUnavailable,
     TResult? Function(_noDataFound value)? noDataFound,
+    TResult? Function(_alreadyReviewed value)? alreadyReviewed,
   }) {
     return noDataFound?.call(this);
   }
@@ -403,6 +426,7 @@ class _$noDataFoundImpl implements _noDataFound {
     TResult Function(_ServerError value)? serverError,
     TResult Function(_serviceUnavailable value)? serviceUnavailable,
     TResult Function(_noDataFound value)? noDataFound,
+    TResult Function(_alreadyReviewed value)? alreadyReviewed,
     required TResult orElse(),
   }) {
     if (noDataFound != null) {
@@ -414,4 +438,121 @@ class _$noDataFoundImpl implements _noDataFound {
 
 abstract class _noDataFound implements FormFailures {
   const factory _noDataFound() = _$noDataFoundImpl;
+}
+
+/// @nodoc
+abstract class _$$alreadyReviewedImplCopyWith<$Res> {
+  factory _$$alreadyReviewedImplCopyWith(_$alreadyReviewedImpl value,
+          $Res Function(_$alreadyReviewedImpl) then) =
+      __$$alreadyReviewedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$alreadyReviewedImplCopyWithImpl<$Res>
+    extends _$FormFailuresCopyWithImpl<$Res, _$alreadyReviewedImpl>
+    implements _$$alreadyReviewedImplCopyWith<$Res> {
+  __$$alreadyReviewedImplCopyWithImpl(
+      _$alreadyReviewedImpl _value, $Res Function(_$alreadyReviewedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of FormFailures
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$alreadyReviewedImpl implements _alreadyReviewed {
+  const _$alreadyReviewedImpl();
+
+  @override
+  String toString() {
+    return 'FormFailures.alreadyReviewed()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$alreadyReviewedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() serverError,
+    required TResult Function() serviceUnavailable,
+    required TResult Function() noDataFound,
+    required TResult Function() alreadyReviewed,
+  }) {
+    return alreadyReviewed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? serverError,
+    TResult? Function()? serviceUnavailable,
+    TResult? Function()? noDataFound,
+    TResult? Function()? alreadyReviewed,
+  }) {
+    return alreadyReviewed?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? serverError,
+    TResult Function()? serviceUnavailable,
+    TResult Function()? noDataFound,
+    TResult Function()? alreadyReviewed,
+    required TResult orElse(),
+  }) {
+    if (alreadyReviewed != null) {
+      return alreadyReviewed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ServerError value) serverError,
+    required TResult Function(_serviceUnavailable value) serviceUnavailable,
+    required TResult Function(_noDataFound value) noDataFound,
+    required TResult Function(_alreadyReviewed value) alreadyReviewed,
+  }) {
+    return alreadyReviewed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ServerError value)? serverError,
+    TResult? Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult? Function(_noDataFound value)? noDataFound,
+    TResult? Function(_alreadyReviewed value)? alreadyReviewed,
+  }) {
+    return alreadyReviewed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ServerError value)? serverError,
+    TResult Function(_serviceUnavailable value)? serviceUnavailable,
+    TResult Function(_noDataFound value)? noDataFound,
+    TResult Function(_alreadyReviewed value)? alreadyReviewed,
+    required TResult orElse(),
+  }) {
+    if (alreadyReviewed != null) {
+      return alreadyReviewed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _alreadyReviewed implements FormFailures {
+  const factory _alreadyReviewed() = _$alreadyReviewedImpl;
 }

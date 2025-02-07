@@ -178,93 +178,100 @@ class HostelDetailsStudentAppScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.grey[900],
-        title: Text(
-          widget.hostelResp.hostelName,
-          style: const TextStyle(color: Colors.white),
-        ),
-        actions: [
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.call),
-                onPressed: () async {
-                  final phoneNumber = widget
-                      .hostelResp.phoneNumber; // Use your desired phone number
-                  final url = 'tel:$phoneNumber';
-                  if (await canLaunch(url)) {
-                    await launch(url);
-                  } else {
-                    // Handle the error if the URL can't be launched
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Could not launch the phone dialer.'),
-                      ),
-                    );
-                  }
-                },
-                color: Colors.white,
-              ),
-              IconButton(
-                icon: const Icon(Icons.chat),
-                onPressed: () {
-                  // Chat button functionality
-                  _handlePressed(
-                      types.User(id: widget.hostelResp.hostelOwnerUserId),
-                      context);
-                },
-                color: Colors.white,
-              ),
-            ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<CommonHostelProcessBloc>().add(
+            CommonHostelProcessEvent.getAllratingsAndReview(
+                hostelId: widget.hostelResp.hostelId));
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.grey[900],
+          title: Text(
+            widget.hostelResp.hostelName,
+            style: const TextStyle(color: Colors.white),
           ),
-        ],
-      ),
-      body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
-        listener: (context, state) {
-          state.getAllRatingsSuccessOrFailure.fold(() {}, (either) {
-            either.fold((f) {}, (s) {
-              setState(() {
-                reviews = s;
+          actions: [
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.call),
+                  onPressed: () async {
+                    final phoneNumber = widget.hostelResp
+                        .phoneNumber; // Use your desired phone number
+                    final url = 'tel:$phoneNumber';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      // Handle the error if the URL can't be launched
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Could not launch the phone dialer.'),
+                        ),
+                      );
+                    }
+                  },
+                  color: Colors.white,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.chat),
+                  onPressed: () {
+                    // Chat button functionality
+                    _handlePressed(
+                        types.User(id: widget.hostelResp.hostelOwnerUserId),
+                        context);
+                  },
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ],
+        ),
+        body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
+          listener: (context, state) {
+            state.getAllRatingsSuccessOrFailure.fold(() {}, (either) {
+              either.fold((f) {}, (s) {
+                setState(() {
+                  reviews = s;
+                });
               });
             });
-          });
-        },
-        builder: (context, state) {
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 75),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Horizontal Photo Scroller
-                      _buildPhotoScroller(),
-                      const SizedBox(height: 20),
-                      // Hostel Details Section
-                      _buildDetailsSection(),
-                      const SizedBox(height: 25),
+          },
+          builder: (context, state) {
+            return Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 75),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Horizontal Photo Scroller
+                        _buildPhotoScroller(),
+                        const SizedBox(height: 20),
+                        // Hostel Details Section
+                        _buildDetailsSection(),
+                        const SizedBox(height: 25),
 
-                      reviews.isEmpty
-                          ? const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text("No Reviews"),
-                              ),
-                            )
-                          : ReviewList(reviews: reviews),
-                    ],
+                        reviews.isEmpty
+                            ? const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("No Reviews"),
+                                ),
+                              )
+                            : ReviewList(reviews: reviews),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              _buildBookNowButton(),
-            ],
-          );
-        },
+                _buildBookNowButton(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -315,12 +322,18 @@ class HostelDetailsStudentAppScreenState
         children: [
           buildDetail("Owner Name", widget.hostelResp.ownerName),
           buildDetail("Rent", "₹${widget.hostelResp.rent}/month"),
+          buildDetail("Rooms Available", widget.hostelResp.rooms),
+          buildDetail("Vacancy", widget.hostelResp.vacancy),
+          buildDetail("Monthly Rent", "₹${widget.hostelResp.rent} per person"),
+          buildDetail("Mess Availability",
+              " ${widget.hostelResp.isMessAvailable.toLowerCase() == "yes" ? "Available" : "Not Available"}"),
           buildDetail(
-            "Mess Availability",
-            widget.hostelResp.isMessAvailable.toLowerCase() == "yes"
-                ? "Mess Available"
-                : "Mess Not Available",
-          ),
+              "Hostel Type",
+              widget.hostelResp.isMensHostel.toLowerCase() == "yes"
+                  ? "Men's Hostel"
+                  : "Women's Hostel"),
+          buildDetail("Description", widget.hostelResp.description),
+          buildDetail("Distance", "${widget.hostelResp.distFromCollege} m"),
           const SizedBox(height: 20),
           const SizedBox(
             height: 15,

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/hostel_process/widget/select_location_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
+import 'package:latlong2/latlong.dart';
 
 class CreateHostelScreen extends StatefulWidget {
   final bool? isEdit;
@@ -32,6 +34,8 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
   final TextEditingController messAvailableController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController distanceController = TextEditingController();
+
+  LatLng? _selectedLocation;
 
   @override
   void initState() {
@@ -142,24 +146,59 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          onPressed: () => context
-                              .read<CommonHostelProcessBloc>()
-                              .add(CommonHostelProcessEvent
-                                  .findLocationButtonPressed()),
+                          onPressed: () async {
+                            context.read<CommonHostelProcessBloc>().add(
+                                CommonHostelProcessEvent
+                                    .findLocationButtonPressed());
+                            setState(() {
+                              _selectedLocation = state.location;
+                            });
+                          },
                           child: Text(
                             'Get Location',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        if (state.locationFetched)
-                          Text(
-                            'Location Fetched!',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.teal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 20),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: () async {
+                                final LatLng? pickedLocation =
+                                    await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SelectLocationScreen()),
+                                );
+                                if (pickedLocation != null) {
+                                  setState(() {
+                                    _selectedLocation = pickedLocation;
+                                    locationController.text =
+                                        "${pickedLocation.latitude}, ${pickedLocation.longitude}";
+                                  });
+                                }
+                              },
+                              child: Text('Choose Location',
+                                  style: TextStyle(color: Colors.white)),
                             ),
-                          ),
+                            if (_selectedLocation != null)
+                              Text(
+                                'Location Selected!',
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -200,14 +239,24 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                           )
                         : ElevatedButton(
                             onPressed: () async {
-                              // print(messAvailableController.text);
-                              // print(distanceController.text);
+                              // Check if location is selected before proceeding
+                              if (_selectedLocation == null) {
+                                // Show a message or Snackbar prompting the user to select a location
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('Please select a location')),
+                                );
+                                return; // Prevent form submission
+                              }
+
                               if (widget.isEdit == true) {
-                                print("true is working in ui${state.hostelDataById.hostelId}");
+                                print(
+                                    "true is working in ui${state.hostelDataById.hostelId}");
                                 context.read<CommonHostelProcessBloc>().add(
                                       CommonHostelProcessEvent
                                           .submitButtonPressed(
-                                      hostelId: state.hostelDataById.hostelId,
+                                        hostelId: state.hostelDataById.hostelId,
                                         hostelName: hostelNameController.text,
                                         ownerName: ownerNameController.text,
                                         phoneNumber: phoneNumberController.text,
@@ -215,7 +264,8 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                         rooms: roomsController.text,
                                         vacancy: vacancyController.text,
                                         description: descriptionController.text,
-                                        location: state.location,
+                                        location: _selectedLocation ??
+                                            LatLng(11.83399, 75.97021),
                                         distFromCollege:
                                             distanceController.text,
                                         isMessAvailable:
@@ -227,15 +277,15 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                       ),
                                     );
                               } else {
-                                  print("false is working");
-                                if (_formKey.currentState!.validate()) {
+                                print("false is working");
+                                if (_formKey.currentState!.validate() &&
+                                    _selectedLocation != null) {
                                   if (_imageFiles == null) {
                                     print('add_images');
                                   } else {
                                     context.read<CommonHostelProcessBloc>().add(
                                           CommonHostelProcessEvent
                                               .submitButtonPressed(
-                                                // hostelId: '',
                                             hostelName:
                                                 hostelNameController.text,
                                             ownerName: ownerNameController.text,
@@ -246,7 +296,8 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                             vacancy: vacancyController.text,
                                             description:
                                                 descriptionController.text,
-                                            location: state.location,
+                                            location: _selectedLocation ??
+                                                LatLng(11.83399, 75.97021),
                                             distFromCollege:
                                                 distanceController.text,
                                             isMessAvailable:
@@ -254,12 +305,10 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                             hostelImages: _imageFiles!,
                                             isMensHostel:
                                                 _selectedHostelType.toString(),
-                                            isEdit:false,
+                                            isEdit: false,
                                           ),
                                         );
                                   }
-
-                                  // Dispatching the event to the Bloc
                                 }
                               }
                             },
@@ -277,6 +326,15 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                               ),
                             ),
                           ),
+                    // Show a message if location is not selected
+                    if (_selectedLocation == null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Please select a location',
+                          style: TextStyle(color: Colors.red, fontSize: 14),
+                        ),
+                      ),
                   ],
                 ),
               ),

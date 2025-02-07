@@ -38,7 +38,7 @@ mixin _$CommonHostelProcessEvent {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -66,7 +66,7 @@ mixin _$CommonHostelProcessEvent {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -94,7 +94,7 @@ mixin _$CommonHostelProcessEvent {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -316,7 +316,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -348,7 +348,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -380,7 +380,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -565,7 +565,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -596,7 +596,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -627,7 +627,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -809,7 +809,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -840,7 +840,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -871,7 +871,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1019,7 +1019,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1050,7 +1050,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1081,7 +1081,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1242,7 +1242,7 @@ class _$getHostelByIdImpl implements _getHostelById {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1273,7 +1273,7 @@ class _$getHostelByIdImpl implements _getHostelById {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1304,7 +1304,7 @@ class _$getHostelByIdImpl implements _getHostelById {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1398,7 +1398,7 @@ abstract class _$$submitButtonPressedImplCopyWith<$Res> {
       String phoneNumber,
       String rent,
       String rooms,
-      Position location,
+      LatLng location,
       bool isEdit,
       String vacancy,
       String description,
@@ -1465,7 +1465,7 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
       location: null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as Position,
+              as LatLng,
       isEdit: null == isEdit
           ? _value.isEdit
           : isEdit // ignore: cast_nullable_to_non_nullable
@@ -1531,7 +1531,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
   @override
   final String rooms;
   @override
-  final Position location;
+  final LatLng location;
   @override
   final bool isEdit;
 // required String personsPerRoom,
@@ -1639,7 +1639,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1684,7 +1684,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1729,7 +1729,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             String phoneNumber,
             String rent,
             String rooms,
-            Position location,
+            LatLng location,
             bool isEdit,
             String vacancy,
             String description,
@@ -1819,7 +1819,7 @@ abstract class _submitButtonPressed implements CommonHostelProcessEvent {
       required final String phoneNumber,
       required final String rent,
       required final String rooms,
-      required final Position location,
+      required final LatLng location,
       required final bool isEdit,
       required final String vacancy,
       required final String description,
@@ -1834,7 +1834,7 @@ abstract class _submitButtonPressed implements CommonHostelProcessEvent {
   String get phoneNumber;
   String get rent;
   String get rooms;
-  Position get location;
+  LatLng get location;
   bool get isEdit; // required String personsPerRoom,
   String get vacancy;
   String get description;
@@ -1858,11 +1858,11 @@ mixin _$CommonHostelProcessState {
   Option<Either<FormFailures, List<Map<String, String>>>>
       get getAllRatingsSuccessOrFailure => throw _privateConstructorUsedError;
   List<Map<String, String>> get respList => throw _privateConstructorUsedError;
-  Position get location => throw _privateConstructorUsedError;
+  LatLng get location => throw _privateConstructorUsedError;
   bool get showErrorMessages => throw _privateConstructorUsedError;
   Option<Either<FormFailures, Unit>> get submitFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
-  Option<Either<LocationFetchFailures, Position>> get locationOption =>
+  Option<Either<LocationFetchFailures, LatLng>> get locationOption =>
       throw _privateConstructorUsedError;
   HostelResponseModel get hostelDataById =>
       throw _privateConstructorUsedError; // required bool isSubmitting,
@@ -1887,10 +1887,10 @@ abstract class $CommonHostelProcessStateCopyWith<$Res> {
       Option<Either<FormFailures, List<Map<String, String>>>>
           getAllRatingsSuccessOrFailure,
       List<Map<String, String>> respList,
-      Position location,
+      LatLng location,
       bool showErrorMessages,
       Option<Either<FormFailures, Unit>> submitFailureOrSuccessOption,
-      Option<Either<LocationFetchFailures, Position>> locationOption,
+      Option<Either<LocationFetchFailures, LatLng>> locationOption,
       HostelResponseModel hostelDataById,
       bool locationFetched});
 }
@@ -1942,7 +1942,7 @@ class _$CommonHostelProcessStateCopyWithImpl<$Res,
       location: null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as Position,
+              as LatLng,
       showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
@@ -1954,7 +1954,7 @@ class _$CommonHostelProcessStateCopyWithImpl<$Res,
       locationOption: null == locationOption
           ? _value.locationOption
           : locationOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<LocationFetchFailures, Position>>,
+              as Option<Either<LocationFetchFailures, LatLng>>,
       hostelDataById: null == hostelDataById
           ? _value.hostelDataById
           : hostelDataById // ignore: cast_nullable_to_non_nullable
@@ -1982,10 +1982,10 @@ abstract class _$$CommonHostelProcessStateImplCopyWith<$Res>
       Option<Either<FormFailures, List<Map<String, String>>>>
           getAllRatingsSuccessOrFailure,
       List<Map<String, String>> respList,
-      Position location,
+      LatLng location,
       bool showErrorMessages,
       Option<Either<FormFailures, Unit>> submitFailureOrSuccessOption,
-      Option<Either<LocationFetchFailures, Position>> locationOption,
+      Option<Either<LocationFetchFailures, LatLng>> locationOption,
       HostelResponseModel hostelDataById,
       bool locationFetched});
 }
@@ -2036,7 +2036,7 @@ class __$$CommonHostelProcessStateImplCopyWithImpl<$Res>
       location: null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as Position,
+              as LatLng,
       showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
@@ -2048,7 +2048,7 @@ class __$$CommonHostelProcessStateImplCopyWithImpl<$Res>
       locationOption: null == locationOption
           ? _value.locationOption
           : locationOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<LocationFetchFailures, Position>>,
+              as Option<Either<LocationFetchFailures, LatLng>>,
       hostelDataById: null == hostelDataById
           ? _value.hostelDataById
           : hostelDataById // ignore: cast_nullable_to_non_nullable
@@ -2093,13 +2093,13 @@ class _$CommonHostelProcessStateImpl implements _CommonHostelProcessState {
   }
 
   @override
-  final Position location;
+  final LatLng location;
   @override
   final bool showErrorMessages;
   @override
   final Option<Either<FormFailures, Unit>> submitFailureOrSuccessOption;
   @override
-  final Option<Either<LocationFetchFailures, Position>> locationOption;
+  final Option<Either<LocationFetchFailures, LatLng>> locationOption;
   @override
   final HostelResponseModel hostelDataById;
 // required bool isSubmitting,
@@ -2172,11 +2172,11 @@ abstract class _CommonHostelProcessState implements CommonHostelProcessState {
       required final Option<Either<FormFailures, List<Map<String, String>>>>
           getAllRatingsSuccessOrFailure,
       required final List<Map<String, String>> respList,
-      required final Position location,
+      required final LatLng location,
       required final bool showErrorMessages,
       required final Option<Either<FormFailures, Unit>>
           submitFailureOrSuccessOption,
-      required final Option<Either<LocationFetchFailures, Position>>
+      required final Option<Either<LocationFetchFailures, LatLng>>
           locationOption,
       required final HostelResponseModel hostelDataById,
       required final bool locationFetched}) = _$CommonHostelProcessStateImpl;
@@ -2191,13 +2191,13 @@ abstract class _CommonHostelProcessState implements CommonHostelProcessState {
   @override
   List<Map<String, String>> get respList;
   @override
-  Position get location;
+  LatLng get location;
   @override
   bool get showErrorMessages;
   @override
   Option<Either<FormFailures, Unit>> get submitFailureOrSuccessOption;
   @override
-  Option<Either<LocationFetchFailures, Position>> get locationOption;
+  Option<Either<LocationFetchFailures, LatLng>> get locationOption;
   @override
   HostelResponseModel get hostelDataById; // required bool isSubmitting,
   @override

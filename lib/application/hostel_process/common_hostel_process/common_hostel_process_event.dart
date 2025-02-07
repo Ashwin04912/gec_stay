@@ -31,7 +31,7 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
     required String phoneNumber,
     required String rent,
     required String rooms,
-    required Position location,
+    required LatLng location,
     required bool isEdit,
     // required String personsPerRoom,
     required String vacancy,

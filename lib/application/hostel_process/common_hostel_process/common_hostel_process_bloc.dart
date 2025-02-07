@@ -7,6 +7,7 @@ import 'package:gecw_lakx/domain/hostel_process/i_hostel_process_facade.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../domain/core/location_fetch_failures.dart';
 

@@ -5,11 +5,12 @@ import 'package:gecw_lakx/domain/core/formfailures.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../core/location_fetch_failures.dart';
 
 abstract class IHostelProcessFacade {
-  Future<Either<LocationFetchFailures, Position>> getCurrentLocation();
+  Future<Either<LocationFetchFailures, LatLng>> getCurrentLocation();
   Future<Either<FormFailures, Unit>> saveDataToDb(
       {required bool isEdit,
       String? hostelIdForEdit,
@@ -21,7 +22,7 @@ abstract class IHostelProcessFacade {
       required String isMessAvailable,
       required String isMensHostel,
       required String rooms,
-      required Position location,
+      required LatLng location,
       required String vacancy,
       required String description,
       required List<XFile> hostelImages});

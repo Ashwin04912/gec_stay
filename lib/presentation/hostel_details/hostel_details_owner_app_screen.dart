@@ -80,7 +80,7 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
+        
             // Hostel Details
             const Text(
               "Hostel Details",
@@ -163,18 +163,39 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
                 ),
               ],
             ),
-
+        
             const SizedBox(height: 20),
             Text(
               "Rooms Available: ${hostelResp.rooms}",
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
             Text(
-              "Facilities: Wi-Fi, Gym, Laundry, Parking",
+              "Vacancy: ${hostelResp.vacancy}",
+              style: const TextStyle(color: Colors.white70, fontSize: 16),
+            ),
+            Text(
+              "Monthly Rent: \$${hostelResp.rent} per person",
+              style: TextStyle(color: Colors.white70, fontSize: 16),
+            ),
+            Text(
+              "Mess Availability: ${hostelResp.isMessAvailable}",
+              style: TextStyle(color: Colors.white70, fontSize: 16),
+            ),
+            Text(
+              "Hostel Type: ${hostelResp.isMensHostel.toLowerCase() == "yes" ? "Men's Hostel" : "Women's Hostel"}",
+              style: const TextStyle(color: Colors.white70, fontSize: 16),
+            ),
+        
+            Text(
+              "Description: ${hostelResp.description}",
+              style: const TextStyle(color: Colors.white70, fontSize: 16),
+            ),
+            Text(
+              "Distance: ${hostelResp.distFromCollege} m",
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
             const SizedBox(height: 20),
-
+        
             // Action Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,8 +203,11 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     print(hostelId);
-                    context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getHostelById(hostelId: hostelId));
-                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>LoadingScreen(isEdit:true)));
+                    context.read<CommonHostelProcessBloc>().add(
+                        CommonHostelProcessEvent.getHostelById(
+                            hostelId: hostelId));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => LoadingScreen(isEdit: true)));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purpleAccent,
@@ -218,7 +242,7 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-
+        
             // Delete Button
             ElevatedButton(
               onPressed: () {
@@ -238,24 +262,6 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-            const Text(
-              "Additional Information",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Nearby Places: Grocery Store, Park, Shopping Mall",
-              style: TextStyle(color: Colors.white70, fontSize: 16),
-            ),
-            Text(
-              "Monthly Rent: \$${hostelResp.rent} per room",
-              style: TextStyle(color: Colors.white70, fontSize: 16),
-            ),
           ],
         ),
       ),
@@ -281,11 +287,10 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               onPressed: () async {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (ctx) => LoadingScreen()));
-                 context.read<CommonHostelProcessBloc>().add(
+                context.read<CommonHostelProcessBloc>().add(
                     CommonHostelProcessEvent.deleteButtonPressed(
                         hostelId: hostelId,
                         hostelOwnerUserId: hostelResp.hostelOwnerUserId));
-               
               },
               child: const Text("Delete", style: TextStyle(color: Colors.red)),
             ),

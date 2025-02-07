@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
 import 'package:gecw_lakx/presentation/chat/chat_room_screen.dart';
 import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
 import 'package:gecw_lakx/presentation/owner_home/owner_home_screen.dart';
@@ -107,12 +109,19 @@ class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwner
                   ),
                   
                   NavBarIcon(
-                    text: "Profile",
-                    icon: Icons.person,
+                    text: "Logout",
+                    icon: Icons.logout,
                     defaultColor: secondaryColor,
                     selectedColor: primaryColor,
                     selected: _selectedIndex == 3,
-                    onPressed: () => _onNavBarItemTapped(3),
+                    onPressed: () async{
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignInScreen()),
+                        (route) => false,
+                      );
+                    },
                   ),
                  
                 ],
