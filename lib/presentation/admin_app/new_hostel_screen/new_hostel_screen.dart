@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/hostel_details/hostel_details_admin_app_screen.dart';
 
 class NewHostelsScreen extends StatelessWidget {
-  NewHostelsScreen({super.key});
+  final String hostelApprovalType;
+  final List<HostelResponseModel> hostelList;
+  NewHostelsScreen({super.key, required this.hostelList, required this.hostelApprovalType});
 
   // Sample hostel data
-  final List<Map<String, String>> hostels = [
-    {"name": "Hostel A", "location": "City Center", "id": "1"},
-    {"name": "Hostel B", "location": "Downtown", "id": "2"},
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("New Hostels"),
+        title: const Text("Hostels"),
         backgroundColor: Colors.black,
         centerTitle: true,
         elevation: 0,
@@ -22,17 +22,23 @@ class NewHostelsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ListView.builder(
-          itemCount: hostels.length,
+          itemCount: hostelList.length,
           itemBuilder: (context, index) {
-            final hostel = hostels[index];
+            final hostel = hostelList[index];
             return HostelCard(
-              name: hostel["name"]!,
-              location: hostel["location"]!,
+              name: hostel.hostelName,
+              owner: hostel.ownerName,
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => HostelDetailScreen(hostelId: hostel["id"]!)),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HostelDetailsAdminAppScreen(
+                            hostelApprovalType: hostelApprovalType,
+                            hostelResp: hostel,
+                            hostelId: hostel.hostelId,
+                            hostelImages: hostel.hostelImages,
+                          )),
+                );
               },
             );
           },
@@ -44,13 +50,13 @@ class NewHostelsScreen extends StatelessWidget {
 
 class HostelCard extends StatelessWidget {
   final String name;
-  final String location;
+  final String owner;
   final VoidCallback onTap;
 
   const HostelCard({
     super.key,
     required this.name,
-    required this.location,
+    required this.owner,
     required this.onTap,
   });
 
@@ -67,7 +73,8 @@ class HostelCard extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              const Icon(Icons.apartment, color: Colors.deepPurpleAccent, size: 32),
+              const Icon(Icons.apartment,
+                  color: Colors.deepPurpleAccent, size: 32),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -83,13 +90,14 @@ class HostelCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "📍 $location",
+                      " $owner",
                       style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
                   ],
                 ),
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 20),
+              const Icon(Icons.arrow_forward_ios,
+                  color: Colors.white70, size: 20),
             ],
           ),
         ),

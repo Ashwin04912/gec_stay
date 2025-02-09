@@ -22,7 +22,49 @@ class CommonHostelProcessBloc
   CommonHostelProcessBloc(this.ihostelFacade)
       : super(CommonHostelProcessState.initial()) {
     on<CommonHostelProcessEvent>((event, emit) async {
-      await event.map(findLocationButtonPressed: (value) async {
+      await event.map(
+        getOwnersHostelList: (_getOwnersHostelList value) async {
+          emit(state.copyWith(
+            isSubmitting: true,
+            hostelGetFailureOrSuccess: none(),
+          ));
+          print("bloc userId is ${value.userId}");
+          final resp =
+              await ihostelFacade.getOwnerHostelList(userId: value.userId);
+
+          resp.fold((f) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              hostelGetFailureOrSuccess: some(left(f)),
+            ));
+          }, (s) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              hostelGetFailureOrSuccess: some(right(s)),
+            ));
+          });
+        },
+        getAllHostelList: (_getAllHostelList value) async {
+          emit(state.copyWith(
+            isSubmitting: true,
+            hostelGetFailureOrSuccess: none(),
+          ));
+          final resp = await ihostelFacade.getAllHostelList();
+
+          resp.fold((f) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              hostelGetFailureOrSuccess: some(left(f)),
+            ));
+          }, (s) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              hostelGetFailureOrSuccess: some(right(s)),
+            ));
+          });
+        },
+        
+        findLocationButtonPressed: (value) async {
         emit(state.copyWith(isSubmitting: true, locationOption: none(),submitFailureOrSuccessOption: none(),));
 
         final location = await ihostelFacade.getCurrentLocation();
@@ -55,6 +97,8 @@ class CommonHostelProcessBloc
         //     "in bloc call : ${value.distFromCollege} and ${value.isMessAvailable} hostelid = ${value.hostelId}");
         // print("true is working in bloc ${value.hostelId}");
         final resp = await ihostelFacade.saveDataToDb(
+          hostelId: value.hostelId??'',
+          hostelOwnerUserId: value.hostelOwnerUserId,
             isEdit: value.isEdit,
             hostelName: value.hostelName,
             ownerName: value.ownerName,
@@ -69,7 +113,7 @@ class CommonHostelProcessBloc
             isMessAvailable: value.isMessAvailable,
             isMensHostel: value.isMensHostel,
             hostelImages: value.hostelImages,
-            hostelIdForEdit: value.hostelId);
+            hostelIdForEdit: value.hostelId, approvalType: value.approvalType);
 
         resp.fold((f) {
           emit(state.copyWith(
@@ -195,7 +239,25 @@ class CommonHostelProcessBloc
               getAllRatingsSuccessOrFailure: none(),
               hostelDataById: s));
         });
-      });
+      }, getAdminHostelList: (_getAdminHostelList value) async{ 
+         emit(state.copyWith(
+            isSubmitting: true,
+            hostelGetFailureOrSuccess: none(),
+          ));
+          final resp = await ihostelFacade.getAdminHostelList(aprovalType: value.approvalType);
+
+          resp.fold((f) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              hostelGetFailureOrSuccess: some(left(f)),
+            ));
+          }, (s) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              hostelGetFailureOrSuccess: some(right(s)),
+            ));
+          });
+       });
     });
   }
 }

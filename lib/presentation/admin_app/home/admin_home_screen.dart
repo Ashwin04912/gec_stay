@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
+import 'package:gecw_lakx/core/loading_screen.dart';
 import 'package:gecw_lakx/presentation/admin_app/new_hostel_screen/new_hostel_screen.dart';
 
-class AdminHomeScreen extends StatelessWidget {
+class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
+
+  @override
+  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
+}
+
+class _AdminHomeScreenState extends State<AdminHomeScreen> {
+ String hostelApprovalType='';
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +27,75 @@ class AdminHomeScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            AdminOptionCard(
-              title: "New Hostels",
-              icon: Icons.pending_actions,
-              onTap: () {
-                // Navigate to NewHostelsScreen
-                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>NewHostelsScreen()));
-                
-              },
+      body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
+        listener: (context, state) {
+          state.hostelGetFailureOrSuccess.fold(() {}, (either) {
+            either.fold((f) {}, (s) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => NewHostelsScreen(hostelList: s,hostelApprovalType: hostelApprovalType,)));
+            });
+          });
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                AdminOptionCard(
+                  title: "New Hostels",
+                  icon: Icons.pending_actions,
+                  onTap: () {
+                    // Navigate to NewHostelsScreen
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>NewHostelsScreen()));
+                    setState(() {
+                      
+                      hostelApprovalType = 'newHostel';
+                    });
+                    context.read<CommonHostelProcessBloc>().add(
+                        CommonHostelProcessEvent.getAdminHostelList(
+                            approvalType: 'pending'));
+                  },
+                ),
+                const SizedBox(height: 16),
+                AdminOptionCard(
+                  title: "Approved Hostels",
+                  icon: Icons.check_circle,
+                  onTap: () {
+                    // Navigate to ApprovedHostelsScreen
+                     setState(() {
+                      
+                      hostelApprovalType = 'approvedHostel';
+                    });
+                    context.read<CommonHostelProcessBloc>().add(
+                        CommonHostelProcessEvent.getAdminHostelList(
+                            approvalType: 'approved'));
+                  },
+                ),
+                const SizedBox(height: 16),
+                AdminOptionCard(
+                  title: "Rejected Hostels",
+                  icon: Icons.cancel,
+                  onTap: () {
+                    // Navigate to DeniedHostelsScreen
+                     setState(() {
+                      
+                      hostelApprovalType = 'rejectedHostel';
+                    });
+                    context.read<CommonHostelProcessBloc>().add(
+                        CommonHostelProcessEvent.getAdminHostelList(
+                            approvalType: 'rejected'));
+                  },
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                state.isSubmitting
+                ?
+                CircularProgressIndicator(color: Colors.purple,):Center()
+              ],
             ),
-            const SizedBox(height: 16),
-            AdminOptionCard(
-              title: "Approved Hostels",
-              icon: Icons.check_circle,
-              onTap: () {
-                // Navigate to ApprovedHostelsScreen
-              },
-            ),
-            const SizedBox(height: 16),
-            AdminOptionCard(
-              title: "Denied Hostels",
-              icon: Icons.cancel,
-              onTap: () {
-                // Navigate to DeniedHostelsScreen
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -90,7 +138,7 @@ class AdminOptionCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 20),
+              Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 20),
             ],
           ),
         ),

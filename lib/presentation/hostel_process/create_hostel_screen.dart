@@ -256,6 +256,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                 context.read<CommonHostelProcessBloc>().add(
                                       CommonHostelProcessEvent
                                           .submitButtonPressed(
+                                            hostelOwnerUserId: '',
                                         hostelId: state.hostelDataById.hostelId,
                                         hostelName: hostelNameController.text,
                                         ownerName: ownerNameController.text,
@@ -274,10 +275,11 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                         isMensHostel:
                                             _selectedHostelType.toString(),
                                         isEdit: true,
+                                        approvalType: 'pending',
                                       ),
                                     );
                               } else {
-                                print("false is working");
+                                print("ui some is working");
                                 if (_formKey.currentState!.validate() &&
                                     _selectedLocation != null) {
                                   if (_imageFiles == null) {
@@ -286,6 +288,8 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                     context.read<CommonHostelProcessBloc>().add(
                                           CommonHostelProcessEvent
                                               .submitButtonPressed(
+                                            approvalType: 'pending',
+                                            hostelOwnerUserId: '',
                                             hostelName:
                                                 hostelNameController.text,
                                             ownerName: ownerNameController.text,

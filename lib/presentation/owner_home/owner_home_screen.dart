@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gecw_lakx/application/hostel_process/owner_home/owner_home_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_owner_app_screen.dart';
 import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
@@ -38,8 +38,8 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
 
     if (userId != null) {
       context
-          .read<OwnerHomeBloc>()
-          .add(OwnerHomeEvent.getOwnersHostelList(userId: userId.toString()));
+          .read<CommonHostelProcessBloc>()
+          .add(CommonHostelProcessEvent.getOwnersHostelList(userId: userId.toString()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("No data found. Please log in again.")),
@@ -110,7 +110,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
           ),
         ],
       ),
-      body: BlocConsumer<OwnerHomeBloc, OwnerHomeState>(
+      body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
         listener: (context, state) {
           state.hostelGetFailureOrSuccess.fold(() {}, (either) {
             either.fold((failure) {
@@ -282,6 +282,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Text('Approval : ${hostel.approval}',style: TextStyle(color: Colors.red,fontSize: 18),),
                                 Row(
                                   children: [
                                     Expanded(
@@ -312,7 +313,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 8),
+                                // const SizedBox(height: 8),
                                 Text(
                                   hostel.description,
                                   maxLines: 2,
@@ -323,7 +324,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                     color: Colors.white70,
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                // const SizedBox(height: 12),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

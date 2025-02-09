@@ -15,35 +15,36 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
     required HostelResponseModel hostelDataById,
     // required bool isSubmitting,
     required bool locationFetched,
+    required Option<Either<FormFailures,List<HostelResponseModel>>> hostelGetFailureOrSuccess,
   }) = _CommonHostelProcessState;
 
   factory CommonHostelProcessState.initial() => CommonHostelProcessState(
-        isSubmitting: false,
-        successOrFailure: none(),
-        getAllRatingsSuccessOrFailure: none(),
-        respList: [],
-        hostelDataById: HostelResponseModel(
-            description: '',
-            hostelName: '',
-            location: Location(latitude: 0, longitude: 0),
-            hostelId: '',
-            ownerName: '',
-            distFromCollege: '',
-            isMessAvailable: '',
-            isMensHostel: '',
-            phoneNumber: '',
-            rent: '',
-            rooms: '',
-            vacancy: '',
-            hostelImages: [],
-            hostelOwnerUserId: '',
-            rating: ''),
-
-
-        submitFailureOrSuccessOption: none(),
-        locationOption: none(),
-        locationFetched: false,
-        showErrorMessages: false,
-        location:LatLng(0, 0)
-      );
+      isSubmitting: false,
+      successOrFailure: none(),
+      hostelGetFailureOrSuccess: none(),
+      getAllRatingsSuccessOrFailure: none(),
+      respList: [],
+      hostelDataById: HostelResponseModel(
+        description: '',
+        hostelName: '',
+        location: Location(latitude: 0, longitude: 0),
+        hostelId: '',
+        ownerName: '',
+        distFromCollege: '',
+        isMessAvailable: '',
+        isMensHostel: '',
+        phoneNumber: '',
+        rent: '',
+        rooms: '',
+        vacancy: '',
+        hostelImages: [],
+        hostelOwnerUserId: '',
+        rating: '',
+        approval: ''
+      ),
+      submitFailureOrSuccessOption: none(),
+      locationOption: none(),
+      locationFetched: false,
+      showErrorMessages: false,
+      location: LatLng(0, 0));
 }

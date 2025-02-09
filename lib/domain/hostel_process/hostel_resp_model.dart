@@ -26,42 +26,45 @@ class HostelResponseModel {
   List<String> hostelImages; // List of image URLs
   String hostelOwnerUserId;
   String rating;
+  String approval;
 
-  HostelResponseModel({
-    required this.description,
-    required this.hostelName,
-    required this.location,
-    required this.hostelId,
-    required this.ownerName,
-    required this.distFromCollege,
-    required this.isMessAvailable,
-    required this.isMensHostel,
-    required this.phoneNumber,
-    required this.rent,
-    required this.rooms,
-    required this.vacancy,
-    required this.hostelImages,
-    required this.hostelOwnerUserId,
-    required this.rating,
-  });
+  HostelResponseModel(
+      {required this.description,
+      required this.hostelName,
+      required this.location,
+      required this.hostelId,
+      required this.ownerName,
+      required this.distFromCollege,
+      required this.isMessAvailable,
+      required this.isMensHostel,
+      required this.phoneNumber,
+      required this.rent,
+      required this.rooms,
+      required this.vacancy,
+      required this.hostelImages,
+      required this.hostelOwnerUserId,
+      required this.rating,
+      required this.approval});
 
   factory HostelResponseModel.fromJson(Map<String, dynamic> json) =>
       HostelResponseModel(
-          description: json["description"],
-          hostelName: json["hostel_name"],
-          hostelId: json['hostelId'],
-          location: Location.fromJson(json["location"]),
-          ownerName: json["owner_name"],
-          distFromCollege: json["dist_from_college"],
-          isMessAvailable: json["isMess_available"],
-          isMensHostel: json["isMensHostel"],
-          phoneNumber: json["phone_number"],
-          rent: json["rent"],
-          rooms: json["rooms"],
-          vacancy: json["vacancy"],
-          hostelImages: List<String>.from(json["imageList"].map((x) => x)),
-          hostelOwnerUserId: json['hostelOwnerUserId'],
-          rating: json['rating']);
+        description: json["description"],
+        hostelName: json["hostel_name"],
+        hostelId: json['hostelId'],
+        location: Location.fromJson(json["location"]),
+        ownerName: json["owner_name"],
+        distFromCollege: json["dist_from_college"],
+        isMessAvailable: json["isMess_available"],
+        isMensHostel: json["isMensHostel"],
+        phoneNumber: json["phone_number"],
+        rent: json["rent"],
+        rooms: json["rooms"],
+        vacancy: json["vacancy"],
+        hostelImages: List<String>.from(json["imageList"].map((x) => x)),
+        hostelOwnerUserId: json['hostelOwnerUserId'],
+        rating: json['rating'],
+        approval: json['approval']
+      );
 
   Map<String, dynamic> toJson() => {
         "description": description,
@@ -78,10 +81,9 @@ class HostelResponseModel {
         "vacancy": vacancy,
         "imageList": List<dynamic>.from(hostelImages.map((x) => x)),
         "hostelOwnerUserId": hostelOwnerUserId,
-        "rating":rating,
+        "rating": rating,
+        "approval":approval
       };
-
-      
 }
 
 class Location {

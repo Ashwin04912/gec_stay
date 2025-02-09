@@ -21,173 +21,183 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     required this.fireStore,
   });
 
- @override
-Future<Either<LocationFetchFailures, LatLng>> getCurrentLocation() async {
-  bool serviceEnabled;
-  LocationPermission permission;
-
-  // Check if location services are enabled
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    Geolocator.openLocationSettings();
-    debugPrint('Location services are disabled.');
-    return left(LocationFetchFailures.locationServiceDisabled());
-  }
-
-  // Check for location permission
-  permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      debugPrint("Location access denied");
-      return left(LocationFetchFailures.LocationPermissionDenied());
-    }
-  }
-
-  try {
-    // Get the current position
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    // Convert the Position to LatLng
-    LatLng latLng = LatLng(position.latitude, position.longitude);
-
-    return right(latLng);
-  } catch (e) {
-    if (e is LocationServiceDisabledException) {
-      debugPrint("Location services are disabled.");
-      return left(LocationFetchFailures.locationServiceDisabled());
-    } else if (e is PermissionDeniedException) {
-      debugPrint("Location permissions are denied.");
-      return left(LocationFetchFailures.LocationPermissionDenied());
-    } else {
-      debugPrint("Failed to get location: $e");
-    }
-    return left(LocationFetchFailures.networkError());
-  }
-}
-
-
   @override
-Future<Either<FormFailures, Unit>> saveDataToDb({
-  bool? isEdit,
-  String? hostelIdForEdit,
-  required String hostelName,
-  required String ownerName,
-  required String phoneNumber,
-  required String rent,
-  required String rooms,
-  required LatLng location,
-  required String vacancy,
-  required String distFromCollege,
-  required String isMessAvailable,
-  required String isMensHostel,
-  required List<XFile> hostelImages,
-  required String description,
-}) async {
-  try {
-  
+  Future<Either<LocationFetchFailures, LatLng>> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-    List<String>? images;
-    print("In API call: $distFromCollege and $isMessAvailable");
-
-    // Retrieve user ID from shared preferences
-    final prefs = await SharedPreferences.getInstance();
-    final String? userId = prefs.getString('owner_userid');
-
-    if (userId == null || userId.isEmpty) {
-      debugPrint("User ID is null or empty");
-      return left(const FormFailures.serviceUnavailable());
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Geolocator.openLocationSettings();
+      debugPrint('Location services are disabled.');
+      return left(LocationFetchFailures.locationServiceDisabled());
     }
 
-    final firebaseDb = FirebaseFirestore.instance;
-
-    // Upload images if new images are provided
-    if (isEdit == false && hostelImages.isNotEmpty) {
-      final imageListResult = await uploadHostelImages(hostelImages: hostelImages);
-      late List<String> imageUrls;
-
-      imageListResult.fold(
-        (failure) {
-          debugPrint("Image upload failed: $failure");
-          return left(const FormFailures.serverError());
-        },
-        (urls) {
-          images = urls;
-          imageUrls = urls;
-        },
-      );
-
-      if (imageUrls.isEmpty) {
-        debugPrint("No images uploaded successfully");
-        return left(const FormFailures.serverError());
+    // Check for location permission
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        debugPrint("Location access denied");
+        return left(LocationFetchFailures.LocationPermissionDenied());
       }
     }
 
-    final String hostelId = hostelIdForEdit ?? Uuid().v1();
+    try {
+      // Get the current position
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
-    // Create a map of only non-null fields
-    final Map<String, dynamic> hostelData = {
-      if (hostelName.isNotEmpty) 'hostel_name': hostelName,
-      if (ownerName.isNotEmpty) 'owner_name': ownerName,
-      if (phoneNumber.isNotEmpty) 'phone_number': phoneNumber,
-      if (description.isNotEmpty) 'description': description,
-      if (distFromCollege.isNotEmpty) 'dist_from_college': distFromCollege,
-      if (isMessAvailable.isNotEmpty) 'isMess_available': isMessAvailable,
-      if (isMensHostel.isNotEmpty) 'isMensHostel': isMensHostel,
-      if (rent.isNotEmpty) 'rent': rent,
-      if (rooms.isNotEmpty) 'rooms': rooms,
-      if (vacancy.isNotEmpty) 'vacancy': vacancy,
-      if (images != null) 'imageList': images,
-      'location': {
-        'latitude': location.latitude,
-        'longitude': location.longitude,
-      },
-    };
+      // Convert the Position to LatLng
+      LatLng latLng = LatLng(position.latitude, position.longitude);
 
-    // Save or update hostel data
-    if (isEdit == true) {
-      await firebaseDb
-          .collection('my_hostels')
-          .doc(userId)
-          .collection('hostels')
-          .doc(hostelId)
-          .set(hostelData, SetOptions(merge: true));  // 🔥 Update only changed fields
-
-      await firebaseDb
-          .collection('all_hostel_list')
-          .doc(hostelId)
-          .set(hostelData, SetOptions(merge: true));  // 🔥 Update only changed fields
-    } else {
-      hostelData['hostelOwnerUserId'] = userId;
-      hostelData['hostelId'] = hostelId;
-      hostelData['rating'] = '0';
-
-      await firebaseDb
-          .collection('my_hostels')
-          .doc(userId)
-          .collection('hostels')
-          .doc(hostelId)
-          .set(hostelData);
-
-      await firebaseDb
-          .collection('all_hostel_list')
-          .doc(hostelId)
-          .set(hostelData);
+      return right(latLng);
+    } catch (e) {
+      if (e is LocationServiceDisabledException) {
+        debugPrint("Location services are disabled.");
+        return left(LocationFetchFailures.locationServiceDisabled());
+      } else if (e is PermissionDeniedException) {
+        debugPrint("Location permissions are denied.");
+        return left(LocationFetchFailures.LocationPermissionDenied());
+      } else {
+        debugPrint("Failed to get location: $e");
+      }
+      return left(LocationFetchFailures.networkError());
     }
-
-    debugPrint('Document ${isEdit == true ? "updated" : "added"} with ID: $hostelId');
-    return right(unit);
-  } on FirebaseException catch (e) {
-    debugPrint("FirebaseException [${e.code}]: ${e.message}");
-    return left(const FormFailures.serverError());
-  } catch (e) {
-    debugPrint("An unexpected error occurred: $e");
-    return left(const FormFailures.serviceUnavailable());
   }
-}
 
+  @override
+  Future<Either<FormFailures, Unit>> saveDataToDb({
+    bool? isEdit,
+    String? hostelIdForEdit,
+    required String approvalType,
+    required String hostelOwnerUserId,
+    required String hostelName,
+    required String ownerName,
+    required String phoneNumber,
+    required String rent,
+    required String rooms,
+    required LatLng location,
+    required String hostelId,
+    required String vacancy,
+    required String distFromCollege,
+    required String isMessAvailable,
+    required String isMensHostel,
+    required List<XFile> hostelImages,
+    required String description,
+  }) async {
+    try {
+      List<String>? images;
+      print("In API call: $distFromCollege and $isMessAvailable and type $approvalType");
+
+      // Retrieve user ID from shared preferences
+      final prefs = await SharedPreferences.getInstance();
+      final String? userId = prefs.getString('owner_userid');
+
+      if (userId == null || userId.isEmpty) {
+        debugPrint("User ID is null or empty");
+        return left(const FormFailures.serviceUnavailable());
+      }
+
+      // Upload images if new images are provided
+      if (isEdit == false && hostelImages.isNotEmpty) {
+        final imageListResult =
+            await uploadHostelImages(hostelImages: hostelImages);
+
+        imageListResult.fold(
+          (failure) {
+            debugPrint("Image upload failed: $failure");
+            return left(const FormFailures.serverError());
+          },
+          (urls) {
+            images = urls;
+          },
+        );
+
+        if (images!.isEmpty) {
+          debugPrint("No images uploaded successfully");
+          return left(const FormFailures.serverError());
+        }
+      }
+
+      final String hostelId = hostelIdForEdit ?? Uuid().v1();
+
+      // Create a map of only non-null fields
+      final Map<String, dynamic> hostelData = {
+        if (hostelName.isNotEmpty) 'hostel_name': hostelName,
+        if (ownerName.isNotEmpty) 'owner_name': ownerName,
+        if (phoneNumber.isNotEmpty) 'phone_number': phoneNumber,
+        if (description.isNotEmpty) 'description': description,
+        if (distFromCollege.isNotEmpty) 'dist_from_college': distFromCollege,
+        if (isMessAvailable.isNotEmpty) 'isMess_available': isMessAvailable,
+        if (isMensHostel.isNotEmpty) 'isMensHostel': isMensHostel,
+        if (rent.isNotEmpty) 'rent': rent,
+        if (rooms.isNotEmpty) 'rooms': rooms,
+        if (vacancy.isNotEmpty) 'vacancy': vacancy,
+        if (images != null) 'imageList': images,
+        'location': {
+          'latitude': location.latitude,
+          'longitude': location.longitude,
+        },
+        'approval': approvalType
+      };
+
+      // Save or update hostel data
+      if (isEdit == true) {
+        await fireStore
+            .collection('my_hostels')
+            .doc(hostelOwnerUserId)
+            .collection('hostels')
+            .doc(hostelId)
+            .set(hostelData,
+                SetOptions(merge: true)); // 🔥 Update only changed fields
+
+        await fireStore.collection('all_hostel_list').doc(hostelId).set(
+            hostelData,
+            SetOptions(merge: true)); // 🔥 Update only changed fields
+      } else if (approvalType == 'approved') {
+        debugPrint('approved if is working');
+        await fireStore
+            .collection('my_hostels')
+            .doc(hostelOwnerUserId)
+            .collection('hostels')
+            .doc(hostelId)
+            .update(
+                {'approval': approvalType}); // 🔥 Updates only 'approval' field
+
+        await fireStore
+            .collection('all_hostel_list')
+            .doc(hostelId)
+            .update({'approval': approvalType});
+
+
+      } else if (approvalType == 'rejected') {
+      } else if (approvalType == 'deleted') {
+        await fireStore.collection('all_hostel_list').doc(hostelId).delete();
+        fireStore.collection('hostel_rating').doc(hostelId).delete();
+        await fireStore
+            .collection('my_hostels')
+            .doc(userId)
+            .collection('hostels')
+            .doc(hostelId)
+            .update({'approval': approvalType});
+      } else {
+        debugPrint("nothing is happening..check cheythu nok.");
+      }
+
+      debugPrint(
+          'Document ${isEdit == true ? "updated" : "added"} with ID: $hostelId');
+      return right(unit);
+    } on FirebaseException catch (e) {
+      debugPrint("FirebaseException [${e.code}]: ${e.message}");
+      return left(const FormFailures.serverError());
+    } catch (e) {
+      debugPrint("An unexpected error occurred: $e");
+      return left(const FormFailures.serviceUnavailable());
+    }
+  }
 
   @override
   Future<Either<FormFailures, List<HostelResponseModel>>>
@@ -198,13 +208,14 @@ Future<Either<FormFailures, Unit>> saveDataToDb({
           FirebaseFirestore.instance.collection('all_hostel_list');
 
       // Query the collection
-      QuerySnapshot querySnapshot = await hostelCollection.get();
+      QuerySnapshot querySnapshot =
+          await hostelCollection.where('approval', isEqualTo: 'approved').get();
 
       // Check if the collection is empty
-      if (querySnapshot.docs.isEmpty) {
-        debugPrint("No data found in all_hostel_list collection");
-        return left(const FormFailures.noDataFound());
-      }
+      // if (querySnapshot.docs.isEmpty) {
+      //   debugPrint("No data found in all_hostel_list collection");
+      //   return left(const FormFailures.noDataFound());
+      // }
 
       // Map the querySnapshot to the list of HostelResponseModel
       List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
@@ -261,64 +272,104 @@ Future<Either<FormFailures, Unit>> saveDataToDb({
     }
   }
 
-@override
-Future<Either<FormFailures, Unit>> rateTheHostel({
-  required String hostelId,
-  required String hostelOwnerUserId,
-  required String star,
-  required String comment,
-  required String userId,
-  required String userName,
-}) async {
-  try {
-    final hostelRatingRef = fireStore
-        .collection('hostel_rating')
-        .doc(hostelId)
-        .collection('ratings');
+  @override
+  Future<Either<FormFailures, Unit>> rateTheHostel({
+    required String hostelId,
+    required String hostelOwnerUserId,
+    required String star,
+    required String comment,
+    required String userId,
+    required String userName,
+  }) async {
+    try {
+      final hostelRatingRef = fireStore
+          .collection('hostel_rating')
+          .doc(hostelId)
+          .collection('ratings');
 
-    // Check if user already rated this hostel
-    final existingReviewQuery = await hostelRatingRef
-        .where('userId', isEqualTo: userId)
-        .get();
+      // Check if user already rated this hostel
+      final existingReviewQuery =
+          await hostelRatingRef.where('userId', isEqualTo: userId).get();
 
-    if (existingReviewQuery.docs.isNotEmpty) {
-      // Get the first existing review document
-      final existingReviewDoc = existingReviewQuery.docs.first;
+      if (existingReviewQuery.docs.isNotEmpty) {
+        // Get the first existing review document
+        final existingReviewDoc = existingReviewQuery.docs.first;
 
-      // Update the existing review
-      await hostelRatingRef.doc(existingReviewDoc.id).update({
-        'stars': star,
-        'comment': comment,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+        // Update the existing review
+        await hostelRatingRef.doc(existingReviewDoc.id).update({
+          'stars': star,
+          'comment': comment,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
 
-      debugPrint("Review updated successfully.");
-    } else {
-      // Create a new rating object if no previous review exists
-      final rating = {
-        'userId': userId,
-        'userName': userName,
-        'stars': star,
-        'comment': comment,
-        'timestamp': FieldValue.serverTimestamp(),
-      };
+        debugPrint("Review updated successfully.");
+      } else {
+        // Create a new rating object if no previous review exists
+        final rating = {
+          'userId': userId,
+          'userName': userName,
+          'stars': star,
+          'comment': comment,
+          'timestamp': FieldValue.serverTimestamp(),
+        };
 
-      await hostelRatingRef.add(rating);
-      debugPrint("New rating added successfully.");
+        await hostelRatingRef.add(rating);
+        debugPrint("New rating added successfully.");
+      }
+
+      // Recalculate the average rating
+      ratingAvgCalculation(
+          hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
+
+      return right(unit);
+    } catch (e) {
+      debugPrint('Error rating hostel: $e');
+      return left(FormFailures.serverError());
     }
-
-    // Recalculate the average rating
-    ratingAvgCalculation(
-        hostelId: hostelId, hostelOwnerUserId: hostelOwnerUserId);
-
-    return right(unit);
-  } catch (e) {
-    debugPrint('Error rating hostel: $e');
-    return left(FormFailures.serverError());
   }
-}
 
+  @override
+  Future<Either<FormFailures, List<HostelResponseModel>>> getAdminHostelList(
+      {required String aprovalType}) async {
+    try {
+      // Reference the collection
+      final CollectionReference hostelCollection =
+          FirebaseFirestore.instance.collection('all_hostel_list');
 
+      // Query the collection
+      QuerySnapshot querySnapshot = await hostelCollection
+          .where('approval', isEqualTo: aprovalType)
+          .get();
+
+      // Check if the collection is empty
+      // if (querySnapshot.docs.isEmpty) {
+      //   debugPrint("No data found in all_hostel_list collection");
+      //   return left(const FormFailures.noDataFound());
+      // }
+
+      // Map the querySnapshot to the list of HostelResponseModel
+      List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
+        // Safely parse document data
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return HostelResponseModel.fromJson(data);
+      }).toList();
+
+      debugPrint("Fetched hostels: $hostels");
+
+      return right(hostels);
+    } catch (e) {
+      // Handle any exceptions
+      debugPrint("Error fetching all hostel list: $e");
+
+      // If the error might be related to a missing collection
+      if (e.toString().contains('Null is not a subtype of type')) {
+        debugPrint("Likely cause: Collection does not exist or has no data.");
+        return left(const FormFailures.noDataFound());
+      }
+
+      return left(const FormFailures.serverError());
+    }
+  }
 
   @override
   Future<Either<FormFailures, List<Map<String, String>>>>
@@ -475,7 +526,6 @@ Future<Either<FormFailures, Unit>> rateTheHostel({
 
       fireStore.collection('hostel_rating').doc(hostelId).delete();
 
-      fireStore.collection('hostel_rating').doc(hostelId).delete();
       return right(unit);
     } catch (e) {
       return left(Exception(e));

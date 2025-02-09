@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:gecw_lakx/domain/core/formfailures.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -13,9 +10,12 @@ abstract class IHostelProcessFacade {
   Future<Either<LocationFetchFailures, LatLng>> getCurrentLocation();
   Future<Either<FormFailures, Unit>> saveDataToDb(
       {required bool isEdit,
+      required String approvalType,
       String? hostelIdForEdit,
       required String hostelName,
       required String ownerName,
+      required String hostelId,
+      required String hostelOwnerUserId,
       required String phoneNumber,
       required String rent,
       required String distFromCollege,
@@ -30,6 +30,8 @@ abstract class IHostelProcessFacade {
       {required String userId});
 
   Future<Either<FormFailures, List<HostelResponseModel>>> getAllHostelList();
+  Future<Either<FormFailures, List<HostelResponseModel>>> getAdminHostelList(
+      {required String aprovalType});
   Future<Either<FormFailures, HostelResponseModel>> getHostelById(
       {required String hostelId});
 

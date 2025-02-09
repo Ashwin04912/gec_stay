@@ -25,9 +25,11 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
       
 
   const factory CommonHostelProcessEvent.submitButtonPressed({
+    required String approvalType,
     required String hostelName,
      String? hostelId,
     required String ownerName,
+    required String hostelOwnerUserId,
     required String phoneNumber,
     required String rent,
     required String rooms,
@@ -37,10 +39,15 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
     required String vacancy,
     required String description,
     required String distFromCollege,
+    
     required String isMessAvailable,
 required String isMensHostel, 
     required List<XFile> hostelImages,
   }) = _submitButtonPressed;
   
+
+    const factory CommonHostelProcessEvent.getOwnersHostelList({required String userId}) = _getOwnersHostelList;
+  const factory CommonHostelProcessEvent.getAllHostelList() = _getAllHostelList;
+  const factory CommonHostelProcessEvent.getAdminHostelList({required String approvalType}) = _getAdminHostelList;
   
 }

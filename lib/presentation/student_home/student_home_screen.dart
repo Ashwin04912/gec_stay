@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gecw_lakx/application/hostel_process/owner_home/owner_home_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_student_app_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   const StudentHomeScreen({super.key});
@@ -28,7 +29,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   }
 
   Future<void> _loadHostels() async {
-    context.read<OwnerHomeBloc>().add(OwnerHomeEvent.getAllHostelList());
+    context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getAllHostelList());
   }
 
   void _openFilterModal() {
@@ -307,7 +308,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     return RefreshIndicator(
       
     onRefresh: () async {
-      context.read<OwnerHomeBloc>().add(OwnerHomeEvent.getAllHostelList());
+      context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getAllHostelList());
     },
       child: ListView.separated(
         padding: const EdgeInsets.all(12),
@@ -493,7 +494,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             ),
           ],
         ),
-        body: BlocConsumer<OwnerHomeBloc, OwnerHomeState>(
+        body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
           listener: (context, state) {
             state.hostelGetFailureOrSuccess.fold(() {}, (either) {
               either.fold((failure) {
