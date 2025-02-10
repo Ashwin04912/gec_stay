@@ -8,11 +8,13 @@ import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner
 import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
 
 class LoadingScreen extends StatelessWidget {
+  final String? userId;
   final bool? isEdit;
 
   const LoadingScreen({
     super.key,
     this.isEdit,
+    this.userId,
   });
 
   @override
@@ -30,6 +32,9 @@ class LoadingScreen extends StatelessWidget {
                         isEdit: true,
                           hostelData: state.hostelDataById)));
                 } else {
+                  context
+          .read<CommonHostelProcessBloc>()
+          .add(CommonHostelProcessEvent.getOwnersHostelList(userId: userId.toString()));
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                         builder: (ctx) => BottomNavigationBarOwnerWidget(),

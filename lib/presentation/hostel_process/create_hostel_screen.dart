@@ -7,6 +7,7 @@ import 'package:gecw_lakx/presentation/hostel_process/widget/select_location_scr
 import 'package:image_picker/image_picker.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateHostelScreen extends StatefulWidget {
   final bool? isEdit;
@@ -78,7 +79,12 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(message)),
             );
-          }, (success) {
+          }, (success) async {
+            final prefs = await SharedPreferences.getInstance();
+            final String? userId = prefs.getString('owner_userid');
+            context.read<CommonHostelProcessBloc>().add(
+                CommonHostelProcessEvent.getOwnersHostelList(
+                    userId: userId.toString()));
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (ctx) => BottomNavigationBarOwnerWidget(),
@@ -239,78 +245,94 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                           )
                         : ElevatedButton(
                             onPressed: () async {
-                              // Check if location is selected before proceeding
                               if (_selectedLocation == null) {
-                                // Show a message or Snackbar prompting the user to select a location
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content:
                                           Text('Please select a location')),
                                 );
-                                return; // Prevent form submission
+                                return;
                               }
 
-                              if (widget.isEdit == true) {
+                              if (widget.isEdit == true &&
+                                  widget.hostelData != null) {
                                 print(
-                                    "true is working in ui${state.hostelDataById.hostelId}");
-                                context.read<CommonHostelProcessBloc>().add(
-                                      CommonHostelProcessEvent
-                                          .submitButtonPressed(
-                                            hostelOwnerUserId: '',
-                                        hostelId: state.hostelDataById.hostelId,
-                                        hostelName: hostelNameController.text,
-                                        ownerName: ownerNameController.text,
-                                        phoneNumber: phoneNumberController.text,
-                                        rent: rentController.text,
-                                        rooms: roomsController.text,
-                                        vacancy: vacancyController.text,
-                                        description: descriptionController.text,
-                                        location: _selectedLocation ??
-                                            LatLng(11.83399, 75.97021),
-                                        distFromCollege:
-                                            distanceController.text,
-                                        isMessAvailable:
-                                            messAvailableController.text,
-                                        hostelImages: _imageFiles!,
-                                        isMensHostel:
-                                            _selectedHostelType.toString(),
-                                        isEdit: true,
-                                        approvalType: 'pending',
-                                      ),
-                                    );
+                                    "Editing hostel: ${widget.hostelData!.hostelId}");
+
+                                HostelResponseModel updatedHostel =
+                                    HostelResponseModel(
+                                  hostelId: widget.hostelData!.hostelId,
+                                  hostelName: widget.hostelData!.hostelName,
+                                  ownerName: widget.hostelData!.ownerName,
+                                  phoneNumber: widget.hostelData!.phoneNumber,
+                                  rent: widget.hostelData!.rent,
+                                  rooms: widget.hostelData!.rooms,
+                                  vacancy: widget.hostelData!.vacancy,
+                                  description: widget.hostelData!.description,
+                                  location: widget.hostelData!
+                                      .location, // Retain existing location
+                                  distFromCollege:
+                                      widget.hostelData!.distFromCollege,
+                                  isMessAvailable:
+                                      widget.hostelData!.isMessAvailable,
+                                  isMensHostel: widget.hostelData!.isMensHostel,
+                                  hostelImages: [], // Otherwise, retain old images
+                                  hostelOwnerUserId:
+                                      widget.hostelData!.hostelOwnerUserId,
+                                  rating: widget.hostelData!.rating,
+                                  approval: widget.hostelData!.approval,
+                                );
+
+                                // context.read<CommonHostelProcessBloc>().add(
+                                //       CommonHostelProcessEvent
+                                //           .submitButtonPressed(
+                                //         hostelData: updatedHostel,
+                                //         isEdit: true,
+                                //       ),
+                                //     );
                               } else {
-                                print("ui some is working");
-                                if (_formKey.currentState!.validate() &&
-                                    _selectedLocation != null) {
-                                  if (_imageFiles == null) {
-                                    print('add_images');
+                                print("Creating new hostel entry");
+
+                                if (_formKey.currentState!.validate()) {
+                                  if (_imageFiles == null ||
+                                      _imageFiles!.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Upload Images")),
+                                    );
                                   } else {
+                                    HostelResponseModel newHostel =
+                                        HostelResponseModel(
+                                      hostelId: "",
+                                      hostelName: hostelNameController.text,
+                                      ownerName: ownerNameController.text,
+                                      phoneNumber: phoneNumberController.text,
+                                      rent: rentController.text,
+                                      rooms: roomsController.text,
+                                      vacancy: vacancyController.text,
+                                      description: descriptionController.text,
+                                      location: Location(
+                                        latitude: _selectedLocation!.latitude,
+                                        longitude: _selectedLocation!.longitude,
+                                      ),
+                                      distFromCollege: distanceController.text,
+                                      isMessAvailable:
+                                          messAvailableController.text,
+                                      isMensHostel:
+                                          _selectedHostelType.toString(),
+                                      hostelImages: [],
+                                      hostelOwnerUserId:
+                                          "", // Assign dynamically if needed
+                                      rating:
+                                          "0", // Default rating for new hostels
+                                      approval:
+                                          "pending", // New entries are pending approval
+                                    );
+
                                     context.read<CommonHostelProcessBloc>().add(
                                           CommonHostelProcessEvent
                                               .submitButtonPressed(
-                                            approvalType: 'pending',
-                                            hostelOwnerUserId: '',
-                                            hostelName:
-                                                hostelNameController.text,
-                                            ownerName: ownerNameController.text,
-                                            phoneNumber:
-                                                phoneNumberController.text,
-                                            rent: rentController.text,
-                                            rooms: roomsController.text,
-                                            vacancy: vacancyController.text,
-                                            description:
-                                                descriptionController.text,
-                                            location: _selectedLocation ??
-                                                LatLng(11.83399, 75.97021),
-                                            distFromCollege:
-                                                distanceController.text,
-                                            isMessAvailable:
-                                                messAvailableController.text,
-                                            hostelImages: _imageFiles!,
-                                            isMensHostel:
-                                                _selectedHostelType.toString(),
-                                            isEdit: false,
-                                          ),
+                                                  hostelData: newHostel,
+                                                  hostelImages: _imageFiles!),
                                         );
                                   }
                                 }

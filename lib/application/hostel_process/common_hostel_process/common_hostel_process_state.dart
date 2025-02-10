@@ -15,6 +15,7 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
     required HostelResponseModel hostelDataById,
     // required bool isSubmitting,
     required bool locationFetched,
+    required List<HostelResponseModel> hostelData,
     required Option<Either<FormFailures,List<HostelResponseModel>>> hostelGetFailureOrSuccess,
   }) = _CommonHostelProcessState;
 
@@ -24,6 +25,7 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
       hostelGetFailureOrSuccess: none(),
       getAllRatingsSuccessOrFailure: none(),
       respList: [],
+      hostelData: [],
       hostelDataById: HostelResponseModel(
         description: '',
         hostelName: '',

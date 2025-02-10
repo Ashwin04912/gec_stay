@@ -21,20 +21,23 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
   String _searchQuery = "";
   String? ownerUserId;
   bool? noHostelDataPresent;
+// bool _hasFetchedHostels = false; // Add this flag
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserIdAndFetchHostels();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _loadUserIdAndFetchHostels();
+  // }
 
   Future<void> _loadUserIdAndFetchHostels() async {
+  //   if (_hasFetchedHostels) return; // Prevent duplicate calls
+  // _hasFetchedHostels = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('owner_userid');
 
-    setState(() {
-      ownerUserId = userId;
-    });
+    // setState(() {
+    //   ownerUserId = userId;
+    // });
 
     if (userId != null) {
       context
@@ -47,8 +50,14 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
     }
   }
 
+//   Future<void> _refreshHostels() async {
+//   // _hasFetchedHostels = false;
+//   await _loadUserIdAndFetchHostels();
+// }
+
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       backgroundColor: Color(0xFF1A1A2E),
       appBar: AppBar(
@@ -110,42 +119,47 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
           ),
         ],
       ),
-      body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
-        listener: (context, state) {
-          state.hostelGetFailureOrSuccess.fold(() {}, (either) {
-            either.fold((failure) {
-              failure.maybeWhen(
-                noDataFound: () {
-                  setState(() {
-                    noHostelDataPresent = true;
-                  });
-                },
-                orElse: () {},
-              );
-              String? message = failure.maybeWhen(
-                  serviceUnavailable: () =>
-                      "Service is currently unavailable. Try again later.",
-                  orElse: () => "An unexpected error occurred.",
-                  noDataFound: () => null);
-              if (message != null) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(message)));
-              }
-            }, (hostels) {
-              setState(() {
-                hostelResponseModel = hostels;
-              });
-            });
-          });
-        },
+      body: 
+      
+      
+      BlocBuilder<CommonHostelProcessBloc, CommonHostelProcessState>(
+        // listenWhen: (previous, current) => previous.hostelGetFailureOrSuccess != current.hostelGetFailureOrSuccess,
+        // listener: (context, state) {
+        //   state.hostelGetFailureOrSuccess.fold(() {}, (either) {
+        //     either.fold((failure) {
+        //       failure.maybeWhen(
+        //         noDataFound: () {
+        //           setState(() {
+        //             noHostelDataPresent = true;
+        //           });
+        //         },
+        //         orElse: () {},
+        //       );
+        //       String? message = failure.maybeWhen(
+        //           serviceUnavailable: () =>
+        //               "Service is currently unavailable. Try again later.",
+        //           orElse: () => "An unexpected error occurred.",
+        //           noDataFound: () => null);
+        //       if (message != null) {
+        //         ScaffoldMessenger.of(context)
+        //             .showSnackBar(SnackBar(content: Text(message)));
+        //       }
+        //     }, (hostels) {
+        //       setState(() {
+        //         hostelResponseModel = hostels;
+        //       });
+        //     });
+        //   });
+        // },
         builder: (context, state) {
-          if (hostelResponseModel == null && noHostelDataPresent != true) {
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.deepPurple),
-            );
-          }
+          
+          // if (state.hostelData == null && noHostelDataPresent != true) {
+          //   return const Center(
+          //     child: CircularProgressIndicator(color: Colors.deepPurple),
+          //   );
+          // }
 
-          if (noHostelDataPresent == true) {
+          if (state.hostelData.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -198,7 +212,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
             );
           }
 
-          final filteredHostels = hostelResponseModel!
+          final filteredHostels = state.hostelData
               .where((hostel) => hostel.hostelName
                   .toLowerCase()
                   .contains(_searchQuery.toLowerCase()))
@@ -257,25 +271,36 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                           ClipRRect(
                             borderRadius: const BorderRadius.vertical(
                                 top: Radius.circular(12)),
-                            child: CachedNetworkImage(
-                              height: 150,
-                              imageUrl: hostel.hostelImages[0],
-                              width: MediaQuery.of(context).size.width - 40,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.deepPurpleAccent,
-                                ),
-                              ),
-                              errorWidget: (context, url, error) => Container(
-                                color: Colors.grey[850],
-                                child: const Icon(
-                                  Icons.broken_image,
-                                  color: Colors.white70,
-                                  size: 50,
-                                ),
-                              ),
-                            ),
+                            child: hostel.hostelImages.isNotEmpty
+                                ? CachedNetworkImage(
+                                    height: 150,
+                                    imageUrl: hostel.hostelImages[0],
+                                    width: MediaQuery.of(context).size.width - 40,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.deepPurpleAccent,
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) => Container(
+                                      color: Colors.grey[850],
+                                      child: const Icon(
+                                        Icons.broken_image,
+                                        color: Colors.white70,
+                                        size: 50,
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    height: 150,
+                                    width: MediaQuery.of(context).size.width - 40,
+                                    color: Colors.grey[850],
+                                    child: const Icon(
+                                      Icons.hotel,
+                                      color: Colors.white70,
+                                      size: 50,
+                                    ),
+                                  ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(12),
@@ -313,7 +338,6 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                     ),
                                   ],
                                 ),
-                                // const SizedBox(height: 8),
                                 Text(
                                   hostel.description,
                                   maxLines: 2,
@@ -324,7 +348,6 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                     color: Colors.white70,
                                   ),
                                 ),
-                                // const SizedBox(height: 12),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

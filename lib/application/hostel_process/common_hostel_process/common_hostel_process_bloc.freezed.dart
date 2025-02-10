@@ -32,22 +32,7 @@ mixin _$CommonHostelProcessEvent {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -64,23 +49,7 @@ mixin _$CommonHostelProcessEvent {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -97,23 +66,7 @@ mixin _$CommonHostelProcessEvent {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -334,22 +287,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -370,23 +308,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -407,23 +329,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -607,22 +513,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -642,23 +533,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -678,23 +553,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -875,22 +734,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -910,23 +754,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -946,23 +774,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -1109,22 +921,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -1144,23 +941,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -1180,23 +961,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -1356,22 +1121,7 @@ class _$getHostelByIdImpl implements _getHostelById {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -1391,23 +1141,7 @@ class _$getHostelByIdImpl implements _getHostelById {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -1427,23 +1161,7 @@ class _$getHostelByIdImpl implements _getHostelById {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -1535,23 +1253,7 @@ abstract class _$$submitButtonPressedImplCopyWith<$Res> {
           $Res Function(_$submitButtonPressedImpl) then) =
       __$$submitButtonPressedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {String approvalType,
-      String hostelName,
-      String? hostelId,
-      String ownerName,
-      String hostelOwnerUserId,
-      String phoneNumber,
-      String rent,
-      String rooms,
-      LatLng location,
-      bool isEdit,
-      String vacancy,
-      String description,
-      String distFromCollege,
-      String isMessAvailable,
-      String isMensHostel,
-      List<XFile> hostelImages});
+  $Res call({HostelResponseModel hostelData, List<XFile> hostelImages});
 }
 
 /// @nodoc
@@ -1568,84 +1270,14 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? approvalType = null,
-    Object? hostelName = null,
-    Object? hostelId = freezed,
-    Object? ownerName = null,
-    Object? hostelOwnerUserId = null,
-    Object? phoneNumber = null,
-    Object? rent = null,
-    Object? rooms = null,
-    Object? location = null,
-    Object? isEdit = null,
-    Object? vacancy = null,
-    Object? description = null,
-    Object? distFromCollege = null,
-    Object? isMessAvailable = null,
-    Object? isMensHostel = null,
+    Object? hostelData = null,
     Object? hostelImages = null,
   }) {
     return _then(_$submitButtonPressedImpl(
-      approvalType: null == approvalType
-          ? _value.approvalType
-          : approvalType // ignore: cast_nullable_to_non_nullable
-              as String,
-      hostelName: null == hostelName
-          ? _value.hostelName
-          : hostelName // ignore: cast_nullable_to_non_nullable
-              as String,
-      hostelId: freezed == hostelId
-          ? _value.hostelId
-          : hostelId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ownerName: null == ownerName
-          ? _value.ownerName
-          : ownerName // ignore: cast_nullable_to_non_nullable
-              as String,
-      hostelOwnerUserId: null == hostelOwnerUserId
-          ? _value.hostelOwnerUserId
-          : hostelOwnerUserId // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      rent: null == rent
-          ? _value.rent
-          : rent // ignore: cast_nullable_to_non_nullable
-              as String,
-      rooms: null == rooms
-          ? _value.rooms
-          : rooms // ignore: cast_nullable_to_non_nullable
-              as String,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as LatLng,
-      isEdit: null == isEdit
-          ? _value.isEdit
-          : isEdit // ignore: cast_nullable_to_non_nullable
-              as bool,
-      vacancy: null == vacancy
-          ? _value.vacancy
-          : vacancy // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      distFromCollege: null == distFromCollege
-          ? _value.distFromCollege
-          : distFromCollege // ignore: cast_nullable_to_non_nullable
-              as String,
-      isMessAvailable: null == isMessAvailable
-          ? _value.isMessAvailable
-          : isMessAvailable // ignore: cast_nullable_to_non_nullable
-              as String,
-      isMensHostel: null == isMensHostel
-          ? _value.isMensHostel
-          : isMensHostel // ignore: cast_nullable_to_non_nullable
-              as String,
+      hostelData: null == hostelData
+          ? _value.hostelData
+          : hostelData // ignore: cast_nullable_to_non_nullable
+              as HostelResponseModel,
       hostelImages: null == hostelImages
           ? _value._hostelImages
           : hostelImages // ignore: cast_nullable_to_non_nullable
@@ -1658,55 +1290,11 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
 
 class _$submitButtonPressedImpl implements _submitButtonPressed {
   const _$submitButtonPressedImpl(
-      {required this.approvalType,
-      required this.hostelName,
-      this.hostelId,
-      required this.ownerName,
-      required this.hostelOwnerUserId,
-      required this.phoneNumber,
-      required this.rent,
-      required this.rooms,
-      required this.location,
-      required this.isEdit,
-      required this.vacancy,
-      required this.description,
-      required this.distFromCollege,
-      required this.isMessAvailable,
-      required this.isMensHostel,
-      required final List<XFile> hostelImages})
+      {required this.hostelData, required final List<XFile> hostelImages})
       : _hostelImages = hostelImages;
 
   @override
-  final String approvalType;
-  @override
-  final String hostelName;
-  @override
-  final String? hostelId;
-  @override
-  final String ownerName;
-  @override
-  final String hostelOwnerUserId;
-  @override
-  final String phoneNumber;
-  @override
-  final String rent;
-  @override
-  final String rooms;
-  @override
-  final LatLng location;
-  @override
-  final bool isEdit;
-// required String personsPerRoom,
-  @override
-  final String vacancy;
-  @override
-  final String description;
-  @override
-  final String distFromCollege;
-  @override
-  final String isMessAvailable;
-  @override
-  final String isMensHostel;
+  final HostelResponseModel hostelData;
   final List<XFile> _hostelImages;
   @override
   List<XFile> get hostelImages {
@@ -1717,7 +1305,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
 
   @override
   String toString() {
-    return 'CommonHostelProcessEvent.submitButtonPressed(approvalType: $approvalType, hostelName: $hostelName, hostelId: $hostelId, ownerName: $ownerName, hostelOwnerUserId: $hostelOwnerUserId, phoneNumber: $phoneNumber, rent: $rent, rooms: $rooms, location: $location, isEdit: $isEdit, vacancy: $vacancy, description: $description, distFromCollege: $distFromCollege, isMessAvailable: $isMessAvailable, isMensHostel: $isMensHostel, hostelImages: $hostelImages)';
+    return 'CommonHostelProcessEvent.submitButtonPressed(hostelData: $hostelData, hostelImages: $hostelImages)';
   }
 
   @override
@@ -1725,54 +1313,14 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$submitButtonPressedImpl &&
-            (identical(other.approvalType, approvalType) ||
-                other.approvalType == approvalType) &&
-            (identical(other.hostelName, hostelName) ||
-                other.hostelName == hostelName) &&
-            (identical(other.hostelId, hostelId) ||
-                other.hostelId == hostelId) &&
-            (identical(other.ownerName, ownerName) ||
-                other.ownerName == ownerName) &&
-            (identical(other.hostelOwnerUserId, hostelOwnerUserId) ||
-                other.hostelOwnerUserId == hostelOwnerUserId) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.rent, rent) || other.rent == rent) &&
-            (identical(other.rooms, rooms) || other.rooms == rooms) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.isEdit, isEdit) || other.isEdit == isEdit) &&
-            (identical(other.vacancy, vacancy) || other.vacancy == vacancy) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.distFromCollege, distFromCollege) ||
-                other.distFromCollege == distFromCollege) &&
-            (identical(other.isMessAvailable, isMessAvailable) ||
-                other.isMessAvailable == isMessAvailable) &&
-            (identical(other.isMensHostel, isMensHostel) ||
-                other.isMensHostel == isMensHostel) &&
+            (identical(other.hostelData, hostelData) ||
+                other.hostelData == hostelData) &&
             const DeepCollectionEquality()
                 .equals(other._hostelImages, _hostelImages));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      approvalType,
-      hostelName,
-      hostelId,
-      ownerName,
-      hostelOwnerUserId,
-      phoneNumber,
-      rent,
-      rooms,
-      location,
-      isEdit,
-      vacancy,
-      description,
-      distFromCollege,
-      isMessAvailable,
-      isMensHostel,
+  int get hashCode => Object.hash(runtimeType, hostelData,
       const DeepCollectionEquality().hash(_hostelImages));
 
   /// Create a copy of CommonHostelProcessEvent
@@ -1801,44 +1349,13 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
     required TResult Function(String approvalType) getAdminHostelList,
   }) {
-    return submitButtonPressed(
-        approvalType,
-        hostelName,
-        hostelId,
-        ownerName,
-        hostelOwnerUserId,
-        phoneNumber,
-        rent,
-        rooms,
-        location,
-        isEdit,
-        vacancy,
-        description,
-        distFromCollege,
-        isMessAvailable,
-        isMensHostel,
-        hostelImages);
+    return submitButtonPressed(hostelData, hostelImages);
   }
 
   @override
@@ -1852,45 +1369,13 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
     TResult? Function(String approvalType)? getAdminHostelList,
   }) {
-    return submitButtonPressed?.call(
-        approvalType,
-        hostelName,
-        hostelId,
-        ownerName,
-        hostelOwnerUserId,
-        phoneNumber,
-        rent,
-        rooms,
-        location,
-        isEdit,
-        vacancy,
-        description,
-        distFromCollege,
-        isMessAvailable,
-        isMensHostel,
-        hostelImages);
+    return submitButtonPressed?.call(hostelData, hostelImages);
   }
 
   @override
@@ -1904,23 +1389,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -1928,23 +1397,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     required TResult orElse(),
   }) {
     if (submitButtonPressed != null) {
-      return submitButtonPressed(
-          approvalType,
-          hostelName,
-          hostelId,
-          ownerName,
-          hostelOwnerUserId,
-          phoneNumber,
-          rent,
-          rooms,
-          location,
-          isEdit,
-          vacancy,
-          description,
-          distFromCollege,
-          isMessAvailable,
-          isMensHostel,
-          hostelImages);
+      return submitButtonPressed(hostelData, hostelImages);
     }
     return orElse();
   }
@@ -2011,38 +1464,10 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
 
 abstract class _submitButtonPressed implements CommonHostelProcessEvent {
   const factory _submitButtonPressed(
-      {required final String approvalType,
-      required final String hostelName,
-      final String? hostelId,
-      required final String ownerName,
-      required final String hostelOwnerUserId,
-      required final String phoneNumber,
-      required final String rent,
-      required final String rooms,
-      required final LatLng location,
-      required final bool isEdit,
-      required final String vacancy,
-      required final String description,
-      required final String distFromCollege,
-      required final String isMessAvailable,
-      required final String isMensHostel,
+      {required final HostelResponseModel hostelData,
       required final List<XFile> hostelImages}) = _$submitButtonPressedImpl;
 
-  String get approvalType;
-  String get hostelName;
-  String? get hostelId;
-  String get ownerName;
-  String get hostelOwnerUserId;
-  String get phoneNumber;
-  String get rent;
-  String get rooms;
-  LatLng get location;
-  bool get isEdit; // required String personsPerRoom,
-  String get vacancy;
-  String get description;
-  String get distFromCollege;
-  String get isMessAvailable;
-  String get isMensHostel;
+  HostelResponseModel get hostelData;
   List<XFile> get hostelImages;
 
   /// Create a copy of CommonHostelProcessEvent
@@ -2136,22 +1561,7 @@ class _$getOwnersHostelListImpl implements _getOwnersHostelList {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -2171,23 +1581,7 @@ class _$getOwnersHostelListImpl implements _getOwnersHostelList {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -2207,23 +1601,7 @@ class _$getOwnersHostelListImpl implements _getOwnersHostelList {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -2364,22 +1742,7 @@ class _$getAllHostelListImpl implements _getAllHostelList {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -2399,23 +1762,7 @@ class _$getAllHostelListImpl implements _getAllHostelList {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -2435,23 +1782,7 @@ class _$getAllHostelListImpl implements _getAllHostelList {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -2613,22 +1944,7 @@ class _$getAdminHostelListImpl implements _getAdminHostelList {
     required TResult Function() findLocationButtonPressed,
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)
+            HostelResponseModel hostelData, List<XFile> hostelImages)
         submitButtonPressed,
     required TResult Function(String userId) getOwnersHostelList,
     required TResult Function() getAllHostelList,
@@ -2648,23 +1964,7 @@ class _$getAdminHostelListImpl implements _getAdminHostelList {
         deleteButtonPressed,
     TResult? Function()? findLocationButtonPressed,
     TResult? Function(String hostelId)? getHostelById,
-    TResult? Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult? Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult? Function(String userId)? getOwnersHostelList,
     TResult? Function()? getAllHostelList,
@@ -2684,23 +1984,7 @@ class _$getAdminHostelListImpl implements _getAdminHostelList {
         deleteButtonPressed,
     TResult Function()? findLocationButtonPressed,
     TResult Function(String hostelId)? getHostelById,
-    TResult Function(
-            String approvalType,
-            String hostelName,
-            String? hostelId,
-            String ownerName,
-            String hostelOwnerUserId,
-            String phoneNumber,
-            String rent,
-            String rooms,
-            LatLng location,
-            bool isEdit,
-            String vacancy,
-            String description,
-            String distFromCollege,
-            String isMessAvailable,
-            String isMensHostel,
-            List<XFile> hostelImages)?
+    TResult Function(HostelResponseModel hostelData, List<XFile> hostelImages)?
         submitButtonPressed,
     TResult Function(String userId)? getOwnersHostelList,
     TResult Function()? getAllHostelList,
@@ -2803,6 +2087,8 @@ mixin _$CommonHostelProcessState {
   HostelResponseModel get hostelDataById =>
       throw _privateConstructorUsedError; // required bool isSubmitting,
   bool get locationFetched => throw _privateConstructorUsedError;
+  List<HostelResponseModel> get hostelData =>
+      throw _privateConstructorUsedError;
   Option<Either<FormFailures, List<HostelResponseModel>>>
       get hostelGetFailureOrSuccess => throw _privateConstructorUsedError;
 
@@ -2831,6 +2117,7 @@ abstract class $CommonHostelProcessStateCopyWith<$Res> {
       Option<Either<LocationFetchFailures, LatLng>> locationOption,
       HostelResponseModel hostelDataById,
       bool locationFetched,
+      List<HostelResponseModel> hostelData,
       Option<Either<FormFailures, List<HostelResponseModel>>>
           hostelGetFailureOrSuccess});
 }
@@ -2861,6 +2148,7 @@ class _$CommonHostelProcessStateCopyWithImpl<$Res,
     Object? locationOption = null,
     Object? hostelDataById = null,
     Object? locationFetched = null,
+    Object? hostelData = null,
     Object? hostelGetFailureOrSuccess = null,
   }) {
     return _then(_value.copyWith(
@@ -2904,6 +2192,10 @@ class _$CommonHostelProcessStateCopyWithImpl<$Res,
           ? _value.locationFetched
           : locationFetched // ignore: cast_nullable_to_non_nullable
               as bool,
+      hostelData: null == hostelData
+          ? _value.hostelData
+          : hostelData // ignore: cast_nullable_to_non_nullable
+              as List<HostelResponseModel>,
       hostelGetFailureOrSuccess: null == hostelGetFailureOrSuccess
           ? _value.hostelGetFailureOrSuccess
           : hostelGetFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -2933,6 +2225,7 @@ abstract class _$$CommonHostelProcessStateImplCopyWith<$Res>
       Option<Either<LocationFetchFailures, LatLng>> locationOption,
       HostelResponseModel hostelDataById,
       bool locationFetched,
+      List<HostelResponseModel> hostelData,
       Option<Either<FormFailures, List<HostelResponseModel>>>
           hostelGetFailureOrSuccess});
 }
@@ -2962,6 +2255,7 @@ class __$$CommonHostelProcessStateImplCopyWithImpl<$Res>
     Object? locationOption = null,
     Object? hostelDataById = null,
     Object? locationFetched = null,
+    Object? hostelData = null,
     Object? hostelGetFailureOrSuccess = null,
   }) {
     return _then(_$CommonHostelProcessStateImpl(
@@ -3005,6 +2299,10 @@ class __$$CommonHostelProcessStateImplCopyWithImpl<$Res>
           ? _value.locationFetched
           : locationFetched // ignore: cast_nullable_to_non_nullable
               as bool,
+      hostelData: null == hostelData
+          ? _value._hostelData
+          : hostelData // ignore: cast_nullable_to_non_nullable
+              as List<HostelResponseModel>,
       hostelGetFailureOrSuccess: null == hostelGetFailureOrSuccess
           ? _value.hostelGetFailureOrSuccess
           : hostelGetFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -3027,8 +2325,10 @@ class _$CommonHostelProcessStateImpl implements _CommonHostelProcessState {
       required this.locationOption,
       required this.hostelDataById,
       required this.locationFetched,
+      required final List<HostelResponseModel> hostelData,
       required this.hostelGetFailureOrSuccess})
-      : _respList = respList;
+      : _respList = respList,
+        _hostelData = hostelData;
 
   @override
   final bool isSubmitting;
@@ -3058,13 +2358,21 @@ class _$CommonHostelProcessStateImpl implements _CommonHostelProcessState {
 // required bool isSubmitting,
   @override
   final bool locationFetched;
+  final List<HostelResponseModel> _hostelData;
+  @override
+  List<HostelResponseModel> get hostelData {
+    if (_hostelData is EqualUnmodifiableListView) return _hostelData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_hostelData);
+  }
+
   @override
   final Option<Either<FormFailures, List<HostelResponseModel>>>
       hostelGetFailureOrSuccess;
 
   @override
   String toString() {
-    return 'CommonHostelProcessState(isSubmitting: $isSubmitting, successOrFailure: $successOrFailure, getAllRatingsSuccessOrFailure: $getAllRatingsSuccessOrFailure, respList: $respList, location: $location, showErrorMessages: $showErrorMessages, submitFailureOrSuccessOption: $submitFailureOrSuccessOption, locationOption: $locationOption, hostelDataById: $hostelDataById, locationFetched: $locationFetched, hostelGetFailureOrSuccess: $hostelGetFailureOrSuccess)';
+    return 'CommonHostelProcessState(isSubmitting: $isSubmitting, successOrFailure: $successOrFailure, getAllRatingsSuccessOrFailure: $getAllRatingsSuccessOrFailure, respList: $respList, location: $location, showErrorMessages: $showErrorMessages, submitFailureOrSuccessOption: $submitFailureOrSuccessOption, locationOption: $locationOption, hostelDataById: $hostelDataById, locationFetched: $locationFetched, hostelData: $hostelData, hostelGetFailureOrSuccess: $hostelGetFailureOrSuccess)';
   }
 
   @override
@@ -3095,6 +2403,8 @@ class _$CommonHostelProcessStateImpl implements _CommonHostelProcessState {
                 other.hostelDataById == hostelDataById) &&
             (identical(other.locationFetched, locationFetched) ||
                 other.locationFetched == locationFetched) &&
+            const DeepCollectionEquality()
+                .equals(other._hostelData, _hostelData) &&
             (identical(other.hostelGetFailureOrSuccess,
                     hostelGetFailureOrSuccess) ||
                 other.hostelGetFailureOrSuccess == hostelGetFailureOrSuccess));
@@ -3113,6 +2423,7 @@ class _$CommonHostelProcessStateImpl implements _CommonHostelProcessState {
       locationOption,
       hostelDataById,
       locationFetched,
+      const DeepCollectionEquality().hash(_hostelData),
       hostelGetFailureOrSuccess);
 
   /// Create a copy of CommonHostelProcessState
@@ -3140,6 +2451,7 @@ abstract class _CommonHostelProcessState implements CommonHostelProcessState {
           locationOption,
       required final HostelResponseModel hostelDataById,
       required final bool locationFetched,
+      required final List<HostelResponseModel> hostelData,
       required final Option<Either<FormFailures, List<HostelResponseModel>>>
           hostelGetFailureOrSuccess}) = _$CommonHostelProcessStateImpl;
 
@@ -3164,6 +2476,8 @@ abstract class _CommonHostelProcessState implements CommonHostelProcessState {
   HostelResponseModel get hostelDataById; // required bool isSubmitting,
   @override
   bool get locationFetched;
+  @override
+  List<HostelResponseModel> get hostelData;
   @override
   Option<Either<FormFailures, List<HostelResponseModel>>>
       get hostelGetFailureOrSuccess;

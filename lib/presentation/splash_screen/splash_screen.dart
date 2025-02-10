@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_student.dart';
@@ -42,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(builder: (context) => const BottomNavigationBarStudentWidget()),
           );
         } else if (role == 'Hostel_Owner') {
+          context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getOwnersHostelList(userId: user.uid));
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const BottomNavigationBarOwnerWidget()),

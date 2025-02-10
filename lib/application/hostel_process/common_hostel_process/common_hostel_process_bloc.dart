@@ -39,6 +39,7 @@ class CommonHostelProcessBloc
             ));
           }, (s) {
             emit(state.copyWith(
+              hostelData: s,
               isSubmitting: false,
               hostelGetFailureOrSuccess: some(right(s)),
             ));
@@ -96,34 +97,17 @@ class CommonHostelProcessBloc
         // print(
         //     "in bloc call : ${value.distFromCollege} and ${value.isMessAvailable} hostelid = ${value.hostelId}");
         // print("true is working in bloc ${value.hostelId}");
-        final resp = await ihostelFacade.saveDataToDb(
-          hostelId: value.hostelId??'',
-          hostelOwnerUserId: value.hostelOwnerUserId,
-            isEdit: value.isEdit,
-            hostelName: value.hostelName,
-            ownerName: value.ownerName,
-            phoneNumber: value.phoneNumber,
-            rent: value.rent,
-            rooms: value.rooms,
-            location: value.location,
-            // personsPerRoom: value.personsPerRoom,
-            vacancy: value.vacancy,
-            description: value.description,
-            distFromCollege: value.distFromCollege,
-            isMessAvailable: value.isMessAvailable,
-            isMensHostel: value.isMensHostel,
-            hostelImages: value.hostelImages,
-            hostelIdForEdit: value.hostelId, approvalType: value.approvalType);
+        final resp = await ihostelFacade.saveNewHostelData(hostelData: value.hostelData, hostelImages: value.hostelImages);
 
         resp.fold((f) {
           emit(state.copyWith(
-            successOrFailure: none(),
+            // successOrFailure: none(),
               showErrorMessages: true,
               isSubmitting: false,
               submitFailureOrSuccessOption: some(left(f))));
         }, (s) {
           emit(state.copyWith(
-            successOrFailure: none(),
+            // successOrFailure: none(),
               isSubmitting: false,
               submitFailureOrSuccessOption: some(right(s))));
         });

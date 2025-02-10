@@ -34,10 +34,9 @@ class HostelDetailsAdminAppScreen extends StatelessWidget {
       ),
       body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
         listener: (context, state) {
-print(state.isSubmitting);
+          print(state.isSubmitting);
         },
         builder: (context, state) {
-          
           return Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -60,8 +59,9 @@ print(state.isSubmitting);
                 _buildSectionTitle("Hostel Owner Details"),
                 _buildOwnerDetails(),
                 const SizedBox(height: 30),
-                state.isSubmitting?
-                Center(child: CircularProgressIndicator()):_buildActionButtons(context: context, hostel: hostelResp),
+                state.isSubmitting
+                    ? Center(child: CircularProgressIndicator())
+                    : _buildActionButtons(context: context, hostel: hostelResp),
               ],
             ),
           );
@@ -219,29 +219,34 @@ print(state.isSubmitting);
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildActionButton("Approve", Colors.green, () {
-                debugPrint("approve button working");
-                context.read<CommonHostelProcessBloc>().add(
-                    CommonHostelProcessEvent.submitButtonPressed(
-                        hostelImages: [],
-                         hostelOwnerUserId: hostel.hostelOwnerUserId,
-                         hostelId: hostel.hostelId,
-                        approvalType: 'approved',
-                        hostelName: hostel.hostelName,
-                        ownerName: hostel.ownerName,
-                        phoneNumber: hostel.phoneNumber,
-                        rent: hostel.rent,
-                        rooms: hostel.rooms,
-                        location: LatLng(hostel.location.latitude,
-                            hostel.location.longitude),
-                        isEdit: false,
-                        vacancy: hostel.vacancy,
-                        description: hostel.description,
-                        distFromCollege: hostel.distFromCollege,
-                        isMessAvailable: hostel.isMessAvailable,
-                        isMensHostel: hostel.isMensHostel,
-                        ));
-              }),
+              _buildActionButton(
+                "Approve",
+                Colors.green,
+                () {
+                  debugPrint("approve button working");
+                  // context.read<CommonHostelProcessBloc>().add(
+                  //       CommonHostelProcessEvent.submitButtonPressed(
+                  //         hostelImages: [],
+                  //         hostelOwnerUserId: hostel.hostelOwnerUserId,
+                  //         hostelId: hostel.hostelId,
+                  //         approvalType: 'approved',
+                  //         hostelName: hostel.hostelName,
+                  //         ownerName: hostel.ownerName,
+                  //         phoneNumber: hostel.phoneNumber,
+                  //         rent: hostel.rent,
+                  //         rooms: hostel.rooms,
+                  //         location: LatLng(hostel.location.latitude,
+                  //             hostel.location.longitude),
+                  //         isEdit: false,
+                  //         vacancy: hostel.vacancy,
+                  //         description: hostel.description,
+                  //         distFromCollege: hostel.distFromCollege,
+                  //         isMessAvailable: hostel.isMessAvailable,
+                  //         isMensHostel: hostel.isMensHostel,
+                  //       ),
+                  //     );
+                },
+              ),
               _buildActionButton("Reject", Colors.red, () {
                 _showRejectDialog(
                     context: context,
