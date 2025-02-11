@@ -21,17 +21,14 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
   String _searchQuery = "";
   String? ownerUserId;
   bool? noHostelDataPresent;
-// bool _hasFetchedHostels = false; // Add this flag
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _loadUserIdAndFetchHostels();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _loadUserIdAndFetchHostels();
+  }
 
   Future<void> _loadUserIdAndFetchHostels() async {
-  //   if (_hasFetchedHostels) return; // Prevent duplicate calls
-  // _hasFetchedHostels = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('owner_userid');
 
@@ -40,24 +37,22 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
     // });
 
     if (userId != null) {
-      context
+      if (!context.mounted) return ;
+        context
           .read<CommonHostelProcessBloc>()
           .add(CommonHostelProcessEvent.getOwnersHostelList(userId: userId.toString()));
     } else {
+      if (!context.mounted) return ;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("No data found. Please log in again.")),
       );
     }
   }
 
-//   Future<void> _refreshHostels() async {
-//   // _hasFetchedHostels = false;
-//   await _loadUserIdAndFetchHostels();
-// }
+
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: Color(0xFF1A1A2E),
       appBar: AppBar(
@@ -122,42 +117,42 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
       body: 
       
       
-      BlocBuilder<CommonHostelProcessBloc, CommonHostelProcessState>(
-        // listenWhen: (previous, current) => previous.hostelGetFailureOrSuccess != current.hostelGetFailureOrSuccess,
-        // listener: (context, state) {
-        //   state.hostelGetFailureOrSuccess.fold(() {}, (either) {
-        //     either.fold((failure) {
-        //       failure.maybeWhen(
-        //         noDataFound: () {
-        //           setState(() {
-        //             noHostelDataPresent = true;
-        //           });
-        //         },
-        //         orElse: () {},
-        //       );
-        //       String? message = failure.maybeWhen(
-        //           serviceUnavailable: () =>
-        //               "Service is currently unavailable. Try again later.",
-        //           orElse: () => "An unexpected error occurred.",
-        //           noDataFound: () => null);
-        //       if (message != null) {
-        //         ScaffoldMessenger.of(context)
-        //             .showSnackBar(SnackBar(content: Text(message)));
-        //       }
-        //     }, (hostels) {
-        //       setState(() {
-        //         hostelResponseModel = hostels;
-        //       });
-        //     });
-        //   });
-        // },
+      BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
+        listenWhen: (previous, current) => previous.hostelGetFailureOrSuccess != current.hostelGetFailureOrSuccess,
+        listener: (context, state) {
+          state.hostelGetFailureOrSuccess.fold(() {}, (either) {
+            either.fold((failure) {
+              failure.maybeWhen(
+                noDataFound: () {
+                  setState(() {
+                    noHostelDataPresent = true;
+                  });
+                },
+                orElse: () {},
+              );
+              String? message = failure.maybeWhen(
+                  serviceUnavailable: () =>
+                      "Service is currently unavailable. Try again later.",
+                  orElse: () => "An unexpected error occurred.",
+                  noDataFound: () => null);
+              if (message != null) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message)));
+              }
+            }, (hostels) {
+              setState(() {
+                hostelResponseModel = hostels;
+              });
+            });
+          });
+        },
         builder: (context, state) {
           
-          // if (state.hostelData == null && noHostelDataPresent != true) {
-          //   return const Center(
-          //     child: CircularProgressIndicator(color: Colors.deepPurple),
-          //   );
-          // }
+          if (hostelResponseModel == null && noHostelDataPresent != true) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.deepPurple),
+            );
+          }
 
           if (state.hostelData.isEmpty) {
             return Center(

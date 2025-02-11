@@ -8,10 +8,25 @@ import '../core/location_fetch_failures.dart';
 
 abstract class IHostelProcessFacade {
   Future<Either<LocationFetchFailures, LatLng>> getCurrentLocation();
-  Future<Either<FormFailures, Unit>> saveNewHostelData({
-    required HostelResponseModel hostelData,
-    required List<XFile> hostelImages,
-  });
+  Future<Either<FormFailures, Unit>> saveDataToDb(
+      {required bool isEdit,
+      required String approvalType,
+      String? hostelIdForEdit,
+      required String hostelName,
+      required String ownerName,
+      required String rating,
+      required String hostelId,
+      required String hostelOwnerUserId,
+      required String phoneNumber,
+      required String rent,
+      required String distFromCollege,
+      required String isMessAvailable,
+      required String isMensHostel,
+      required String rooms,
+      required LatLng location,
+      required String vacancy,
+      required String description,
+      required List<XFile> hostelImages});
   Future<Either<FormFailures, List<HostelResponseModel>>> getOwnerHostelList(
       {required String userId});
 

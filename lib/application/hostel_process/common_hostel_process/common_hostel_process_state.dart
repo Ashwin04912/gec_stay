@@ -17,6 +17,7 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
     required bool locationFetched,
     required List<HostelResponseModel> hostelData,
     required Option<Either<FormFailures,List<HostelResponseModel>>> hostelGetFailureOrSuccess,
+   
   }) = _CommonHostelProcessState;
 
   factory CommonHostelProcessState.initial() => CommonHostelProcessState(
@@ -24,6 +25,7 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
       successOrFailure: none(),
       hostelGetFailureOrSuccess: none(),
       getAllRatingsSuccessOrFailure: none(),
+      
       respList: [],
       hostelData: [],
       hostelDataById: HostelResponseModel(

@@ -23,9 +23,25 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
 
       const factory CommonHostelProcessEvent.getHostelById({required String hostelId}) = _getHostelById;
       
-
   const factory CommonHostelProcessEvent.submitButtonPressed({
-    required HostelResponseModel hostelData,
+    required String approvalType,
+    required String hostelName,
+     String? hostelId,
+    required String ownerName,
+    required String hostelOwnerUserId,
+    required String phoneNumber,
+    required String rent,
+    required String rooms,
+    required LatLng location,
+    required bool isEdit,
+    // required String personsPerRoom,
+    required String vacancy,
+    required String description,
+    required String rating,
+    required String distFromCollege,
+    
+    required String isMessAvailable,
+required String isMensHostel, 
     required List<XFile> hostelImages,
   }) = _submitButtonPressed;
   

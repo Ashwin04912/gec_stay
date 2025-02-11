@@ -26,7 +26,12 @@ class CommonHostelProcessBloc
         getOwnersHostelList: (_getOwnersHostelList value) async {
           emit(state.copyWith(
             isSubmitting: true,
+            locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
             hostelGetFailureOrSuccess: none(),
+            
           ));
           print("bloc userId is ${value.userId}");
           final resp =
@@ -40,6 +45,7 @@ class CommonHostelProcessBloc
           }, (s) {
             emit(state.copyWith(
               hostelData: s,
+                          submitFailureOrSuccessOption:none(),
               isSubmitting: false,
               hostelGetFailureOrSuccess: some(right(s)),
             ));
@@ -48,6 +54,10 @@ class CommonHostelProcessBloc
         getAllHostelList: (_getAllHostelList value) async {
           emit(state.copyWith(
             isSubmitting: true,
+            locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
             hostelGetFailureOrSuccess: none(),
           ));
           final resp = await ihostelFacade.getAllHostelList();
@@ -66,7 +76,14 @@ class CommonHostelProcessBloc
         },
         
         findLocationButtonPressed: (value) async {
-        emit(state.copyWith(isSubmitting: true, locationOption: none(),submitFailureOrSuccessOption: none(),));
+        emit(state.copyWith(isSubmitting: true,
+        
+        locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
+            hostelGetFailureOrSuccess: none(),
+         ));
 
         final location = await ihostelFacade.getCurrentLocation();
 
@@ -91,13 +108,33 @@ class CommonHostelProcessBloc
         emit(state.copyWith(
           successOrFailure: none(),
           isSubmitting: true,
+
           submitFailureOrSuccessOption: none(),
         ));
 
         // print(
         //     "in bloc call : ${value.distFromCollege} and ${value.isMessAvailable} hostelid = ${value.hostelId}");
         // print("true is working in bloc ${value.hostelId}");
-        final resp = await ihostelFacade.saveNewHostelData(hostelData: value.hostelData, hostelImages: value.hostelImages);
+          final resp = await ihostelFacade.saveDataToDb(
+            rating: value.rating,
+          hostelId: value.hostelId??'',
+          hostelOwnerUserId: value.hostelOwnerUserId,
+            isEdit: value.isEdit,
+            hostelName: value.hostelName,
+            ownerName: value.ownerName,
+            phoneNumber: value.phoneNumber,
+            rent: value.rent,
+            rooms: value.rooms,
+            location: value.location,
+            // personsPerRoom: value.personsPerRoom,
+            vacancy: value.vacancy,
+            description: value.description,
+            distFromCollege: value.distFromCollege,
+            isMessAvailable: value.isMessAvailable,
+            isMensHostel: value.isMensHostel,
+            hostelImages: value.hostelImages,
+            hostelIdForEdit: value.hostelId, approvalType: value.approvalType);
+
 
         resp.fold((f) {
           emit(state.copyWith(
@@ -113,9 +150,14 @@ class CommonHostelProcessBloc
         });
       }, submitReviewButtonPressed: (value) async {
         emit(state.copyWith(
-          submitFailureOrSuccessOption: none(),
+          locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
+            hostelGetFailureOrSuccess: none(),
+    
           isSubmitting: true,
-          successOrFailure: none(),
+         
           // getAllRatingsSuccessOrFailure: none()
         ));
         final resp = await ihostelFacade.rateTheHostel(
@@ -164,10 +206,13 @@ class CommonHostelProcessBloc
         });
       }, deleteButtonPressed: (_deleteButtonPressed value) async {
         emit(state.copyWith(
+          locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
+            hostelGetFailureOrSuccess: none(),
           isSubmitting: true,
-          successOrFailure: none(),
-          submitFailureOrSuccessOption: none(),
-          getAllRatingsSuccessOrFailure: none()
+
         ));
 
         final resp = await ihostelFacade.deleteHostel(
@@ -187,9 +232,14 @@ class CommonHostelProcessBloc
         });
       }, getHostelById: (_getHostelById value) async {
         emit(state.copyWith(
+          locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
+            hostelGetFailureOrSuccess: none(),
           isSubmitting: true,
-          successOrFailure: None(),
-          submitFailureOrSuccessOption: none()
+         
+     
         ));
         final hostelData =
             await ihostelFacade.getHostelById(hostelId: value.hostelId);
@@ -225,8 +275,13 @@ class CommonHostelProcessBloc
         });
       }, getAdminHostelList: (_getAdminHostelList value) async{ 
          emit(state.copyWith(
-            isSubmitting: true,
+          locationOption: none(),
+            successOrFailure: none(),
+            getAllRatingsSuccessOrFailure: none(),
+            submitFailureOrSuccessOption:none(),
             hostelGetFailureOrSuccess: none(),
+            isSubmitting: true,
+         
           ));
           final resp = await ihostelFacade.getAdminHostelList(aprovalType: value.approvalType);
 

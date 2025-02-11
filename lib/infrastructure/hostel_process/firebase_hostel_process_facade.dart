@@ -69,11 +69,31 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   }
 
   @override
-  Future<Either<FormFailures, Unit>> saveNewHostelData({
-    required HostelResponseModel hostelData,
+  Future<Either<FormFailures, Unit>> saveDataToDb({
+    bool? isEdit,
+    String? hostelIdForEdit,
+    required String approvalType,
+    required String hostelOwnerUserId,
+    required String hostelName,
+    required String ownerName,
+    required String phoneNumber,
+    required String rent,
+    required String rooms,
+    required LatLng location,
+    required String hostelId,
+    required String vacancy,
+    required String distFromCollege,
+    required String isMessAvailable,
+    required String isMensHostel,
     required List<XFile> hostelImages,
+    required String rating,
+    required String description,
   }) async {
     try {
+      List<String>? images;
+      print(
+          "In API call: $distFromCollege and $isMessAvailable and type $approvalType");
+
       // Retrieve user ID from shared preferences
       final prefs = await SharedPreferences.getInstance();
       final String? userId = prefs.getString('owner_userid');
@@ -83,136 +103,111 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         return left(const FormFailures.serviceUnavailable());
       }
 
-      // Upload images if provided
-      List<String> images = [];
-      if (hostelImages.isNotEmpty) {
+      // Upload images if new images are provided
+      if (isEdit == false && hostelImages.isNotEmpty) {
         final imageListResult =
             await uploadHostelImages(hostelImages: hostelImages);
 
-        final uploadedImages = imageListResult.fold(
+        imageListResult.fold(
           (failure) {
             debugPrint("Image upload failed: $failure");
-            return <String>[]; // Return empty list on failure
+            return left(const FormFailures.serverError());
           },
-          (urls) => urls,
+          (urls) {
+            images = urls;
+          },
         );
 
-        if (uploadedImages.isEmpty) {
+        if (images!.isEmpty) {
           debugPrint("No images uploaded successfully");
           return left(const FormFailures.serverError());
         }
-        images = uploadedImages;
       }
 
-      // Generate hostel ID
-      final String hostelId = const Uuid().v1();
+      final String hostelId = hostelIdForEdit ?? Uuid().v1();
 
-      // Corrected hostelDataMap
-      final Map<String, dynamic> hostelDataMap = {
-        'hostelOwnerUserId': userId,
-        'hostel_name': hostelData.hostelName,
-        'hostelId': hostelId,
-        'owner_name': hostelData.ownerName,
-        'phone_number': hostelData.phoneNumber,
-        'description': hostelData.description,
+      // Create a map of only non-null fields
+      final Map<String, dynamic> hostelData = {
+        if (hostelName.isNotEmpty) 'hostel_name': hostelName, //
+        if (ownerName.isNotEmpty) 'owner_name': ownerName, //
+        if (phoneNumber.isNotEmpty) 'phone_number': phoneNumber, //
+        if (description.isNotEmpty) 'description': description, //
+        if (distFromCollege.isNotEmpty) 'dist_from_college': distFromCollege, //
+        if (isMessAvailable.isNotEmpty) 'isMess_available': isMessAvailable,
+        if (isMensHostel.isNotEmpty) 'isMensHostel': isMensHostel,
+        if (rent.isNotEmpty) 'rent': rent,
+        if (rooms.isNotEmpty) 'rooms': rooms,
+        if (vacancy.isNotEmpty) 'vacancy': vacancy,
+        if (images != null) 'imageList': images,
         'location': {
-          'latitude': hostelData.location.latitude,
-          'longitude': hostelData.location.longitude,
+          'latitude': location.latitude,
+          'longitude': location.longitude,
         },
-        'dist_from_college': hostelData.distFromCollege,
-        'isMess_available': hostelData.isMessAvailable,
-        'isMensHostel': hostelData.isMensHostel,
-        'rent': hostelData.rent,
-        'rooms': hostelData.rooms,
-        'vacancy': hostelData.vacancy,
-        'imageList': images,
-        'rating': '0',
-        'approval': 'pending',
+        'hostelId': hostelId,
+        'hostelOwnerUserId':hostelOwnerUserId, 
+        'approval': approvalType,
+        'rating':'0'
       };
 
-      // Save hostel data to Firestore
-      await fireStore
-          .collection('my_hostels')
-          .doc(userId)
-          .collection('hostels')
-          .doc(hostelId)
-          .set(hostelDataMap);
+      // Save or update hostel data
+      if (isEdit == true) {
+        await fireStore
+            .collection('my_hostels')
+            .doc(hostelOwnerUserId)
+            .collection('hostels')
+            .doc(hostelIdForEdit)
+            .set(hostelData,
+                SetOptions(merge: true)); // 🔥 Update only changed fields
 
-      await fireStore
-          .collection('all_hostel_list')
-          .doc(hostelId)
-          .set(hostelDataMap);
-
-      debugPrint('New hostel added with ID: $hostelId');
-      return right(unit);
-    } catch (e) {
-      debugPrint("Error saving new hostel: $e");
-      return left(const FormFailures.serviceUnavailable());
-    }
-  }
-
-  Future<Either<FormFailures, Unit>> editHostelData({
-    required String hostelId,
-    required String hostelOwnerUserId,
-    required Map<String, dynamic> updatedData,
-  }) async {
-    try {
-      await fireStore
-          .collection('my_hostels')
-          .doc(hostelOwnerUserId)
-          .collection('hostels')
-          .doc(hostelId)
-          .set(updatedData,
-              SetOptions(merge: true)); // Update only changed fields
-
-      await fireStore.collection('all_hostel_list').doc(hostelId).set(
-          updatedData, SetOptions(merge: true)); // Update only changed fields
-
-      debugPrint('Hostel data updated for ID: $hostelId');
-      return right(unit);
-    } catch (e) {
-      debugPrint("Error updating hostel: $e");
-      return left(const FormFailures.serviceUnavailable());
-    }
-  }
-
-  Future<Either<FormFailures, Unit>> updateHostelApprovalStatus({
-    required String hostelId,
-    required String hostelOwnerUserId,
-    required String approvalType,
-  }) async {
-    try {
-      if (approvalType == 'approved' || approvalType == 'rejected') {
+        await fireStore.collection('all_hostel_list').doc(hostelIdForEdit).set(
+            hostelData,
+            SetOptions(merge: true)); // 🔥 Update only changed fields
+      } else if (approvalType == 'approved') {
+        debugPrint('approved if is working');
         await fireStore
             .collection('my_hostels')
             .doc(hostelOwnerUserId)
             .collection('hostels')
             .doc(hostelId)
-            .update({'approval': approvalType});
+            .update(
+                {'approval': approvalType}); // 🔥 Updates only 'approval' field
 
         await fireStore
             .collection('all_hostel_list')
             .doc(hostelId)
             .update({'approval': approvalType});
-        debugPrint('Hostel approval updated for ID: $hostelId');
+      } else if (approvalType == 'rejected') {
       } else if (approvalType == 'deleted') {
         await fireStore.collection('all_hostel_list').doc(hostelId).delete();
-        await fireStore.collection('hostel_rating').doc(hostelId).delete();
+        fireStore.collection('hostel_rating').doc(hostelId).delete();
         await fireStore
             .collection('my_hostels')
-            .doc(hostelOwnerUserId)
+            .doc(userId)
             .collection('hostels')
             .doc(hostelId)
-            .delete();
-        debugPrint('Hostel deleted for ID: $hostelId');
+            .update({'approval': approvalType});
       } else {
-        debugPrint("Invalid approval type: $approvalType");
-        return left(const FormFailures.serviceUnavailable());
+        debugPrint("New hostel creation");
+         await fireStore
+            .collection('my_hostels')
+            .doc(userId)
+            .collection('hostels')
+            .doc(hostelId)
+            .set(hostelData);
+
+            await fireStore.collection('all_hostel_list').doc(hostelId).set(
+            hostelData,
+            SetOptions(merge: true)); 
       }
 
+      debugPrint(
+          'Document ${isEdit == true ? "updated" : "added"} with ID: $hostelId');
       return right(unit);
+    } on FirebaseException catch (e) {
+      debugPrint("FirebaseException [${e.code}]: ${e.message}");
+      return left(const FormFailures.serverError());
     } catch (e) {
-      debugPrint("Error updating approval status: $e");
+      debugPrint("An unexpected error occurred: $e");
       return left(const FormFailures.serviceUnavailable());
     }
   }

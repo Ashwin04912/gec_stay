@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_admin_app_screen.dart';
 
 class NewHostelsScreen extends StatelessWidget {
   final String hostelApprovalType;
   final List<HostelResponseModel> hostelList;
-  NewHostelsScreen({super.key, required this.hostelList, required this.hostelApprovalType});
+  NewHostelsScreen(
+      {super.key, required this.hostelList, required this.hostelApprovalType});
 
   // Sample hostel data
 
@@ -19,29 +22,36 @@ class NewHostelsScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: ListView.builder(
-          itemCount: hostelList.length,
-          itemBuilder: (context, index) {
-            final hostel = hostelList[index];
-            return HostelCard(
-              name: hostel.hostelName,
-              owner: hostel.ownerName,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HostelDetailsAdminAppScreen(
-                            hostelApprovalType: hostelApprovalType,
-                            hostelResp: hostel,
-                            hostelId: hostel.hostelId,
-                            hostelImages: hostel.hostelImages,
-                          )),
-                );
-              },
-            );
-          },
+      body: RefreshIndicator(
+        onRefresh: () async{
+          context.read<CommonHostelProcessBloc>().add(
+              CommonHostelProcessEvent.getAdminHostelList(
+                  approvalType: hostelApprovalType));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ListView.builder(
+            itemCount: hostelList.length,
+            itemBuilder: (context, index) {
+              final hostel = hostelList[index];
+              return HostelCard(
+                name: hostel.hostelName,
+                owner: hostel.ownerName,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HostelDetailsAdminAppScreen(
+                              hostelApprovalType: hostelApprovalType,
+                              hostelResp: hostel,
+                              hostelId: hostel.hostelId,
+                              hostelImages: hostel.hostelImages,
+                            )),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

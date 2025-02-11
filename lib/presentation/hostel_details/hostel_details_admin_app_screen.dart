@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:gecw_lakx/application/approval_process/approval_process_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:latlong2/latlong.dart';
@@ -32,9 +33,14 @@ class HostelDetailsAdminAppScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
+      body: BlocConsumer<ApprovalProcessBloc, ApprovalProcessState>(
         listener: (context, state) {
-          print(state.isSubmitting);
+          state.approvalSuccessOrFailure.fold(() {}, (either) {
+            either.fold((f) {}, (s) {
+              // print("")
+              Navigator.of(context).pop();
+            });
+          });
         },
         builder: (context, state) {
           return Container(
@@ -224,27 +230,28 @@ class HostelDetailsAdminAppScreen extends StatelessWidget {
                 Colors.green,
                 () {
                   debugPrint("approve button working");
-                  // context.read<CommonHostelProcessBloc>().add(
-                  //       CommonHostelProcessEvent.submitButtonPressed(
-                  //         hostelImages: [],
-                  //         hostelOwnerUserId: hostel.hostelOwnerUserId,
-                  //         hostelId: hostel.hostelId,
-                  //         approvalType: 'approved',
-                  //         hostelName: hostel.hostelName,
-                  //         ownerName: hostel.ownerName,
-                  //         phoneNumber: hostel.phoneNumber,
-                  //         rent: hostel.rent,
-                  //         rooms: hostel.rooms,
-                  //         location: LatLng(hostel.location.latitude,
-                  //             hostel.location.longitude),
-                  //         isEdit: false,
-                  //         vacancy: hostel.vacancy,
-                  //         description: hostel.description,
-                  //         distFromCollege: hostel.distFromCollege,
-                  //         isMessAvailable: hostel.isMessAvailable,
-                  //         isMensHostel: hostel.isMensHostel,
-                  //       ),
-                  //     );
+                  context.read<ApprovalProcessBloc>().add(
+                        ApprovalProcessEvent.approvalProcessPressed(
+                          rating: hostel.rating,
+                          hostelImages: [],
+                          hostelOwnerUserId: hostel.hostelOwnerUserId,
+                          hostelId: hostel.hostelId,
+                          approvalType: 'approved',
+                          hostelName: hostel.hostelName,
+                          ownerName: hostel.ownerName,
+                          phoneNumber: hostel.phoneNumber,
+                          rent: hostel.rent,
+                          rooms: hostel.rooms,
+                          location: LatLng(hostel.location.latitude,
+                              hostel.location.longitude),
+                          isEdit: false,
+                          vacancy: hostel.vacancy,
+                          description: hostel.description,
+                          distFromCollege: hostel.distFromCollege,
+                          isMessAvailable: hostel.isMessAvailable,
+                          isMensHostel: hostel.isMensHostel,
+                        ),
+                      );
                 },
               ),
               _buildActionButton("Reject", Colors.red, () {
