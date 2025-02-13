@@ -97,6 +97,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       // Retrieve user ID from shared preferences
       final prefs = await SharedPreferences.getInstance();
       final String? userId = prefs.getString('owner_userid');
+      print(userId);
 
       if (userId == null || userId.isEmpty) {
         debugPrint("User ID is null or empty");
@@ -144,9 +145,9 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           'longitude': location.longitude,
         },
         'hostelId': hostelId,
-        'hostelOwnerUserId':hostelOwnerUserId, 
+        'hostelOwnerUserId': userId,
         'approval': approvalType,
-        'rating':'0'
+        'rating': '0'
       };
 
       // Save or update hostel data
@@ -188,16 +189,17 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
             .update({'approval': approvalType});
       } else {
         debugPrint("New hostel creation");
-         await fireStore
+        await fireStore
             .collection('my_hostels')
             .doc(userId)
             .collection('hostels')
             .doc(hostelId)
             .set(hostelData);
 
-            await fireStore.collection('all_hostel_list').doc(hostelId).set(
-            hostelData,
-            SetOptions(merge: true)); 
+        await fireStore
+            .collection('all_hostel_list')
+            .doc(hostelId)
+            .set(hostelData, SetOptions(merge: true));
       }
 
       debugPrint(
