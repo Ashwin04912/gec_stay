@@ -25,6 +25,7 @@ class CommonHostelProcessEvent with _$CommonHostelProcessEvent {
       
   const factory CommonHostelProcessEvent.submitButtonPressed({
     required String approvalType,
+    required String reason,
     required String hostelName,
      String? hostelId,
     required String ownerName,

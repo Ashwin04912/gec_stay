@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
-import 'package:gecw_lakx/core/loading_screen.dart';
 import 'package:gecw_lakx/presentation/admin_app/new_hostel_screen/new_hostel_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -48,7 +47,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     // Navigate to NewHostelsScreen
                     // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>NewHostelsScreen()));
                     setState(() {
-                      
                       hostelApprovalType = 'newHostel';
                     });
                     context.read<CommonHostelProcessBloc>().add(

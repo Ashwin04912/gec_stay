@@ -117,6 +117,7 @@ class CommonHostelProcessBloc
         // print("true is working in bloc ${value.hostelId}");
           final resp = await ihostelFacade.saveDataToDb(
             rating: value.rating,
+            reason: value.reason,
           hostelId: value.hostelId??'',
           hostelOwnerUserId: value.hostelOwnerUserId,
             isEdit: value.isEdit,

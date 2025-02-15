@@ -44,7 +44,7 @@ class CommonHostelProcessState with _$CommonHostelProcessState {
         hostelImages: [],
         hostelOwnerUserId: '',
         rating: '',
-        approval: ''
+        approval: Approval(reason: '', type: '')
       ),
       submitFailureOrSuccessOption: none(),
       locationOption: none(),

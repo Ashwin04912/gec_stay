@@ -11,6 +11,7 @@ abstract class IHostelProcessFacade {
   Future<Either<FormFailures, Unit>> saveDataToDb(
       {required bool isEdit,
       required String approvalType,
+      required String reason,
       String? hostelIdForEdit,
       required String hostelName,
       required String ownerName,

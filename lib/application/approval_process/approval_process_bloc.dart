@@ -30,6 +30,7 @@ class ApprovalProcessBloc extends Bloc<ApprovalProcessEvent, ApprovalProcessStat
         //     "in bloc call : ${value.distFromCollege} and ${value.isMessAvailable} hostelid = ${value.hostelId}");
         // print("true is working in bloc ${value.hostelId}");
           final resp = await ihostelFacade.saveDataToDb(
+            reason: '',
             rating: value.rating,
           hostelId: value.hostelId??'',
           hostelOwnerUserId: value.hostelOwnerUserId,

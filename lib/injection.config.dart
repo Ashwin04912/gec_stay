@@ -44,10 +44,10 @@ extension GetItInjectableX on _i174.GetIt {
             fireStore: gh<_i974.FirebaseFirestore>()));
     gh.lazySingleton<_i878.IAuthFacade>(
         () => _i1019.FirebaseAuthFacade(gh<_i59.FirebaseAuth>()));
-    gh.factory<_i1039.CommonHostelProcessBloc>(
-        () => _i1039.CommonHostelProcessBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i481.ApprovalProcessBloc>(
         () => _i481.ApprovalProcessBloc(gh<_i922.IHostelProcessFacade>()));
+    gh.factory<_i1039.CommonHostelProcessBloc>(
+        () => _i1039.CommonHostelProcessBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i966.SignInFormBloc>(
         () => _i966.SignInFormBloc(gh<_i878.IAuthFacade>()));
     return this;

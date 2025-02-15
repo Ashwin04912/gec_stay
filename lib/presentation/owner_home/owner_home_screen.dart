@@ -302,7 +302,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Approval : ${hostel.approval}',style: TextStyle(color: Colors.red,fontSize: 18),),
+                                Text('Approval : ${hostel.approval.type}',style: TextStyle(color: Colors.red,fontSize: 18),),
                                 Row(
                                   children: [
                                     Expanded(

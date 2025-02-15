@@ -33,6 +33,7 @@ mixin _$CommonHostelProcessEvent {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -67,6 +68,7 @@ mixin _$CommonHostelProcessEvent {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -101,6 +103,7 @@ mixin _$CommonHostelProcessEvent {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -338,6 +341,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -376,6 +380,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -414,6 +419,7 @@ class _$submitReviewButtonPressedImpl implements _submitReviewButtonPressed {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -614,6 +620,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -651,6 +658,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -688,6 +696,7 @@ class _$getAllratingsAndReviewImpl implements _getAllratingsAndReview {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -885,6 +894,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -922,6 +932,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -959,6 +970,7 @@ class _$deleteButtonPressedImpl implements _deleteButtonPressed {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1122,6 +1134,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1159,6 +1172,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1196,6 +1210,7 @@ class _$findLocationButtonPressedImpl implements _findLocationButtonPressed {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1372,6 +1387,7 @@ class _$getHostelByIdImpl implements _getHostelById {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1409,6 +1425,7 @@ class _$getHostelByIdImpl implements _getHostelById {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1446,6 +1463,7 @@ class _$getHostelByIdImpl implements _getHostelById {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1555,6 +1573,7 @@ abstract class _$$submitButtonPressedImplCopyWith<$Res> {
   @useResult
   $Res call(
       {String approvalType,
+      String reason,
       String hostelName,
       String? hostelId,
       String ownerName,
@@ -1588,6 +1607,7 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? approvalType = null,
+    Object? reason = null,
     Object? hostelName = null,
     Object? hostelId = freezed,
     Object? ownerName = null,
@@ -1609,6 +1629,10 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
       approvalType: null == approvalType
           ? _value.approvalType
           : approvalType // ignore: cast_nullable_to_non_nullable
+              as String,
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String,
       hostelName: null == hostelName
           ? _value.hostelName
@@ -1683,6 +1707,7 @@ class __$$submitButtonPressedImplCopyWithImpl<$Res>
 class _$submitButtonPressedImpl implements _submitButtonPressed {
   const _$submitButtonPressedImpl(
       {required this.approvalType,
+      required this.reason,
       required this.hostelName,
       this.hostelId,
       required this.ownerName,
@@ -1703,6 +1728,8 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
 
   @override
   final String approvalType;
+  @override
+  final String reason;
   @override
   final String hostelName;
   @override
@@ -1744,7 +1771,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
 
   @override
   String toString() {
-    return 'CommonHostelProcessEvent.submitButtonPressed(approvalType: $approvalType, hostelName: $hostelName, hostelId: $hostelId, ownerName: $ownerName, hostelOwnerUserId: $hostelOwnerUserId, phoneNumber: $phoneNumber, rent: $rent, rooms: $rooms, location: $location, isEdit: $isEdit, vacancy: $vacancy, description: $description, rating: $rating, distFromCollege: $distFromCollege, isMessAvailable: $isMessAvailable, isMensHostel: $isMensHostel, hostelImages: $hostelImages)';
+    return 'CommonHostelProcessEvent.submitButtonPressed(approvalType: $approvalType, reason: $reason, hostelName: $hostelName, hostelId: $hostelId, ownerName: $ownerName, hostelOwnerUserId: $hostelOwnerUserId, phoneNumber: $phoneNumber, rent: $rent, rooms: $rooms, location: $location, isEdit: $isEdit, vacancy: $vacancy, description: $description, rating: $rating, distFromCollege: $distFromCollege, isMessAvailable: $isMessAvailable, isMensHostel: $isMensHostel, hostelImages: $hostelImages)';
   }
 
   @override
@@ -1754,6 +1781,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
             other is _$submitButtonPressedImpl &&
             (identical(other.approvalType, approvalType) ||
                 other.approvalType == approvalType) &&
+            (identical(other.reason, reason) || other.reason == reason) &&
             (identical(other.hostelName, hostelName) ||
                 other.hostelName == hostelName) &&
             (identical(other.hostelId, hostelId) ||
@@ -1787,6 +1815,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
   int get hashCode => Object.hash(
       runtimeType,
       approvalType,
+      reason,
       hostelName,
       hostelId,
       ownerName,
@@ -1831,6 +1860,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1854,6 +1884,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
   }) {
     return submitButtonPressed(
         approvalType,
+        reason,
         hostelName,
         hostelId,
         ownerName,
@@ -1885,6 +1916,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1908,6 +1940,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
   }) {
     return submitButtonPressed?.call(
         approvalType,
+        reason,
         hostelName,
         hostelId,
         ownerName,
@@ -1939,6 +1972,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -1964,6 +1998,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
     if (submitButtonPressed != null) {
       return submitButtonPressed(
           approvalType,
+          reason,
           hostelName,
           hostelId,
           ownerName,
@@ -2047,6 +2082,7 @@ class _$submitButtonPressedImpl implements _submitButtonPressed {
 abstract class _submitButtonPressed implements CommonHostelProcessEvent {
   const factory _submitButtonPressed(
       {required final String approvalType,
+      required final String reason,
       required final String hostelName,
       final String? hostelId,
       required final String ownerName,
@@ -2065,6 +2101,7 @@ abstract class _submitButtonPressed implements CommonHostelProcessEvent {
       required final List<XFile> hostelImages}) = _$submitButtonPressedImpl;
 
   String get approvalType;
+  String get reason;
   String get hostelName;
   String? get hostelId;
   String get ownerName;
@@ -2174,6 +2211,7 @@ class _$getOwnersHostelListImpl implements _getOwnersHostelList {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2211,6 +2249,7 @@ class _$getOwnersHostelListImpl implements _getOwnersHostelList {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2248,6 +2287,7 @@ class _$getOwnersHostelListImpl implements _getOwnersHostelList {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2405,6 +2445,7 @@ class _$getAllHostelListImpl implements _getAllHostelList {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2442,6 +2483,7 @@ class _$getAllHostelListImpl implements _getAllHostelList {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2479,6 +2521,7 @@ class _$getAllHostelListImpl implements _getAllHostelList {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2657,6 +2700,7 @@ class _$getAdminHostelListImpl implements _getAdminHostelList {
     required TResult Function(String hostelId) getHostelById,
     required TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2694,6 +2738,7 @@ class _$getAdminHostelListImpl implements _getAdminHostelList {
     TResult? Function(String hostelId)? getHostelById,
     TResult? Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,
@@ -2731,6 +2776,7 @@ class _$getAdminHostelListImpl implements _getAdminHostelList {
     TResult Function(String hostelId)? getHostelById,
     TResult Function(
             String approvalType,
+            String reason,
             String hostelName,
             String? hostelId,
             String ownerName,

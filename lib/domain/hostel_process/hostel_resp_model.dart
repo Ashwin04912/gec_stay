@@ -26,7 +26,7 @@ class HostelResponseModel {
   List<String> hostelImages; // List of image URLs
   String hostelOwnerUserId;
   String rating;
-  String approval;
+  Approval approval;
 
   HostelResponseModel(
       {required this.description,
@@ -63,7 +63,7 @@ class HostelResponseModel {
         hostelImages: List<String>.from(json["imageList"].map((x) => x)),
         hostelOwnerUserId: json['hostelOwnerUserId'],
         rating: json['rating'],
-        approval: json['approval']
+        approval: Approval.fromJson(json["approval"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,7 +82,7 @@ class HostelResponseModel {
         "imageList": List<dynamic>.from(hostelImages.map((x) => x)),
         "hostelOwnerUserId": hostelOwnerUserId,
         "rating": rating,
-        "approval":approval
+        "approval": approval.toJson(),
       };
 }
 
@@ -104,4 +104,25 @@ class Location {
         "latitude": latitude,
         "longitude": longitude,
       };
+}
+
+
+class Approval {
+    String reason;
+    String type;
+
+    Approval({
+        required this.reason,
+        required this.type,
+    });
+
+    factory Approval.fromJson(Map<String, dynamic> json) => Approval(
+        reason: json["reason"],
+        type: json["type"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "reason": reason,
+        "type": type,
+    };
 }

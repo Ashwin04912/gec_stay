@@ -263,6 +263,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                 context.read<CommonHostelProcessBloc>().add(
                                       CommonHostelProcessEvent
                                           .submitButtonPressed(
+                                            reason: '',
                                             rating: state.hostelDataById.rating,
                                             hostelOwnerUserId: state.hostelDataById.hostelOwnerUserId,
                                         hostelId: state.hostelDataById.hostelId,
@@ -297,6 +298,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                           CommonHostelProcessEvent
                                               .submitButtonPressed(
                                                 rating: '0',
+                                                reason: '',
                                             approvalType: 'pending',
                                             hostelOwnerUserId: '',
                                             hostelName:

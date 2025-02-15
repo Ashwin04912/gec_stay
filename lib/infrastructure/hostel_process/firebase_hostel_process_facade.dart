@@ -73,6 +73,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     bool? isEdit,
     String? hostelIdForEdit,
     required String approvalType,
+    required String reason,
     required String hostelOwnerUserId,
     required String hostelName,
     required String ownerName,
@@ -146,7 +147,10 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         },
         'hostelId': hostelId,
         'hostelOwnerUserId': userId,
-        'approval': approvalType,
+        'approval':{
+          "type":approvalType,
+          "reason":''
+        },
         'rating': '0'
       };
 
@@ -171,22 +175,55 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
             .collection('hostels')
             .doc(hostelId)
             .update(
-                {'approval': approvalType}); // 🔥 Updates only 'approval' field
+                {'approval': {
+                  "type":approvalType,
+                  "reason":''
+                }}); // 🔥 Updates only 'approval' field
 
         await fireStore
             .collection('all_hostel_list')
             .doc(hostelId)
-            .update({'approval': approvalType});
+            .update({'approval':  {
+                  "type":approvalType,
+                  "reason":''
+                }});
       } else if (approvalType == 'rejected') {
-      } else if (approvalType == 'deleted') {
-        await fireStore.collection('all_hostel_list').doc(hostelId).delete();
-        fireStore.collection('hostel_rating').doc(hostelId).delete();
+
+          await fireStore
+            .collection('all_hostel_list')
+            .doc(hostelId)
+            .update({'approval':  {
+                  "type":approvalType,
+                  "reason":reason
+                }});
+      
         await fireStore
             .collection('my_hostels')
             .doc(userId)
             .collection('hostels')
             .doc(hostelId)
-            .update({'approval': approvalType});
+            .update({'approval':  {
+                  "type":approvalType,
+                  "reason":reason
+                }});
+      } else if (approvalType == 'deleted') {
+         await fireStore
+            .collection('all_hostel_list')
+            .doc(hostelId)
+            .update({'approval':  {
+                  "type":approvalType,
+                  "reason":reason
+                }});
+        // fireStore.collection('hostel_rating').doc(hostelId).delete();
+        await fireStore
+            .collection('my_hostels')
+            .doc(userId)
+            .collection('hostels')
+            .doc(hostelId)
+            .update({'approval':  {
+                  "type":approvalType,
+                  "reason":reason
+                }});
       } else {
         debugPrint("New hostel creation");
         await fireStore
@@ -347,20 +384,23 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   Future<Either<FormFailures, List<HostelResponseModel>>> getAdminHostelList(
       {required String aprovalType}) async {
     try {
+      print(aprovalType);
       // Reference the collection
       final CollectionReference hostelCollection =
           FirebaseFirestore.instance.collection('all_hostel_list');
 
       // Query the collection
       QuerySnapshot querySnapshot = await hostelCollection
-          .where('approval', isEqualTo: aprovalType)
+          .where('approval.type', isEqualTo: aprovalType)
           .get();
 
+          print(querySnapshot);
+
       // Check if the collection is empty
-      // if (querySnapshot.docs.isEmpty) {
-      //   debugPrint("No data found in all_hostel_list collection");
-      //   return left(const FormFailures.noDataFound());
-      // }
+      if (querySnapshot.docs.isEmpty) {
+        debugPrint("No data found in all_hostel_list collection");
+        return left(const FormFailures.noDataFound());
+      }
 
       // Map the querySnapshot to the list of HostelResponseModel
       List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
