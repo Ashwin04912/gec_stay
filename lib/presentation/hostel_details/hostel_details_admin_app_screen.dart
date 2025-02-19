@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gecw_lakx/application/approval_process/approval_process_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
@@ -36,9 +37,14 @@ class HostelDetailsAdminAppScreen extends StatelessWidget {
       body: BlocConsumer<ApprovalProcessBloc, ApprovalProcessState>(
         listener: (context, state) {
           state.approvalSuccessOrFailure.fold(() {}, (either) {
-            either.fold((f) {}, (s) {
+            either.fold((f) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("process failed...try again later",style: TextStyle(color:Colors.red),)));
+            }, (s) {
               // print("")
+              
               Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("process successfull",style: TextStyle(color:Colors.green),)));
             });
           });
         },
@@ -228,7 +234,7 @@ class HostelDetailsAdminAppScreen extends StatelessWidget {
               _buildActionButton(
                 "Approve",
                 Colors.green,
-                () {
+                () {                 
                   debugPrint("approve button working");
                   context.read<ApprovalProcessBloc>().add(
                         ApprovalProcessEvent.approvalProcessPressed(
@@ -272,12 +278,44 @@ class HostelDetailsAdminAppScreen extends StatelessWidget {
                     heading: 'Delete Hostel',
                     approvalType: 'deleted',
                     hostel: hostelResp);
+              }),
+              SizedBox(width: 20,),
+              _buildActionButton("Reject", Colors.red, () {
+                _showRejectDialog(
+                    context: context,
+                    heading: 'Reject Hostel',
+                    approvalType: 'rejected',
+                    hostel: hostelResp);
               })
             ],
           )
         else
           Row(
-            children: [_buildActionButton("Approve", Colors.green, () {})],
+            children: [_buildActionButton("Approve", Colors.green, () {
+
+              context.read<ApprovalProcessBloc>().add(
+                        ApprovalProcessEvent.approvalProcessPressed(
+                          rating: hostel.rating,
+                          hostelImages: [],
+                          hostelOwnerUserId: hostel.hostelOwnerUserId,
+                          hostelId: hostel.hostelId,
+                          approvalType: 'approved',
+                          hostelName: hostel.hostelName,
+                          ownerName: hostel.ownerName,
+                          phoneNumber: hostel.phoneNumber,
+                          rent: hostel.rent,
+                          rooms: hostel.rooms,
+                          location: LatLng(hostel.location.latitude,
+                              hostel.location.longitude),
+                          isEdit: false,
+                          vacancy: hostel.vacancy,
+                          description: hostel.description,
+                          distFromCollege: hostel.distFromCollege,
+                          isMessAvailable: hostel.isMessAvailable,
+                          isMensHostel: hostel.isMensHostel,
+                        ),
+                      );
+            })],
           )
       ],
     );
@@ -376,10 +414,37 @@ void _showRejectDialog(
                               errorText = "Reason is required!";
                             });
                           } else {
-                            Navigator.pop(dialogContext);
-                            // Perform reject action
-                            print(
-                                "Rejected with reason: ${reasonController.text}");
+                            
+                             context.read<ApprovalProcessBloc>().add(
+                                          ApprovalProcessEvent
+                                              .rejectButtonPressedButton(
+                                                rating: hostel.rating,
+                                                reason: reasonController.text,
+                                            approvalType:approvalType,
+                                            hostelOwnerUserId: hostel.hostelOwnerUserId,
+                                            hostelId: hostel.hostelId,
+                                            hostelName:
+                                                hostel.hostelName,
+                                            ownerName: hostel.ownerName,
+                                            phoneNumber:
+                                                hostel.phoneNumber,
+                                            rent: hostel.rent,
+                                            rooms: hostel.rooms,
+                                            vacancy: hostel.vacancy,
+                                            description:
+                                                hostel.description,
+                                            location:LatLng(hostel.location.latitude, hostel.location.longitude),
+                                            distFromCollege:
+                                                hostel.distFromCollege,
+                                            isMessAvailable:
+                                                hostel.isMessAvailable,
+                                            hostelImages: [],
+                                            isMensHostel:
+                                                hostel.isMensHostel,
+                                            isEdit: false,
+                                          ),
+                                        );
+                                        Navigator.pop(dialogContext);
                           }
                         },
                         style: ElevatedButton.styleFrom(

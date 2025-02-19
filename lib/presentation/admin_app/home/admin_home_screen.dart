@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/presentation/admin_app/new_hostel_screen/new_hostel_screen.dart';
+import 'package:gecw_lakx/presentation/chat/chat_room_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
@@ -11,11 +13,25 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
- String hostelApprovalType='';
+  String hostelApprovalType = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:             FloatingActionButton(
+  onPressed: () async{
+    // Add your chat navigation logic here
+    final prefs = await SharedPreferences.getInstance();
+      final String? userId = prefs.getString('owner_userid');
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatRoomScreen(userId: userId.toString(),)));
+  },
+  backgroundColor: Colors.deepPurpleAccent,
+  foregroundColor: Colors.white,
+  elevation: 4,
+  child: Icon(Icons.chat, size: 28),
+  
+),
+floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -31,7 +47,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           state.hostelGetFailureOrSuccess.fold(() {}, (either) {
             either.fold((f) {}, (s) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => NewHostelsScreen(hostelList: s,hostelApprovalType: hostelApprovalType,)));
+                  builder: (ctx) => NewHostelsScreen(
+                        hostelList: s,
+                        hostelApprovalType: hostelApprovalType,
+                      )));
             });
           });
         },
@@ -60,8 +79,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   icon: Icons.check_circle,
                   onTap: () {
                     // Navigate to ApprovedHostelsScreen
-                     setState(() {
-                      
+                    setState(() {
                       hostelApprovalType = 'approvedHostel';
                     });
                     context.read<CommonHostelProcessBloc>().add(
@@ -75,8 +93,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   icon: Icons.cancel,
                   onTap: () {
                     // Navigate to DeniedHostelsScreen
-                     setState(() {
-                      
+                    setState(() {
                       hostelApprovalType = 'rejectedHostel';
                     });
                     context.read<CommonHostelProcessBloc>().add(
@@ -85,11 +102,31 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   },
                 ),
                 SizedBox(
+                  height: 16,
+                ),
+                AdminOptionCard(
+                  title: "Deleted Hostels",
+                  icon: Icons.cancel,
+                  onTap: () {
+                    // Navigate to ApprovedHostelsScreen
+                    setState(() {
+                      hostelApprovalType = 'deletedHostel';
+                    });
+                    context.read<CommonHostelProcessBloc>().add(
+                        CommonHostelProcessEvent.getAdminHostelList(
+                            approvalType: 'deleted'));
+                  },
+                ),
+                SizedBox(
                   height: 30,
                 ),
                 state.isSubmitting
-                ?
-                CircularProgressIndicator(color: Colors.purple,):Center()
+                    ? CircularProgressIndicator(
+                        color: Colors.purple,
+                      )
+                    : Center(),
+   
+
               ],
             ),
           );

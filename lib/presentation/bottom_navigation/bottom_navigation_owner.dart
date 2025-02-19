@@ -8,7 +8,8 @@ import 'package:gecw_lakx/presentation/owner_home/owner_home_screen.dart';
 import '../owner_profile/owner_profile_screen.dart';
 
 class BottomNavigationBarOwnerWidget extends StatefulWidget {
-  const BottomNavigationBarOwnerWidget({super.key});
+  final String? userId;
+  const BottomNavigationBarOwnerWidget({super.key, this.userId});
 
   @override
   BottomNavigationBarOwnerWidgetState createState() =>
@@ -22,7 +23,7 @@ class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwner
     OwnerHomeScreen(), // Replace with your home screen
     
     CreateHostelScreen(),
-    ChatRoomScreen(),
+    ChatRoomScreen(userId: '',),
     OwnerProfileScreen(),
   ];
 
@@ -60,21 +61,7 @@ class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwner
                 },
               ),
             ),
-            // Floating Action Button
-            // Center(
-            //   heightFactor: 0.6,
-            //   child: FloatingActionButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (ctx) => CreateHostelScreen()));
-            //     },
-            //     backgroundColor: Colors.pink,
-            //     child: const Icon(Icons.add, color: Colors.white),
-            //   ),
-            // ),
-            // Navigation items
+            
             SizedBox(
               height: 56,
               child: Row(
@@ -108,21 +95,41 @@ class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwner
                     onPressed: () => _onNavBarItemTapped(2),
                   ),
                   
-                  NavBarIcon(
-                    text: "Logout",
-                    icon: Icons.logout,
-                    defaultColor: secondaryColor,
-                    selectedColor: primaryColor,
-                    selected: _selectedIndex == 3,
-                    onPressed: () async{
+                   NavBarIcon(
+                  text: "Log Out",
+                  icon: Icons.logout,
+                  defaultColor: secondaryColor,
+                selected: _selectedIndex == 3,
+                selectedColor: primaryColor,
+                  onPressed: () async {
+                    bool confirmSignOut = await showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text("Confirm Sign Out"),
+                        content:
+                            const Text("Are you sure you want to log out?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(false), // No
+                            child: const Text("No"),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(true), // Yes
+                            child: const Text("Yes"),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirmSignOut == true) {
                       await FirebaseAuth.instance.signOut();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignInScreen()),
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (ctx) => SignInScreen()),
                         (route) => false,
                       );
-                    },
-                  ),
+                    }
+                  },
+                ),
                  
                 ],
               ),
@@ -132,7 +139,7 @@ class BottomNavigationBarOwnerWidgetState extends State<BottomNavigationBarOwner
       ),
     );
   }
-}
+} 
 
 class BottomNavCurvePainter extends CustomPainter {
   BottomNavCurvePainter({

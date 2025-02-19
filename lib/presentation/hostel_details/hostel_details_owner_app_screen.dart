@@ -1,11 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/core/loading_screen.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/chat/chat_page.dart';
 import 'package:gecw_lakx/presentation/hostel_details/all_reviews_screen.dart';
+import 'package:gecw_lakx/presentation/room_details/room_details_screen_owner.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
@@ -80,8 +84,48 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-        
-            // Hostel Details
+            approvalStatusBox(
+              context: context,
+              status: hostelResp.approval.type,
+              reason: hostelResp.approval.reason.isEmpty
+                  ? ''
+                  : hostelResp.approval.reason,
+            ),
+            const SizedBox(height: 20),
+
+            
+
+            SizedBox(height: 15,),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  _handlePressed(
+                      types.User(id: 'iXZA3kQoJYXuoLG1PGune5lv8Ds1'), context);
+                },
+                icon: const Icon(Icons.chat, color: Colors.white),
+                label: const Text(
+                  "Chat with Admin",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 33, 42, 51),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadowColor: Colors.blue.withOpacity(0.4),
+                  elevation: 6,
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: 20,
+            ),
+
             const Text(
               "Hostel Details",
               style: TextStyle(
@@ -163,8 +207,30 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
                 ),
               ],
             ),
-        
+
             const SizedBox(height: 20),
+
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>RoomDetailsScreen(hostelId: hostelResp.hostelId)));
+              },
+              icon: const Icon(Icons.add, color: Colors.white),
+              label: const Text(
+                "Add Hostel Layout",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                shadowColor: Colors.blue.withOpacity(0.4),
+                elevation: 6,
+              ),
+            ),
+            SizedBox(height: 15,),
             Text(
               "Rooms Available: ${hostelResp.rooms}",
               style: const TextStyle(color: Colors.white70, fontSize: 16),
@@ -185,7 +251,7 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               "Hostel Type: ${hostelResp.isMensHostel.toLowerCase() == "yes" ? "Men's Hostel" : "Women's Hostel"}",
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
-        
+
             Text(
               "Description: ${hostelResp.description}",
               style: const TextStyle(color: Colors.white70, fontSize: 16),
@@ -195,7 +261,7 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
             const SizedBox(height: 20),
-        
+
             // Action Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +308,7 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-        
+
             // Delete Button
             ElevatedButton(
               onPressed: () {
@@ -299,4 +365,74 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
       },
     );
   }
+
+  void _handlePressed(types.User otherUser, BuildContext context) async {
+    final room = await FirebaseChatCore.instance.createRoom(otherUser);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (ctx) => ChatPage(room: room)));
+  }
+}
+
+Widget approvalStatusBox({
+  required BuildContext context,
+  required String status,
+  required String reason,
+}) {
+  bool isApproved = status == "approved";
+  bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+  return Container(
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: isDarkMode
+          ? (isApproved
+              ? Colors.green.shade900
+              : const Color.fromARGB(255, 79, 76, 76))
+          : (isApproved ? Colors.black : const Color.fromARGB(255, 79, 76, 76)),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(
+        color: isApproved ? Colors.green.shade400 : Colors.red.shade400,
+        width: 1.5,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 8,
+          offset: const Offset(2, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              size: 20,
+              isApproved ? Icons.check_circle : Icons.error,
+              color: isApproved ? Colors.green : Colors.red,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "Status: $status",
+              style: TextStyle(
+                color: isApproved ? Colors.green : Colors.red,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Text(
+          "Reason: $reason",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+        const SizedBox(height: 12),
+      ],
+    ),
+  );
 }

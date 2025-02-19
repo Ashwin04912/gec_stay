@@ -17,6 +17,7 @@ import 'application/approval_process/approval_process_bloc.dart' as _i481;
 import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i966;
 import 'application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart'
     as _i1039;
+import 'application/room_details_owner/room_details_bloc.dart' as _i898;
 import 'domain/auth/i_auth_facade.dart' as _i878;
 import 'domain/hostel_process/i_hostel_process_facade.dart' as _i922;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i1019;
@@ -48,6 +49,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i481.ApprovalProcessBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i1039.CommonHostelProcessBloc>(
         () => _i1039.CommonHostelProcessBloc(gh<_i922.IHostelProcessFacade>()));
+    gh.factory<_i898.RoomDetailsBloc>(
+        () => _i898.RoomDetailsBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i966.SignInFormBloc>(
         () => _i966.SignInFormBloc(gh<_i878.IAuthFacade>()));
     return this;

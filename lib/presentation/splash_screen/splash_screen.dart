@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getOwnersHostelList(userId: user.uid));
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const BottomNavigationBarOwnerWidget()),
+            MaterialPageRoute(builder: (context) =>  BottomNavigationBarOwnerWidget(userId: user.uid,)),
           );
         } else {
           // Handle unexpected role (optional)

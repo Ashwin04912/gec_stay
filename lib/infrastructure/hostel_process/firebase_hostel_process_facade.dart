@@ -147,10 +147,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         },
         'hostelId': hostelId,
         'hostelOwnerUserId': userId,
-        'approval':{
-          "type":approvalType,
-          "reason":''
-        },
+        'approval': {"type": approvalType, "reason": ''},
         'rating': '0'
       };
 
@@ -161,8 +158,22 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
             .doc(hostelOwnerUserId)
             .collection('hostels')
             .doc(hostelIdForEdit)
-            .set(hostelData,
-                SetOptions(merge: true)); // 🔥 Update only changed fields
+            .set(hostelData, SetOptions(merge: true))
+            .then((_) async {
+          // Update the approval field
+          await fireStore
+              .collection('my_hostels')
+              .doc(hostelOwnerUserId)
+              .collection('hostels')
+              .doc(hostelIdForEdit)
+              .update({
+            'approval': {'type': 'pending', 'reason': ''}
+          });
+        }).catchError((error) {
+          // Handle any errors here
+          print("Error updating hostel data: $error");
+        });
+        // 🔥 Update only changed fields
 
         await fireStore.collection('all_hostel_list').doc(hostelIdForEdit).set(
             hostelData,
@@ -174,56 +185,42 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
             .doc(hostelOwnerUserId)
             .collection('hostels')
             .doc(hostelId)
-            .update(
-                {'approval': {
-                  "type":approvalType,
-                  "reason":''
-                }}); // 🔥 Updates only 'approval' field
+            .update({
+          'approval': {
+            "type": approvalType,
+            "reason": 'Documents all are well completed..Thank You..'
+          }
+        }); // 🔥 Updates only 'approval' field
 
-        await fireStore
-            .collection('all_hostel_list')
-            .doc(hostelId)
-            .update({'approval':  {
-                  "type":approvalType,
-                  "reason":''
-                }});
+        await fireStore.collection('all_hostel_list').doc(hostelId).update({
+          'approval': {"type": approvalType, "reason": ''}
+        });
       } else if (approvalType == 'rejected') {
+        await fireStore.collection('all_hostel_list').doc(hostelId).update({
+          'approval': {"type": approvalType, "reason": reason}
+        });
 
-          await fireStore
-            .collection('all_hostel_list')
-            .doc(hostelId)
-            .update({'approval':  {
-                  "type":approvalType,
-                  "reason":reason
-                }});
-      
         await fireStore
             .collection('my_hostels')
-            .doc(userId)
+            .doc(hostelOwnerUserId)
             .collection('hostels')
             .doc(hostelId)
-            .update({'approval':  {
-                  "type":approvalType,
-                  "reason":reason
-                }});
+            .update({
+          'approval': {"type": approvalType, "reason": reason}
+        });
       } else if (approvalType == 'deleted') {
-         await fireStore
-            .collection('all_hostel_list')
-            .doc(hostelId)
-            .update({'approval':  {
-                  "type":approvalType,
-                  "reason":reason
-                }});
+        await fireStore.collection('all_hostel_list').doc(hostelId).update({
+          'approval': {"type": approvalType, "reason": reason}
+        });
         // fireStore.collection('hostel_rating').doc(hostelId).delete();
         await fireStore
             .collection('my_hostels')
-            .doc(userId)
+            .doc(hostelOwnerUserId)
             .collection('hostels')
             .doc(hostelId)
-            .update({'approval':  {
-                  "type":approvalType,
-                  "reason":reason
-                }});
+            .update({
+          'approval': {"type": approvalType, "reason": reason}
+        });
       } else {
         debugPrint("New hostel creation");
         await fireStore
@@ -260,8 +257,9 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           FirebaseFirestore.instance.collection('all_hostel_list');
 
       // Query the collection
-      QuerySnapshot querySnapshot =
-          await hostelCollection.where('approval', isEqualTo: 'approved').get();
+      QuerySnapshot querySnapshot = await hostelCollection
+          .where('approval.type', isEqualTo: 'approved')
+          .get();
 
       // Check if the collection is empty
       // if (querySnapshot.docs.isEmpty) {
@@ -394,13 +392,13 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           .where('approval.type', isEqualTo: aprovalType)
           .get();
 
-          print(querySnapshot);
+      print(querySnapshot);
 
       // Check if the collection is empty
-      if (querySnapshot.docs.isEmpty) {
-        debugPrint("No data found in all_hostel_list collection");
-        return left(const FormFailures.noDataFound());
-      }
+      // if (querySnapshot.docs.isEmpty) {
+      //   debugPrint("No data found in all_hostel_list collection");
+      //   return left(const FormFailures.noDataFound());
+      // }
 
       // Map the querySnapshot to the list of HostelResponseModel
       List<HostelResponseModel> hostels = querySnapshot.docs.map((doc) {
@@ -622,6 +620,27 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       // Log error and return server failure
       debugPrint("Error fetching hostel: $e");
       return left(const FormFailures.serverError());
+    }
+  }
+
+  @override
+  Future<Either<FormFailures, Unit>> addRoomsToFirestore({
+    required List<Map<String, String>> rooms,
+    required String hostelId,
+  }) async {
+    try {
+      for (var room in rooms) {
+        await fireStore.collection("room_details").doc(hostelId).set({
+          "roomNumber": room["roomNumber"],
+          "beds": int.tryParse(room["beds"] ?? "0") ?? 0,
+          "vacancy": int.tryParse(room["vacancy"] ?? "0") ?? 0,
+          "timestamp": FieldValue.serverTimestamp(),
+        });
+      }
+      return right(unit);
+    } catch (e) {
+      debugPrint("Error adding rooms to Firestore: $e");
+      return left(FormFailures.serverError());
     }
   }
 }

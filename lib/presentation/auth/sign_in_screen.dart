@@ -42,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (ctx) =>
-                            const BottomNavigationBarOwnerWidget()),
+                             BottomNavigationBarOwnerWidget()),
                     (route) => false);
               }
             });

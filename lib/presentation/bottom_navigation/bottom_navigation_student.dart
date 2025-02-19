@@ -24,10 +24,10 @@ class BottomNavigationBarStudentWidgetState
     // ),
     Scaffold(
       body: Center(
-          child:
-              Text("probability checkout Screen",style: TextStyle(
-                color: Colors.white
-              ),)), // Notifications screen placeholder
+          child: Text(
+        "probability checkout Screen",
+        style: TextStyle(color: Colors.white),
+      )), // Notifications screen placeholder
     ),
     StudentProfileScreen(),
   ];
@@ -84,12 +84,33 @@ class BottomNavigationBarStudentWidgetState
                   text: "Log Out",
                   icon: Icons.logout,
                   isSelected: _selectedIndex == 2,
-                  onPressed: () {
-   FirebaseAuth.instance.signOut();
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (ctx) => SignInScreen()),
-                              (route) => false);
+                  onPressed: () async {
+                    bool confirmSignOut = await showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text("Confirm Sign Out"),
+                        content:
+                            const Text("Are you sure you want to log out?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(false), // No
+                            child: const Text("No"),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(true), // Yes
+                            child: const Text("Yes"),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirmSignOut == true) {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (ctx) => SignInScreen()),
+                        (route) => false,
+                      );
+                    }
                   },
                 ),
               ],

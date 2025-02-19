@@ -22,13 +22,8 @@ class ApprovalProcessBloc extends Bloc<ApprovalProcessEvent, ApprovalProcessStat
         emit(state.copyWith(
           approvalSuccessOrFailure: none(),
           isSubmitting: true,
-
-         
         ));
 
-        // print(
-        //     "in bloc call : ${value.distFromCollege} and ${value.isMessAvailable} hostelid = ${value.hostelId}");
-        // print("true is working in bloc ${value.hostelId}");
           final resp = await ihostelFacade.saveDataToDb(
             reason: '',
             rating: value.rating,
@@ -63,7 +58,45 @@ class ApprovalProcessBloc extends Bloc<ApprovalProcessEvent, ApprovalProcessStat
               isSubmitting: false,
               approvalSuccessOrFailure: some(right(s))));
         });
-       });
+       }, rejectButtonPressedButton: (_rejectButtonPressedButton value) async{ 
+
+        emit(state.copyWith(
+          approvalSuccessOrFailure: none(),
+          isSubmitting: true,
+        ));
+
+          final resp = await ihostelFacade.saveDataToDb(
+            reason: value.reason,
+            rating: value.rating,
+          hostelId: value.hostelId??'',
+          hostelOwnerUserId: value.hostelOwnerUserId,
+            isEdit: value.isEdit,
+            hostelName: value.hostelName,
+            ownerName: value.ownerName,
+            phoneNumber: value.phoneNumber,
+            rent: value.rent,
+            rooms: value.rooms,
+            location: value.location,
+            // personsPerRoom: value.personsPerRoom,
+            vacancy: value.vacancy,
+            description: value.description,
+            distFromCollege: value.distFromCollege,
+            isMessAvailable: value.isMessAvailable,
+            isMensHostel: value.isMensHostel,
+            hostelImages: value.hostelImages,
+            hostelIdForEdit: value.hostelId, approvalType: value.approvalType);
+
+
+        resp.fold((f) {
+          emit(state.copyWith(
+              isSubmitting: false,
+              approvalSuccessOrFailure: some(left(f))));
+        }, (s) {
+          emit(state.copyWith(
+              isSubmitting: false,
+              approvalSuccessOrFailure: some(right(s))));
+        });
+        });
     });
   }
 }

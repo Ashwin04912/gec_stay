@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/hostel_process/widget/select_location_screen.dart';
+import 'package:gecw_lakx/presentation/room_details/room_details_screen_owner.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 import 'package:latlong2/latlong.dart';
@@ -82,13 +83,9 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
           }, (success) async {
             final prefs = await SharedPreferences.getInstance();
             final String? userId = prefs.getString('owner_userid');
-            // if(!context.mounted) return;
-            // context.read<CommonHostelProcessBloc>().add(
-            //     CommonHostelProcessEvent.getOwnersHostelList(
-            //         userId: userId.toString()));
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (ctx) => BottomNavigationBarOwnerWidget(),
+                builder: (ctx) => BottomNavigationBarOwnerWidget(userId: userId.toString(),),
               ),
               (route) => false,
             );
@@ -333,7 +330,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                   vertical: 14, horizontal: 24),
                             ),
                             child: const Text(
-                              'Submit',
+                              'Submit & Proceed',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

@@ -9,6 +9,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/chat/chat_page.dart';
+import 'package:gecw_lakx/presentation/hostel_booking_layout/room_selection_screen.dart';
 import 'package:gecw_lakx/presentation/hostel_details/widgets/build_detail_widget.dart';
 import 'package:gecw_lakx/presentation/hostel_details/widgets/build_review_widget.dart';
 import 'package:latlong2/latlong.dart';
@@ -259,7 +260,7 @@ class HostelDetailsStudentAppScreenState
                             ? const Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: Text("No Reviews"),
+                                  child: Text("No Reviews",style: TextStyle(color: Colors.white),),
                                 ),
                               )
                             : ReviewList(reviews: reviews),
@@ -323,7 +324,7 @@ class HostelDetailsStudentAppScreenState
           buildDetail("Owner Name", widget.hostelResp.ownerName),
           buildDetail("Rent", "₹${widget.hostelResp.rent}/month"),
           buildDetail("Rooms Available", widget.hostelResp.rooms),
-          buildDetail("Vacancy", widget.hostelResp.vacancy),
+          // buildDetail("Vacancy", widget.hostelResp.vacancy),
           buildDetail("Monthly Rent", "₹${widget.hostelResp.rent} per person"),
           buildDetail("Mess Availability",
               " ${widget.hostelResp.isMessAvailable.toLowerCase() == "yes" ? "Available" : "Not Available"}"),
@@ -506,6 +507,16 @@ class HostelDetailsStudentAppScreenState
           ),
           onPressed: () {
             // Implement booking functionality here
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RoomSelectionScreen(
+                  rooms: [
+                    {'roomNumber': '4', 'beds': 5, 'vacancy': 2},{'roomNumber': '401', 'beds': 5, 'vacancy': 2}
+                  ],
+                ),
+              ),
+            );
           },
           child: const Text(
             "Book Now",
