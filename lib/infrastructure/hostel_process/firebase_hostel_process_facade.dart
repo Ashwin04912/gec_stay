@@ -623,23 +623,22 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     }
   }
 
- @override
+@override
 Future<Either<FormFailures, Unit>> addRoomsToFirestore({
   required Map<String, dynamic> roomData, // Renamed for clarity
-  required String hostelId
+  required String hostelId,
 }) async {
   try {
-    
-    List<Map<String, dynamic>> rooms = List<Map<String, dynamic>>.from(roomData["rooms"]);
+    List<Map<String, dynamic>> rooms =
+        List<Map<String, dynamic>>.from(roomData["rooms"] ?? []);
 
     await fireStore.collection("room_details").doc(hostelId).set({
       "timestamp": FieldValue.serverTimestamp(),
-      "hostelId":hostelId,
+      "hostelId": hostelId,
       "rooms": rooms.map((room) => {
         "roomNumber": room["roomNumber"],
         "beds": int.tryParse(room["beds"] ?? "0") ?? 0,
         "vacancy": int.tryParse(room["vacancy"] ?? "0") ?? 0,
-        
       }).toList(),
     });
 
@@ -649,5 +648,181 @@ Future<Either<FormFailures, Unit>> addRoomsToFirestore({
     return left(FormFailures.serverError());
   }
 }
+
+@override
+Future<Either<FormFailures, List<Map<String, dynamic>>>> getRoomsFromFirestore({
+  required String hostelId,
+}) async {
+  try {
+    DocumentSnapshot docSnapshot =
+        await fireStore.collection("room_details").doc(hostelId).get();
+
+    if (!docSnapshot.exists || docSnapshot.data() == null) {
+      return left(FormFailures.noDataFound());
+    }
+
+    Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+    List<Map<String, dynamic>> rooms =
+        List<Map<String, dynamic>>.from(data["rooms"] ?? []);
+
+    return right(rooms);
+  } catch (e) {
+    debugPrint("Error fetching rooms from Firestore: $e");
+    return left(FormFailures.serverError());
+  }
+}
+
+@override
+Future<Either<FormFailures, Unit>> editRoomInFirestore({
+  required String hostelId,
+  required Map<String, dynamic> updatedRoom,
+}) async {
+  try {
+    // Reference to the hostel's room details document
+    DocumentReference roomDocRef =
+        fireStore.collection("room_details").doc(hostelId);
+
+    // Fetch existing room details
+    DocumentSnapshot docSnapshot = await roomDocRef.get();
+
+    if (!docSnapshot.exists || docSnapshot.data() == null) {
+      return left(FormFailures.noDataFound());
+    }
+
+    Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+    List<Map<String, dynamic>> rooms =
+        List<Map<String, dynamic>>.from(data["rooms"] ?? []);
+
+    // Find and update the specific room
+    bool roomFound = false;
+    for (var room in rooms) {
+      if (room["roomNumber"] == updatedRoom["roomNumber"]) {
+        room["beds"] = int.tryParse(updatedRoom["beds"] ?? "0") ?? 0;
+        room["vacancy"] = int.tryParse(updatedRoom["vacancy"] ?? "0") ?? 0;
+        roomFound = true;
+        break;
+      }
+    }
+
+    if (!roomFound) {
+      return left(FormFailures.noDataFound());
+    }
+
+    // Update the Firestore document with the modified room list
+    await roomDocRef.update({
+      "rooms": rooms,
+    });
+
+    return right(unit);
+  } catch (e) {
+    debugPrint("Error editing room in Firestore: $e");
+    return left(FormFailures.serverError());
+  }
+}
+
+
+
+@override
+Future<Either<FormFailures, Unit>> bookRoomsInFirestore({
+  required String userId,
+  required String hostelId,
+  required String hostelOwnerUserId,
+  required List<Map<String, dynamic>> selectedRooms,
+  required String userName,
+  required String userPhone,
+}) async {
+  try {
+    CollectionReference bookingRef = fireStore.collection('booking');
+    String bookingId = bookingRef.doc().id; // Generate a unique ID
+
+    Map<String, dynamic> bookingData = {
+      "bookingId": bookingId,
+      "studentUserId": userId,
+      "hostelOwnerUserId": hostelOwnerUserId,
+      "hostelId": hostelId,
+      "userName": userName,
+      "userPhone": userPhone,
+      "rooms": selectedRooms,
+      "status": "pending", // Default status
+      "timestamp": FieldValue.serverTimestamp(),
+    };
+
+    await bookingRef.doc(bookingId).set(bookingData);
+
+    return right(unit);
+  } catch (e) {
+    debugPrint("Error booking rooms in Firestore: $e");
+    return left(FormFailures.serverError());
+  }
+}
+
+@override
+Future<Either<FormFailures, List<Map<String, dynamic>>>> getBookingsFromFirestore({
+  String? studentUserId,
+  String? hostelOwnerUserId,
+}) async {
+  try {
+    if (studentUserId == null && hostelOwnerUserId == null) {
+      return left(FormFailures.serverError()); // Custom failure for clarity
+    }
+
+    Query query = fireStore.collection('booking');
+
+    if (studentUserId != null) {
+      query = query.where('studentUserId', isEqualTo: studentUserId);
+    } else if (hostelOwnerUserId != null) {
+      query = query.where('hostelOwnerUserId', isEqualTo: hostelOwnerUserId);
+    }
+
+    QuerySnapshot querySnapshot = await query.orderBy('timestamp', descending: true).get();
+
+    List<Map<String, dynamic>> bookings = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+
+    if (bookings.isEmpty) {
+      return left(FormFailures.noDataFound());
+    }
+
+    return right(bookings);
+  } catch (e) {
+    debugPrint("Error fetching bookings from Firestore: $e");
+    return left(FormFailures.serverError());
+  }
+}
+
+@override
+Future<Either<FormFailures, Unit>> cancelBooking({
+  required String userId,
+  required String bookingId,
+  required String hostelOwnerUserId,
+  required String hostelId,
+}) async {
+  try {
+    QuerySnapshot querySnapshot = await fireStore
+        .collection('booking')
+        .where('bookingId', isEqualTo: bookingId)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      DocumentReference bookingRef = querySnapshot.docs.first.reference;
+
+      await bookingRef.set({
+        "status": "canceled",
+      }, SetOptions(merge: true));
+
+      return right(unit);
+    } else {
+      debugPrint("Booking not found for bookingId: $bookingId");
+      return left(FormFailures.noDataFound());
+    }
+  } catch (e) {
+    debugPrint("Error canceling booking in Firestore: $e");
+    return left(FormFailures.serverError());
+  }
+}
+
+
 
 }

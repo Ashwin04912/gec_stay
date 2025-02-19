@@ -7,6 +7,7 @@ import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
+import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/chat/chat_page.dart';
 import 'package:gecw_lakx/presentation/hostel_booking_layout/room_selection_screen.dart';
@@ -33,22 +34,6 @@ class HostelDetailsStudentAppScreenState
     extends State<HostelDetailsStudentAppScreen> {
   double _userRating = 4.0; // Default rating
   List<Map<String, String>> reviews = [];
-
-  // Room and bed data
-  final List<Map<String, dynamic>> rooms = [
-    {
-      'roomNumber': 101,
-      'beds': [true, false, true, true]
-    },
-    {
-      'roomNumber': 102,
-      'beds': [false, false, true, true]
-    },
-    {
-      'roomNumber': 103,
-      'beds': [true, true, true, false]
-    },
-  ];
 
   @override
   void initState() {
@@ -260,7 +245,10 @@ class HostelDetailsStudentAppScreenState
                             ? const Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: Text("No Reviews",style: TextStyle(color: Colors.white),),
+                                  child: Text(
+                                    "No Reviews",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               )
                             : ReviewList(reviews: reviews),
@@ -491,42 +479,57 @@ class HostelDetailsStudentAppScreenState
   // }
 
   Widget _buildBookNowButton() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.deepPurpleAccent,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+    return BlocListener<RoomDetailsBloc, RoomDetailsState>(
+      listener: (context, state) {
+        state.fetchSuccessOrFailureOption.fold(() {}, (either) {
+          either.fold((f) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('No rooms available or try again later..')));
+          }, (s) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RoomSelectionScreen(rooms: s,hostelResp: widget.hostelResp  ,)));
+          });
+        });
+      },
+      child: BlocBuilder<RoomDetailsBloc, RoomDetailsState>(
+        builder: (context, state) {
+          return Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: state.isSubmitting
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    )
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurpleAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        context.read<RoomDetailsBloc>().add(
+                            RoomDetailsEvent.getHostelRoomDetailsById(
+                                hostelId: widget.hostelResp.hostelId));
+                      },
+                      child: const Text(
+                        "Book Now",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
             ),
-          ),
-          onPressed: () {
-            // Implement booking functionality here
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RoomSelectionScreen(
-                  rooms: [
-                    {'roomNumber': '4', 'beds': 5, 'vacancy': 2},{'roomNumber': '401', 'beds': 5, 'vacancy': 2}
-                  ],
-                ),
-              ),
-            );
-          },
-          child: const Text(
-            "Book Now",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

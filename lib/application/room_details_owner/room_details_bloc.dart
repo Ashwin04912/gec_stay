@@ -16,9 +16,12 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
     on<RoomDetailsEvent>((event, emit) async {
       await event.map(addRoomsToFirestore: (value) async {
         emit(state.copyWith(
-            isSubmitting: true, successOrFailureOption: none()));
-        final resp =
-            await ihostelFacade.addRoomsToFirestore(roomData: value.rooms,hostelId: value.hostelId);
+          isSubmitting: true,
+          successOrFailureOption: none(),
+          fetchSuccessOrFailureOption: none(),
+        ));
+        final resp = await ihostelFacade.addRoomsToFirestore(
+            roomData: value.rooms, hostelId: value.hostelId);
 
         resp.fold((f) {
           emit(state.copyWith(
@@ -29,6 +32,28 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
           emit(state.copyWith(
             isSubmitting: false,
             successOrFailureOption: some(right(s)),
+          ));
+        });
+      }, getHostelRoomDetailsById: (_getHostelRoomDetailsById value) async {
+        emit(state.copyWith(
+          isSubmitting: true,
+          successOrFailureOption: none(),
+          fetchSuccessOrFailureOption: none(),
+        ));
+        final resp =
+            await ihostelFacade.getRoomsFromFirestore(hostelId: value.hostelId);
+
+        resp.fold((f) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            fetchSuccessOrFailureOption: some(left(f)),
+            // successOrFailureOption: some(left(f)),
+          ));
+        }, (s) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            fetchSuccessOrFailureOption: some(right(s)),
+            // successOrFailureOption: some(right(s)),
           ));
         });
       });

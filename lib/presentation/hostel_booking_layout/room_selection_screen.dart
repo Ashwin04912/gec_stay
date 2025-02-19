@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 
 class RoomSelectionScreen extends StatefulWidget {
+  final HostelResponseModel hostelResp;
   final List<Map<String, dynamic>> rooms;
 
-  const RoomSelectionScreen({super.key, required this.rooms});
+  const RoomSelectionScreen(
+      {super.key, required this.rooms, required this.hostelResp});
 
   @override
   _RoomSelectionScreenState createState() => _RoomSelectionScreenState();
@@ -19,7 +22,8 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
     rooms = widget.rooms.map((room) {
       return {
         ...room, // Copy existing room data
-        'selectedBeds': List.generate(room['beds'], (index) => false), // Initialize selection list
+        'selectedBeds': List.generate(
+            room['beds'], (index) => false), // Initialize selection list
       };
     }).toList();
   }
@@ -27,18 +31,119 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
   void toggleBedSelection(int roomIndex, int bedIndex) {
     setState(() {
       if (bedIndex < rooms[roomIndex]['vacancy']) {
-        rooms[roomIndex]['selectedBeds'][bedIndex] = !rooms[roomIndex]['selectedBeds'][bedIndex];
+        rooms[roomIndex]['selectedBeds'][bedIndex] =
+            !rooms[roomIndex]['selectedBeds'][bedIndex];
       }
     });
   }
 
   void confirmSelection() {
+    List<Map<String, dynamic>> selectedRooms = [];
+
     for (var room in rooms) {
-      int selectedCount = room['selectedBeds'].where((selected) => selected == true).length;
+      int selectedCount =
+          room['selectedBeds'].where((selected) => selected == true).length;
       if (selectedCount > 0) {
-        debugPrint("Room ${room['roomNumber']}: $selectedCount beds selected");
+        selectedRooms.add({
+          'roomNumber': room['roomNumber'],
+          'selectedBedsCount': selectedCount,
+        });
       }
     }
+
+    if (selectedRooms.isNotEmpty) {
+      _showConfirmationDialog(selectedRooms);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select at least one bed')),
+      );
+    }
+  }
+
+  void _showConfirmationDialog(List<Map<String, dynamic>> selectedRooms) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey[900],
+          title: const Text("Confirm Booking",style: TextStyle(color: Colors.white),),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                style: const TextStyle(color: Colors.white), // White text
+                decoration: InputDecoration(
+                  labelText: "Name",
+                  labelStyle: const TextStyle(color: Colors.white70),
+                  filled: true,
+                  fillColor: Colors.grey[800], // Dark field background
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white70),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              TextField(
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: "Phone Number",
+                  labelStyle: const TextStyle(color: Colors.white70),
+                  filled: true,
+                  fillColor: Colors.grey[800],
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white70),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel",style: TextStyle(color: Colors.redAccent),),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.isEmpty ||
+                    phoneController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please fill in all fields')),
+                  );
+                  return;
+                }
+
+                // Proceed with booking (replace with your logic)
+                debugPrint(
+                    "Booking confirmed for ${nameController.text} with phone ${phoneController.text}");
+                debugPrint("Selected Rooms: $selectedRooms");
+
+                Navigator.of(context).pop(); // Close dialog
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Booking Confirmed!')),
+                );
+              },
+              child: const Text("Confirm"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -58,7 +163,8 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
               itemBuilder: (context, roomIndex) {
                 return Card(
                   color: Colors.grey[850],
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
@@ -66,25 +172,37 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                       children: [
                         Text(
                           "Room: ${rooms[roomIndex]['roomNumber']}",
-                          style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 10),
                         Wrap(
                           spacing: 10,
-                          children: List.generate(rooms[roomIndex]['beds'], (bedIndex) {
-                            bool isAvailable = bedIndex < rooms[roomIndex]['vacancy'];
+                          children: List.generate(rooms[roomIndex]['beds'],
+                              (bedIndex) {
+                            bool isAvailable =
+                                bedIndex < rooms[roomIndex]['vacancy'];
                             return GestureDetector(
-                              onTap: isAvailable ? () => toggleBedSelection(roomIndex, bedIndex) : null,
+                              onTap: isAvailable
+                                  ? () =>
+                                      toggleBedSelection(roomIndex, bedIndex)
+                                  : null,
                               child: Container(
                                 width: 40,
                                 height: 40,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: rooms[roomIndex]['selectedBeds'][bedIndex]
+                                  color: rooms[roomIndex]['selectedBeds']
+                                          [bedIndex]
                                       ? Colors.blueAccent
-                                      : (isAvailable ? Colors.grey[700] : Colors.red[900]),
+                                      : (isAvailable
+                                          ? Colors.grey[700]
+                                          : Colors.red[900]),
                                   borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: Colors.white, width: 1),
+                                  border:
+                                      Border.all(color: Colors.white, width: 1),
                                 ),
                                 child: Text(
                                   "${bedIndex + 1}",
@@ -106,25 +224,25 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.deepPurpleAccent,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          onPressed: confirmSelection,
-            // Implement booking functionality here
-           
-          child: const Text(
-            "Confirm Selection",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurpleAccent,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: confirmSelection,
+                // Implement booking functionality here
+
+                child: const Text(
+                  "Confirm Selection",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

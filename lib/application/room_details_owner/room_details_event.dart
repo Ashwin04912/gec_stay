@@ -6,4 +6,8 @@ class RoomDetailsEvent with _$RoomDetailsEvent {
     required Map<String, dynamic> rooms,
     required String hostelId,
   }) = _addRoomsToFirestore;
+
+  const factory RoomDetailsEvent.getHostelRoomDetailsById({
+    required String hostelId,
+  }) = _getHostelRoomDetailsById;
 }

@@ -16,40 +16,47 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RoomDetailsEvent {
-  Map<String, dynamic> get rooms => throw _privateConstructorUsedError;
   String get hostelId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -67,7 +74,7 @@ abstract class $RoomDetailsEventCopyWith<$Res> {
           RoomDetailsEvent value, $Res Function(RoomDetailsEvent) then) =
       _$RoomDetailsEventCopyWithImpl<$Res, RoomDetailsEvent>;
   @useResult
-  $Res call({Map<String, dynamic> rooms, String hostelId});
+  $Res call({String hostelId});
 }
 
 /// @nodoc
@@ -85,14 +92,9 @@ class _$RoomDetailsEventCopyWithImpl<$Res, $Val extends RoomDetailsEvent>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? rooms = null,
     Object? hostelId = null,
   }) {
     return _then(_value.copyWith(
-      rooms: null == rooms
-          ? _value.rooms
-          : rooms // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
       hostelId: null == hostelId
           ? _value.hostelId
           : hostelId // ignore: cast_nullable_to_non_nullable
@@ -192,6 +194,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   TResult when<TResult extends Object?>({
     required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
   }) {
     return addRoomsToFirestore(rooms, hostelId);
   }
@@ -201,6 +204,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
   }) {
     return addRoomsToFirestore?.call(rooms, hostelId);
   }
@@ -210,6 +214,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -222,6 +227,8 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
   }) {
     return addRoomsToFirestore(this);
   }
@@ -230,6 +237,8 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
   }) {
     return addRoomsToFirestore?.call(this);
   }
@@ -238,6 +247,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -252,7 +262,6 @@ abstract class _addRoomsToFirestore implements RoomDetailsEvent {
       {required final Map<String, dynamic> rooms,
       required final String hostelId}) = _$addRoomsToFirestoreImpl;
 
-  @override
   Map<String, dynamic> get rooms;
   @override
   String get hostelId;
@@ -266,10 +275,166 @@ abstract class _addRoomsToFirestore implements RoomDetailsEvent {
 }
 
 /// @nodoc
+abstract class _$$getHostelRoomDetailsByIdImplCopyWith<$Res>
+    implements $RoomDetailsEventCopyWith<$Res> {
+  factory _$$getHostelRoomDetailsByIdImplCopyWith(
+          _$getHostelRoomDetailsByIdImpl value,
+          $Res Function(_$getHostelRoomDetailsByIdImpl) then) =
+      __$$getHostelRoomDetailsByIdImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String hostelId});
+}
+
+/// @nodoc
+class __$$getHostelRoomDetailsByIdImplCopyWithImpl<$Res>
+    extends _$RoomDetailsEventCopyWithImpl<$Res, _$getHostelRoomDetailsByIdImpl>
+    implements _$$getHostelRoomDetailsByIdImplCopyWith<$Res> {
+  __$$getHostelRoomDetailsByIdImplCopyWithImpl(
+      _$getHostelRoomDetailsByIdImpl _value,
+      $Res Function(_$getHostelRoomDetailsByIdImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hostelId = null,
+  }) {
+    return _then(_$getHostelRoomDetailsByIdImpl(
+      hostelId: null == hostelId
+          ? _value.hostelId
+          : hostelId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
+  const _$getHostelRoomDetailsByIdImpl({required this.hostelId});
+
+  @override
+  final String hostelId;
+
+  @override
+  String toString() {
+    return 'RoomDetailsEvent.getHostelRoomDetailsById(hostelId: $hostelId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$getHostelRoomDetailsByIdImpl &&
+            (identical(other.hostelId, hostelId) ||
+                other.hostelId == hostelId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, hostelId);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$getHostelRoomDetailsByIdImplCopyWith<_$getHostelRoomDetailsByIdImpl>
+      get copyWith => __$$getHostelRoomDetailsByIdImplCopyWithImpl<
+          _$getHostelRoomDetailsByIdImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
+        addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
+  }) {
+    return getHostelRoomDetailsById(hostelId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
+  }) {
+    return getHostelRoomDetailsById?.call(hostelId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
+    required TResult orElse(),
+  }) {
+    if (getHostelRoomDetailsById != null) {
+      return getHostelRoomDetailsById(hostelId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
+  }) {
+    return getHostelRoomDetailsById(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
+  }) {
+    return getHostelRoomDetailsById?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    required TResult orElse(),
+  }) {
+    if (getHostelRoomDetailsById != null) {
+      return getHostelRoomDetailsById(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _getHostelRoomDetailsById implements RoomDetailsEvent {
+  const factory _getHostelRoomDetailsById({required final String hostelId}) =
+      _$getHostelRoomDetailsByIdImpl;
+
+  @override
+  String get hostelId;
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$getHostelRoomDetailsByIdImplCopyWith<_$getHostelRoomDetailsByIdImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$RoomDetailsState {
   bool get isSubmitting => throw _privateConstructorUsedError;
   Option<Either<FormFailures, Unit>> get successOrFailureOption =>
       throw _privateConstructorUsedError;
+  Option<Either<FormFailures, List<Map<String, dynamic>>>>
+      get fetchSuccessOrFailureOption => throw _privateConstructorUsedError;
 
   /// Create a copy of RoomDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -286,7 +451,9 @@ abstract class $RoomDetailsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isSubmitting,
-      Option<Either<FormFailures, Unit>> successOrFailureOption});
+      Option<Either<FormFailures, Unit>> successOrFailureOption,
+      Option<Either<FormFailures, List<Map<String, dynamic>>>>
+          fetchSuccessOrFailureOption});
 }
 
 /// @nodoc
@@ -306,6 +473,7 @@ class _$RoomDetailsStateCopyWithImpl<$Res, $Val extends RoomDetailsState>
   $Res call({
     Object? isSubmitting = null,
     Object? successOrFailureOption = null,
+    Object? fetchSuccessOrFailureOption = null,
   }) {
     return _then(_value.copyWith(
       isSubmitting: null == isSubmitting
@@ -316,6 +484,10 @@ class _$RoomDetailsStateCopyWithImpl<$Res, $Val extends RoomDetailsState>
           ? _value.successOrFailureOption
           : successOrFailureOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<FormFailures, Unit>>,
+      fetchSuccessOrFailureOption: null == fetchSuccessOrFailureOption
+          ? _value.fetchSuccessOrFailureOption
+          : fetchSuccessOrFailureOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<FormFailures, List<Map<String, dynamic>>>>,
     ) as $Val);
   }
 }
@@ -330,7 +502,9 @@ abstract class _$$RoomDetailsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isSubmitting,
-      Option<Either<FormFailures, Unit>> successOrFailureOption});
+      Option<Either<FormFailures, Unit>> successOrFailureOption,
+      Option<Either<FormFailures, List<Map<String, dynamic>>>>
+          fetchSuccessOrFailureOption});
 }
 
 /// @nodoc
@@ -348,6 +522,7 @@ class __$$RoomDetailsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isSubmitting = null,
     Object? successOrFailureOption = null,
+    Object? fetchSuccessOrFailureOption = null,
   }) {
     return _then(_$RoomDetailsStateImpl(
       isSubmitting: null == isSubmitting
@@ -358,6 +533,10 @@ class __$$RoomDetailsStateImplCopyWithImpl<$Res>
           ? _value.successOrFailureOption
           : successOrFailureOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<FormFailures, Unit>>,
+      fetchSuccessOrFailureOption: null == fetchSuccessOrFailureOption
+          ? _value.fetchSuccessOrFailureOption
+          : fetchSuccessOrFailureOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<FormFailures, List<Map<String, dynamic>>>>,
     ));
   }
 }
@@ -366,16 +545,21 @@ class __$$RoomDetailsStateImplCopyWithImpl<$Res>
 
 class _$RoomDetailsStateImpl implements _RoomDetailsState {
   _$RoomDetailsStateImpl(
-      {required this.isSubmitting, required this.successOrFailureOption});
+      {required this.isSubmitting,
+      required this.successOrFailureOption,
+      required this.fetchSuccessOrFailureOption});
 
   @override
   final bool isSubmitting;
   @override
   final Option<Either<FormFailures, Unit>> successOrFailureOption;
+  @override
+  final Option<Either<FormFailures, List<Map<String, dynamic>>>>
+      fetchSuccessOrFailureOption;
 
   @override
   String toString() {
-    return 'RoomDetailsState(isSubmitting: $isSubmitting, successOrFailureOption: $successOrFailureOption)';
+    return 'RoomDetailsState(isSubmitting: $isSubmitting, successOrFailureOption: $successOrFailureOption, fetchSuccessOrFailureOption: $fetchSuccessOrFailureOption)';
   }
 
   @override
@@ -386,12 +570,16 @@ class _$RoomDetailsStateImpl implements _RoomDetailsState {
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
             (identical(other.successOrFailureOption, successOrFailureOption) ||
-                other.successOrFailureOption == successOrFailureOption));
+                other.successOrFailureOption == successOrFailureOption) &&
+            (identical(other.fetchSuccessOrFailureOption,
+                    fetchSuccessOrFailureOption) ||
+                other.fetchSuccessOrFailureOption ==
+                    fetchSuccessOrFailureOption));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isSubmitting, successOrFailureOption);
+  int get hashCode => Object.hash(runtimeType, isSubmitting,
+      successOrFailureOption, fetchSuccessOrFailureOption);
 
   /// Create a copy of RoomDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -406,13 +594,17 @@ class _$RoomDetailsStateImpl implements _RoomDetailsState {
 abstract class _RoomDetailsState implements RoomDetailsState {
   factory _RoomDetailsState(
       {required final bool isSubmitting,
-      required final Option<Either<FormFailures, Unit>>
-          successOrFailureOption}) = _$RoomDetailsStateImpl;
+      required final Option<Either<FormFailures, Unit>> successOrFailureOption,
+      required final Option<Either<FormFailures, List<Map<String, dynamic>>>>
+          fetchSuccessOrFailureOption}) = _$RoomDetailsStateImpl;
 
   @override
   bool get isSubmitting;
   @override
   Option<Either<FormFailures, Unit>> get successOrFailureOption;
+  @override
+  Option<Either<FormFailures, List<Map<String, dynamic>>>>
+      get fetchSuccessOrFailureOption;
 
   /// Create a copy of RoomDetailsState
   /// with the given fields replaced by the non-null parameter values.
