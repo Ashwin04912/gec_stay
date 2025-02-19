@@ -623,24 +623,31 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     }
   }
 
-  @override
-  Future<Either<FormFailures, Unit>> addRoomsToFirestore({
-    required List<Map<String, String>> rooms,
-    required String hostelId,
-  }) async {
-    try {
-      for (var room in rooms) {
-        await fireStore.collection("room_details").doc(hostelId).set({
-          "roomNumber": room["roomNumber"],
-          "beds": int.tryParse(room["beds"] ?? "0") ?? 0,
-          "vacancy": int.tryParse(room["vacancy"] ?? "0") ?? 0,
-          "timestamp": FieldValue.serverTimestamp(),
-        });
-      }
-      return right(unit);
-    } catch (e) {
-      debugPrint("Error adding rooms to Firestore: $e");
-      return left(FormFailures.serverError());
-    }
+ @override
+Future<Either<FormFailures, Unit>> addRoomsToFirestore({
+  required Map<String, dynamic> roomData, // Renamed for clarity
+  required String hostelId
+}) async {
+  try {
+    
+    List<Map<String, dynamic>> rooms = List<Map<String, dynamic>>.from(roomData["rooms"]);
+
+    await fireStore.collection("room_details").doc(hostelId).set({
+      "timestamp": FieldValue.serverTimestamp(),
+      "hostelId":hostelId,
+      "rooms": rooms.map((room) => {
+        "roomNumber": room["roomNumber"],
+        "beds": int.tryParse(room["beds"] ?? "0") ?? 0,
+        "vacancy": int.tryParse(room["vacancy"] ?? "0") ?? 0,
+        
+      }).toList(),
+    });
+
+    return right(unit);
+  } catch (e) {
+    debugPrint("Error adding rooms to Firestore: $e");
+    return left(FormFailures.serverError());
   }
+}
+
 }

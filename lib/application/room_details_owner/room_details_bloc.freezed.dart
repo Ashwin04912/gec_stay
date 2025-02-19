@@ -16,23 +16,23 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RoomDetailsEvent {
-  List<Map<String, String>> get rooms => throw _privateConstructorUsedError;
+  Map<String, dynamic> get rooms => throw _privateConstructorUsedError;
   String get hostelId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Map<String, String>> rooms, String hostelId)
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Map<String, String>> rooms, String hostelId)?
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Map<String, String>> rooms, String hostelId)?
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     required TResult orElse(),
   }) =>
@@ -67,7 +67,7 @@ abstract class $RoomDetailsEventCopyWith<$Res> {
           RoomDetailsEvent value, $Res Function(RoomDetailsEvent) then) =
       _$RoomDetailsEventCopyWithImpl<$Res, RoomDetailsEvent>;
   @useResult
-  $Res call({List<Map<String, String>> rooms, String hostelId});
+  $Res call({Map<String, dynamic> rooms, String hostelId});
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ class _$RoomDetailsEventCopyWithImpl<$Res, $Val extends RoomDetailsEvent>
       rooms: null == rooms
           ? _value.rooms
           : rooms // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, String>>,
+              as Map<String, dynamic>,
       hostelId: null == hostelId
           ? _value.hostelId
           : hostelId // ignore: cast_nullable_to_non_nullable
@@ -109,7 +109,7 @@ abstract class _$$addRoomsToFirestoreImplCopyWith<$Res>
       __$$addRoomsToFirestoreImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Map<String, String>> rooms, String hostelId});
+  $Res call({Map<String, dynamic> rooms, String hostelId});
 }
 
 /// @nodoc
@@ -132,7 +132,7 @@ class __$$addRoomsToFirestoreImplCopyWithImpl<$Res>
       rooms: null == rooms
           ? _value._rooms
           : rooms // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, String>>,
+              as Map<String, dynamic>,
       hostelId: null == hostelId
           ? _value.hostelId
           : hostelId // ignore: cast_nullable_to_non_nullable
@@ -145,15 +145,15 @@ class __$$addRoomsToFirestoreImplCopyWithImpl<$Res>
 
 class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   const _$addRoomsToFirestoreImpl(
-      {required final List<Map<String, String>> rooms, required this.hostelId})
+      {required final Map<String, dynamic> rooms, required this.hostelId})
       : _rooms = rooms;
 
-  final List<Map<String, String>> _rooms;
+  final Map<String, dynamic> _rooms;
   @override
-  List<Map<String, String>> get rooms {
-    if (_rooms is EqualUnmodifiableListView) return _rooms;
+  Map<String, dynamic> get rooms {
+    if (_rooms is EqualUnmodifiableMapView) return _rooms;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_rooms);
+    return EqualUnmodifiableMapView(_rooms);
   }
 
   @override
@@ -190,7 +190,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Map<String, String>> rooms, String hostelId)
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
   }) {
     return addRoomsToFirestore(rooms, hostelId);
@@ -199,7 +199,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Map<String, String>> rooms, String hostelId)?
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
   }) {
     return addRoomsToFirestore?.call(rooms, hostelId);
@@ -208,7 +208,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Map<String, String>> rooms, String hostelId)?
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     required TResult orElse(),
   }) {
@@ -249,11 +249,11 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
 
 abstract class _addRoomsToFirestore implements RoomDetailsEvent {
   const factory _addRoomsToFirestore(
-      {required final List<Map<String, String>> rooms,
+      {required final Map<String, dynamic> rooms,
       required final String hostelId}) = _$addRoomsToFirestoreImpl;
 
   @override
-  List<Map<String, String>> get rooms;
+  Map<String, dynamic> get rooms;
   @override
   String get hostelId;
 

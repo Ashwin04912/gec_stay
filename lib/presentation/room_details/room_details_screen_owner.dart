@@ -31,25 +31,23 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
     }
   }
 
-  void submitData({required String hostelId}) {
-    List<Map<String, String>> enteredData = [];
-    for (var room in rooms) {
-      enteredData.add({
-        'roomNumber': room['roomNumber'].text,
-        'beds': room['beds'].text,
-        'vacancy': room['vacancy'].text,
-      });
-    }
+void submitData({required String hostelId}) {
+  Map<String, dynamic> roomData = {
+    'hostelId': hostelId,
+    'rooms': rooms.map((room) => {
+      'roomNumber': room['roomNumber'].text,
+      'beds': room['beds'].text,
+      'vacancy': room['vacancy'].text,
+    }).toList(),
+  };
 
-    debugPrint("Entered Room Details: ");
-    for (var data in enteredData) {
-      debugPrint(
-          "Room: ${data['roomNumber']}, Beds: ${data['beds']}, Vacancy: ${data['vacancy']}");
-    }
+  debugPrint("Final Room Data: $roomData");
 
-    context.read<RoomDetailsBloc>().add(RoomDetailsEvent.addRoomsToFirestore(
-        rooms: enteredData, hostelId: hostelId));
-  }
+  context.read<RoomDetailsBloc>().add(
+    RoomDetailsEvent.addRoomsToFirestore(rooms: roomData, hostelId: hostelId),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {

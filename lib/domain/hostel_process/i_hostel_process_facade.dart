@@ -64,7 +64,7 @@ abstract class IHostelProcessFacade {
   });
 
   Future<Either<FormFailures, Unit>> addRoomsToFirestore({
-    required List<Map<String, String>> rooms,
+    required Map<String, dynamic> roomData,
     required String hostelId,
   });
 }

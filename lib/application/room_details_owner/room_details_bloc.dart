@@ -16,9 +16,9 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
     on<RoomDetailsEvent>((event, emit) async {
       await event.map(addRoomsToFirestore: (value) async {
         emit(state.copyWith(
-            isSubmitting: false, successOrFailureOption: none()));
+            isSubmitting: true, successOrFailureOption: none()));
         final resp =
-            await ihostelFacade.addRoomsToFirestore(rooms: value.rooms,hostelId: value.hostelId);
+            await ihostelFacade.addRoomsToFirestore(roomData: value.rooms,hostelId: value.hostelId);
 
         resp.fold((f) {
           emit(state.copyWith(
