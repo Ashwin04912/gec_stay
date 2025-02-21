@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomSelectionScreen extends StatefulWidget {
   final HostelResponseModel hostelResp;
@@ -52,7 +56,8 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
     }
 
     if (selectedRooms.isNotEmpty) {
-      _showConfirmationDialog(selectedRooms);
+      _showConfirmationDialog(
+          hostelResp: widget.hostelResp, selectedRooms: selectedRooms);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please select at least one bed')),
@@ -60,7 +65,10 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
     }
   }
 
-  void _showConfirmationDialog(List<Map<String, dynamic>> selectedRooms) {
+  void _showConfirmationDialog({
+    required List<Map<String, dynamic>> selectedRooms,
+    required HostelResponseModel hostelResp,
+  }) {
     TextEditingController nameController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
 
@@ -69,7 +77,10 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.grey[900],
-          title: const Text("Confirm Booking",style: TextStyle(color: Colors.white),),
+          title: const Text(
+            "Confirm Booking",
+            style: TextStyle(color: Colors.white),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -91,7 +102,9 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
@@ -116,10 +129,16 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text("Cancel",style: TextStyle(color: Colors.redAccent),),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.redAccent),
+              ),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                final String? userId = prefs.getString('owner_userid');
+
                 if (nameController.text.isEmpty ||
                     phoneController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -128,15 +147,18 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                   return;
                 }
 
-                // Proceed with booking (replace with your logic)
-                debugPrint(
-                    "Booking confirmed for ${nameController.text} with phone ${phoneController.text}");
-                debugPrint("Selected Rooms: $selectedRooms");
+                if (userId != null) {
+                  context.read<RoomDetailsBloc>().add(
+                      RoomDetailsEvent.bookNowButtonPressed(
+                          userId: userId,
+                          hostelOwnerUserId: hostelResp.hostelOwnerUserId,
+                          hostelId: hostelResp.hostelId,
+                          selectedRooms: selectedRooms,
+                          userName: nameController.text,
+                          userPhone: phoneController.text));
+                }
 
                 Navigator.of(context).pop(); // Close dialog
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Booking Confirmed!')),
-                );
               },
               child: const Text("Confirm"),
             ),
@@ -223,25 +245,49 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurpleAccent,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: confirmSelection,
-                // Implement booking functionality here
+              child: BlocConsumer<RoomDetailsBloc, RoomDetailsState>(
+                listener: (context, state) {
+                  state.successOrFailureOption.fold(() {}, (either) {
+                    either.fold((f) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text("Some error Occured...Try again later")));
+                    }, (s) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (ctx) => StudentHomeScreen()));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Booking successfull")));
+                    });
+                  });
+                },
+                builder: (context, state) {
+                  return state.isSubmitting
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.deepPurpleAccent,
+                          ),
+                        )
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurpleAccent,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: confirmSelection,
+                          // Implement booking functionality here
 
-                child: const Text(
-                  "Confirm Selection",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                          child: const Text(
+                            "Confirm Selection",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                },
               ),
             ),
           ),

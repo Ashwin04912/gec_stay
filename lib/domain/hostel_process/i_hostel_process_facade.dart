@@ -101,5 +101,11 @@ Future<Either<FormFailures, Unit>> editRoomInFirestore({
   required Map<String, dynamic> updatedRoom,
 });
 
+  Future<void> updateRoomVacancy({
+  required String hostelId,
+  required String roomNumber,
+  required int bookedBeds,
+});
+
 
 }

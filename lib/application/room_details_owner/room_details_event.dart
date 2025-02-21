@@ -10,4 +10,14 @@ class RoomDetailsEvent with _$RoomDetailsEvent {
   const factory RoomDetailsEvent.getHostelRoomDetailsById({
     required String hostelId,
   }) = _getHostelRoomDetailsById;
+
+  const factory RoomDetailsEvent.bookNowButtonPressed({
+     required String userId,
+   required String hostelOwnerUserId,
+  required String hostelId,
+  required List<Map<String, dynamic>> selectedRooms,
+  required String userName,
+  required String userPhone,
+  }) = _bookNowButtonPressed;
+  
 }

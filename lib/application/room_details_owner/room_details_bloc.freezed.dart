@@ -22,6 +22,14 @@ mixin _$RoomDetailsEvent {
     required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
     required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,6 +37,14 @@ mixin _$RoomDetailsEvent {
     TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +52,14 @@ mixin _$RoomDetailsEvent {
     TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -44,6 +68,7 @@ mixin _$RoomDetailsEvent {
     required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,12 +76,14 @@ mixin _$RoomDetailsEvent {
     TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -195,6 +222,14 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
     required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
   }) {
     return addRoomsToFirestore(rooms, hostelId);
   }
@@ -205,6 +240,14 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
   }) {
     return addRoomsToFirestore?.call(rooms, hostelId);
   }
@@ -215,6 +258,14 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -229,6 +280,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
   }) {
     return addRoomsToFirestore(this);
   }
@@ -239,6 +291,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
   }) {
     return addRoomsToFirestore?.call(this);
   }
@@ -248,6 +301,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -351,6 +405,14 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     required TResult Function(Map<String, dynamic> rooms, String hostelId)
         addRoomsToFirestore,
     required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
   }) {
     return getHostelRoomDetailsById(hostelId);
   }
@@ -361,6 +423,14 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult? Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
   }) {
     return getHostelRoomDetailsById?.call(hostelId);
   }
@@ -371,6 +441,14 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult Function(Map<String, dynamic> rooms, String hostelId)?
         addRoomsToFirestore,
     TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
     required TResult orElse(),
   }) {
     if (getHostelRoomDetailsById != null) {
@@ -385,6 +463,7 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
   }) {
     return getHostelRoomDetailsById(this);
   }
@@ -395,6 +474,7 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
   }) {
     return getHostelRoomDetailsById?.call(this);
   }
@@ -404,6 +484,7 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
     required TResult orElse(),
   }) {
     if (getHostelRoomDetailsById != null) {
@@ -425,6 +506,269 @@ abstract class _getHostelRoomDetailsById implements RoomDetailsEvent {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$getHostelRoomDetailsByIdImplCopyWith<_$getHostelRoomDetailsByIdImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$bookNowButtonPressedImplCopyWith<$Res>
+    implements $RoomDetailsEventCopyWith<$Res> {
+  factory _$$bookNowButtonPressedImplCopyWith(_$bookNowButtonPressedImpl value,
+          $Res Function(_$bookNowButtonPressedImpl) then) =
+      __$$bookNowButtonPressedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String userId,
+      String hostelOwnerUserId,
+      String hostelId,
+      List<Map<String, dynamic>> selectedRooms,
+      String userName,
+      String userPhone});
+}
+
+/// @nodoc
+class __$$bookNowButtonPressedImplCopyWithImpl<$Res>
+    extends _$RoomDetailsEventCopyWithImpl<$Res, _$bookNowButtonPressedImpl>
+    implements _$$bookNowButtonPressedImplCopyWith<$Res> {
+  __$$bookNowButtonPressedImplCopyWithImpl(_$bookNowButtonPressedImpl _value,
+      $Res Function(_$bookNowButtonPressedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+    Object? hostelOwnerUserId = null,
+    Object? hostelId = null,
+    Object? selectedRooms = null,
+    Object? userName = null,
+    Object? userPhone = null,
+  }) {
+    return _then(_$bookNowButtonPressedImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      hostelOwnerUserId: null == hostelOwnerUserId
+          ? _value.hostelOwnerUserId
+          : hostelOwnerUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+      hostelId: null == hostelId
+          ? _value.hostelId
+          : hostelId // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedRooms: null == selectedRooms
+          ? _value._selectedRooms
+          : selectedRooms // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      userPhone: null == userPhone
+          ? _value.userPhone
+          : userPhone // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
+  const _$bookNowButtonPressedImpl(
+      {required this.userId,
+      required this.hostelOwnerUserId,
+      required this.hostelId,
+      required final List<Map<String, dynamic>> selectedRooms,
+      required this.userName,
+      required this.userPhone})
+      : _selectedRooms = selectedRooms;
+
+  @override
+  final String userId;
+  @override
+  final String hostelOwnerUserId;
+  @override
+  final String hostelId;
+  final List<Map<String, dynamic>> _selectedRooms;
+  @override
+  List<Map<String, dynamic>> get selectedRooms {
+    if (_selectedRooms is EqualUnmodifiableListView) return _selectedRooms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedRooms);
+  }
+
+  @override
+  final String userName;
+  @override
+  final String userPhone;
+
+  @override
+  String toString() {
+    return 'RoomDetailsEvent.bookNowButtonPressed(userId: $userId, hostelOwnerUserId: $hostelOwnerUserId, hostelId: $hostelId, selectedRooms: $selectedRooms, userName: $userName, userPhone: $userPhone)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$bookNowButtonPressedImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.hostelOwnerUserId, hostelOwnerUserId) ||
+                other.hostelOwnerUserId == hostelOwnerUserId) &&
+            (identical(other.hostelId, hostelId) ||
+                other.hostelId == hostelId) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedRooms, _selectedRooms) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
+            (identical(other.userPhone, userPhone) ||
+                other.userPhone == userPhone));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      userId,
+      hostelOwnerUserId,
+      hostelId,
+      const DeepCollectionEquality().hash(_selectedRooms),
+      userName,
+      userPhone);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$bookNowButtonPressedImplCopyWith<_$bookNowButtonPressedImpl>
+      get copyWith =>
+          __$$bookNowButtonPressedImplCopyWithImpl<_$bookNowButtonPressedImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
+        addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
+  }) {
+    return bookNowButtonPressed(userId, hostelOwnerUserId, hostelId,
+        selectedRooms, userName, userPhone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+  }) {
+    return bookNowButtonPressed?.call(userId, hostelOwnerUserId, hostelId,
+        selectedRooms, userName, userPhone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    required TResult orElse(),
+  }) {
+    if (bookNowButtonPressed != null) {
+      return bookNowButtonPressed(userId, hostelOwnerUserId, hostelId,
+          selectedRooms, userName, userPhone);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+  }) {
+    return bookNowButtonPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+  }) {
+    return bookNowButtonPressed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    required TResult orElse(),
+  }) {
+    if (bookNowButtonPressed != null) {
+      return bookNowButtonPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _bookNowButtonPressed implements RoomDetailsEvent {
+  const factory _bookNowButtonPressed(
+      {required final String userId,
+      required final String hostelOwnerUserId,
+      required final String hostelId,
+      required final List<Map<String, dynamic>> selectedRooms,
+      required final String userName,
+      required final String userPhone}) = _$bookNowButtonPressedImpl;
+
+  String get userId;
+  String get hostelOwnerUserId;
+  @override
+  String get hostelId;
+  List<Map<String, dynamic>> get selectedRooms;
+  String get userName;
+  String get userPhone;
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$bookNowButtonPressedImplCopyWith<_$bookNowButtonPressedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 

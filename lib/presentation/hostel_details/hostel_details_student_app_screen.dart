@@ -415,68 +415,7 @@ class HostelDetailsStudentAppScreenState
     );
   }
 
-  // Widget _buildRoomCard(Map<String, dynamic> room) {
-  //   return Card(
-  //     color: Colors.grey[850],
-  //     margin: const EdgeInsets.symmetric(vertical: 8),
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(12),
-  //     ),
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(12),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Text(
-  //             "Room ${room['roomNumber']}",
-  //             style: const TextStyle(
-  //               color: Colors.white,
-  //               fontSize: 18,
-  //               fontWeight: FontWeight.bold,
-  //             ),
-  //           ),
-  //           const SizedBox(height: 10),
-  //           Row(
-  //             children: List.generate(room['beds'].length, (index) {
-  //               bool isAvailable = room['beds'][index];
-  //               return GestureDetector(
-  //                 onTap: isAvailable
-  //                     ? () {
-  //                         ScaffoldMessenger.of(context).showSnackBar(
-  //                           SnackBar(
-  //                             content: Text(
-  //                               "You selected bed ${index + 1} in Room ${room['roomNumber']}",
-  //                             ),
-  //                           ),
-  //                         );
-  //                       }
-  //                     : null,
-  //                 child: Container(
-  //                   margin: const EdgeInsets.symmetric(horizontal: 4),
-  //                   width: 40,
-  //                   height: 40,
-  //                   decoration: BoxDecoration(
-  //                     color: isAvailable ? Colors.green : Colors.red,
-  //                     borderRadius: BorderRadius.circular(8),
-  //                   ),
-  //                   child: Center(
-  //                     child: Text(
-  //                       "${index + 1}",
-  //                       style: const TextStyle(
-  //                         color: Colors.white,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               );
-  //             }),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+
 
   Widget _buildBookNowButton() {
     return BlocListener<RoomDetailsBloc, RoomDetailsState>(

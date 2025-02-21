@@ -26,11 +26,13 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
         resp.fold((f) {
           emit(state.copyWith(
             isSubmitting: false,
+            fetchSuccessOrFailureOption: none(),
             successOrFailureOption: some(left(f)),
           ));
         }, (s) {
           emit(state.copyWith(
             isSubmitting: false,
+            fetchSuccessOrFailureOption: none(),
             successOrFailureOption: some(right(s)),
           ));
         });
@@ -46,14 +48,43 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
         resp.fold((f) {
           emit(state.copyWith(
             isSubmitting: false,
+
             fetchSuccessOrFailureOption: some(left(f)),
-            // successOrFailureOption: some(left(f)),
+            successOrFailureOption: none(),
           ));
         }, (s) {
           emit(state.copyWith(
             isSubmitting: false,
             fetchSuccessOrFailureOption: some(right(s)),
-            // successOrFailureOption: some(right(s)),
+            successOrFailureOption:none(),
+          ));
+        });
+      }, bookNowButtonPressed: (_bookNowButtonPressed value) async {
+        emit(state.copyWith(
+          isSubmitting: true,
+          successOrFailureOption: none(),
+          fetchSuccessOrFailureOption: none(),
+        ));
+        final resp = await ihostelFacade.bookRoomsInFirestore(
+          hostelId: value.hostelId,
+          hostelOwnerUserId: value.hostelOwnerUserId,
+          selectedRooms: value.selectedRooms,
+          userId: value.userId,
+          userName: value.userName,
+          userPhone: value.userPhone,
+        );
+
+        resp.fold((f) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            fetchSuccessOrFailureOption: none(),
+            successOrFailureOption: some(left(f)),
+          ));
+        }, (s) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            fetchSuccessOrFailureOption: none(),
+            successOrFailureOption: some(right(s)),
           ));
         });
       });
