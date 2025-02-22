@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RoomDetailsEvent {
-  String get hostelId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Map<String, dynamic> rooms, String hostelId)
@@ -24,12 +23,15 @@ mixin _$RoomDetailsEvent {
     required TResult Function(String hostelId) getHostelRoomDetailsById,
     required TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String userId) loadBookingHistoryForStudent,
+    required TResult Function(String bookingId) cancelBookingEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,12 +41,15 @@ mixin _$RoomDetailsEvent {
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
     TResult? Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String userId)? loadBookingHistoryForStudent,
+    TResult? Function(String bookingId)? cancelBookingEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,12 +59,15 @@ mixin _$RoomDetailsEvent {
     TResult Function(String hostelId)? getHostelRoomDetailsById,
     TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String userId)? loadBookingHistoryForStudent,
+    TResult Function(String bookingId)? cancelBookingEvent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,6 +77,9 @@ mixin _$RoomDetailsEvent {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_loadBookingHistoryForStudent value)
+        loadBookingHistoryForStudent,
+    required TResult Function(_CancelBookingEvent value) cancelBookingEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,6 +88,9 @@ mixin _$RoomDetailsEvent {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult? Function(_CancelBookingEvent value)? cancelBookingEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,14 +98,11 @@ mixin _$RoomDetailsEvent {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult Function(_CancelBookingEvent value)? cancelBookingEvent,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of RoomDetailsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $RoomDetailsEventCopyWith<RoomDetailsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -100,8 +111,6 @@ abstract class $RoomDetailsEventCopyWith<$Res> {
   factory $RoomDetailsEventCopyWith(
           RoomDetailsEvent value, $Res Function(RoomDetailsEvent) then) =
       _$RoomDetailsEventCopyWithImpl<$Res, RoomDetailsEvent>;
-  @useResult
-  $Res call({String hostelId});
 }
 
 /// @nodoc
@@ -116,27 +125,13 @@ class _$RoomDetailsEventCopyWithImpl<$Res, $Val extends RoomDetailsEvent>
 
   /// Create a copy of RoomDetailsEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? hostelId = null,
-  }) {
-    return _then(_value.copyWith(
-      hostelId: null == hostelId
-          ? _value.hostelId
-          : hostelId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$addRoomsToFirestoreImplCopyWith<$Res>
-    implements $RoomDetailsEventCopyWith<$Res> {
+abstract class _$$addRoomsToFirestoreImplCopyWith<$Res> {
   factory _$$addRoomsToFirestoreImplCopyWith(_$addRoomsToFirestoreImpl value,
           $Res Function(_$addRoomsToFirestoreImpl) then) =
       __$$addRoomsToFirestoreImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({Map<String, dynamic> rooms, String hostelId});
 }
@@ -224,12 +219,15 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     required TResult Function(String hostelId) getHostelRoomDetailsById,
     required TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String userId) loadBookingHistoryForStudent,
+    required TResult Function(String bookingId) cancelBookingEvent,
   }) {
     return addRoomsToFirestore(rooms, hostelId);
   }
@@ -242,12 +240,15 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
     TResult? Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String userId)? loadBookingHistoryForStudent,
+    TResult? Function(String bookingId)? cancelBookingEvent,
   }) {
     return addRoomsToFirestore?.call(rooms, hostelId);
   }
@@ -260,12 +261,15 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult Function(String hostelId)? getHostelRoomDetailsById,
     TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String userId)? loadBookingHistoryForStudent,
+    TResult Function(String bookingId)? cancelBookingEvent,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -281,6 +285,9 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_loadBookingHistoryForStudent value)
+        loadBookingHistoryForStudent,
+    required TResult Function(_CancelBookingEvent value) cancelBookingEvent,
   }) {
     return addRoomsToFirestore(this);
   }
@@ -292,6 +299,9 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult? Function(_CancelBookingEvent value)? cancelBookingEvent,
   }) {
     return addRoomsToFirestore?.call(this);
   }
@@ -302,6 +312,9 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult Function(_CancelBookingEvent value)? cancelBookingEvent,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -317,25 +330,21 @@ abstract class _addRoomsToFirestore implements RoomDetailsEvent {
       required final String hostelId}) = _$addRoomsToFirestoreImpl;
 
   Map<String, dynamic> get rooms;
-  @override
   String get hostelId;
 
   /// Create a copy of RoomDetailsEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$addRoomsToFirestoreImplCopyWith<_$addRoomsToFirestoreImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$getHostelRoomDetailsByIdImplCopyWith<$Res>
-    implements $RoomDetailsEventCopyWith<$Res> {
+abstract class _$$getHostelRoomDetailsByIdImplCopyWith<$Res> {
   factory _$$getHostelRoomDetailsByIdImplCopyWith(
           _$getHostelRoomDetailsByIdImpl value,
           $Res Function(_$getHostelRoomDetailsByIdImpl) then) =
       __$$getHostelRoomDetailsByIdImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String hostelId});
 }
@@ -407,12 +416,15 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     required TResult Function(String hostelId) getHostelRoomDetailsById,
     required TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String userId) loadBookingHistoryForStudent,
+    required TResult Function(String bookingId) cancelBookingEvent,
   }) {
     return getHostelRoomDetailsById(hostelId);
   }
@@ -425,12 +437,15 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
     TResult? Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String userId)? loadBookingHistoryForStudent,
+    TResult? Function(String bookingId)? cancelBookingEvent,
   }) {
     return getHostelRoomDetailsById?.call(hostelId);
   }
@@ -443,12 +458,15 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult Function(String hostelId)? getHostelRoomDetailsById,
     TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String userId)? loadBookingHistoryForStudent,
+    TResult Function(String bookingId)? cancelBookingEvent,
     required TResult orElse(),
   }) {
     if (getHostelRoomDetailsById != null) {
@@ -464,6 +482,9 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_loadBookingHistoryForStudent value)
+        loadBookingHistoryForStudent,
+    required TResult Function(_CancelBookingEvent value) cancelBookingEvent,
   }) {
     return getHostelRoomDetailsById(this);
   }
@@ -475,6 +496,9 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult? Function(_CancelBookingEvent value)? cancelBookingEvent,
   }) {
     return getHostelRoomDetailsById?.call(this);
   }
@@ -485,6 +509,9 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult Function(_CancelBookingEvent value)? cancelBookingEvent,
     required TResult orElse(),
   }) {
     if (getHostelRoomDetailsById != null) {
@@ -498,27 +525,24 @@ abstract class _getHostelRoomDetailsById implements RoomDetailsEvent {
   const factory _getHostelRoomDetailsById({required final String hostelId}) =
       _$getHostelRoomDetailsByIdImpl;
 
-  @override
   String get hostelId;
 
   /// Create a copy of RoomDetailsEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$getHostelRoomDetailsByIdImplCopyWith<_$getHostelRoomDetailsByIdImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$bookNowButtonPressedImplCopyWith<$Res>
-    implements $RoomDetailsEventCopyWith<$Res> {
+abstract class _$$bookNowButtonPressedImplCopyWith<$Res> {
   factory _$$bookNowButtonPressedImplCopyWith(_$bookNowButtonPressedImpl value,
           $Res Function(_$bookNowButtonPressedImpl) then) =
       __$$bookNowButtonPressedImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call(
       {String userId,
+      String hostelName,
       String hostelOwnerUserId,
       String hostelId,
       List<Map<String, dynamic>> selectedRooms,
@@ -540,6 +564,7 @@ class __$$bookNowButtonPressedImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = null,
+    Object? hostelName = null,
     Object? hostelOwnerUserId = null,
     Object? hostelId = null,
     Object? selectedRooms = null,
@@ -550,6 +575,10 @@ class __$$bookNowButtonPressedImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      hostelName: null == hostelName
+          ? _value.hostelName
+          : hostelName // ignore: cast_nullable_to_non_nullable
               as String,
       hostelOwnerUserId: null == hostelOwnerUserId
           ? _value.hostelOwnerUserId
@@ -580,6 +609,7 @@ class __$$bookNowButtonPressedImplCopyWithImpl<$Res>
 class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
   const _$bookNowButtonPressedImpl(
       {required this.userId,
+      required this.hostelName,
       required this.hostelOwnerUserId,
       required this.hostelId,
       required final List<Map<String, dynamic>> selectedRooms,
@@ -589,6 +619,8 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
 
   @override
   final String userId;
+  @override
+  final String hostelName;
   @override
   final String hostelOwnerUserId;
   @override
@@ -608,7 +640,7 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
 
   @override
   String toString() {
-    return 'RoomDetailsEvent.bookNowButtonPressed(userId: $userId, hostelOwnerUserId: $hostelOwnerUserId, hostelId: $hostelId, selectedRooms: $selectedRooms, userName: $userName, userPhone: $userPhone)';
+    return 'RoomDetailsEvent.bookNowButtonPressed(userId: $userId, hostelName: $hostelName, hostelOwnerUserId: $hostelOwnerUserId, hostelId: $hostelId, selectedRooms: $selectedRooms, userName: $userName, userPhone: $userPhone)';
   }
 
   @override
@@ -617,6 +649,8 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
         (other.runtimeType == runtimeType &&
             other is _$bookNowButtonPressedImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.hostelName, hostelName) ||
+                other.hostelName == hostelName) &&
             (identical(other.hostelOwnerUserId, hostelOwnerUserId) ||
                 other.hostelOwnerUserId == hostelOwnerUserId) &&
             (identical(other.hostelId, hostelId) ||
@@ -633,6 +667,7 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
   int get hashCode => Object.hash(
       runtimeType,
       userId,
+      hostelName,
       hostelOwnerUserId,
       hostelId,
       const DeepCollectionEquality().hash(_selectedRooms),
@@ -657,14 +692,17 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     required TResult Function(String hostelId) getHostelRoomDetailsById,
     required TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String userId) loadBookingHistoryForStudent,
+    required TResult Function(String bookingId) cancelBookingEvent,
   }) {
-    return bookNowButtonPressed(userId, hostelOwnerUserId, hostelId,
+    return bookNowButtonPressed(userId, hostelName, hostelOwnerUserId, hostelId,
         selectedRooms, userName, userPhone);
   }
 
@@ -676,15 +714,18 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     TResult? Function(String hostelId)? getHostelRoomDetailsById,
     TResult? Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String userId)? loadBookingHistoryForStudent,
+    TResult? Function(String bookingId)? cancelBookingEvent,
   }) {
-    return bookNowButtonPressed?.call(userId, hostelOwnerUserId, hostelId,
-        selectedRooms, userName, userPhone);
+    return bookNowButtonPressed?.call(userId, hostelName, hostelOwnerUserId,
+        hostelId, selectedRooms, userName, userPhone);
   }
 
   @override
@@ -695,17 +736,20 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     TResult Function(String hostelId)? getHostelRoomDetailsById,
     TResult Function(
             String userId,
+            String hostelName,
             String hostelOwnerUserId,
             String hostelId,
             List<Map<String, dynamic>> selectedRooms,
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String userId)? loadBookingHistoryForStudent,
+    TResult Function(String bookingId)? cancelBookingEvent,
     required TResult orElse(),
   }) {
     if (bookNowButtonPressed != null) {
-      return bookNowButtonPressed(userId, hostelOwnerUserId, hostelId,
-          selectedRooms, userName, userPhone);
+      return bookNowButtonPressed(userId, hostelName, hostelOwnerUserId,
+          hostelId, selectedRooms, userName, userPhone);
     }
     return orElse();
   }
@@ -717,6 +761,9 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_loadBookingHistoryForStudent value)
+        loadBookingHistoryForStudent,
+    required TResult Function(_CancelBookingEvent value) cancelBookingEvent,
   }) {
     return bookNowButtonPressed(this);
   }
@@ -728,6 +775,9 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult? Function(_CancelBookingEvent value)? cancelBookingEvent,
   }) {
     return bookNowButtonPressed?.call(this);
   }
@@ -738,6 +788,9 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult Function(_CancelBookingEvent value)? cancelBookingEvent,
     required TResult orElse(),
   }) {
     if (bookNowButtonPressed != null) {
@@ -750,6 +803,7 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
 abstract class _bookNowButtonPressed implements RoomDetailsEvent {
   const factory _bookNowButtonPressed(
       {required final String userId,
+      required final String hostelName,
       required final String hostelOwnerUserId,
       required final String hostelId,
       required final List<Map<String, dynamic>> selectedRooms,
@@ -757,8 +811,8 @@ abstract class _bookNowButtonPressed implements RoomDetailsEvent {
       required final String userPhone}) = _$bookNowButtonPressedImpl;
 
   String get userId;
+  String get hostelName;
   String get hostelOwnerUserId;
-  @override
   String get hostelId;
   List<Map<String, dynamic>> get selectedRooms;
   String get userName;
@@ -766,15 +820,406 @@ abstract class _bookNowButtonPressed implements RoomDetailsEvent {
 
   /// Create a copy of RoomDetailsEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$bookNowButtonPressedImplCopyWith<_$bookNowButtonPressedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$loadBookingHistoryForStudentImplCopyWith<$Res> {
+  factory _$$loadBookingHistoryForStudentImplCopyWith(
+          _$loadBookingHistoryForStudentImpl value,
+          $Res Function(_$loadBookingHistoryForStudentImpl) then) =
+      __$$loadBookingHistoryForStudentImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String userId});
+}
+
+/// @nodoc
+class __$$loadBookingHistoryForStudentImplCopyWithImpl<$Res>
+    extends _$RoomDetailsEventCopyWithImpl<$Res,
+        _$loadBookingHistoryForStudentImpl>
+    implements _$$loadBookingHistoryForStudentImplCopyWith<$Res> {
+  __$$loadBookingHistoryForStudentImplCopyWithImpl(
+      _$loadBookingHistoryForStudentImpl _value,
+      $Res Function(_$loadBookingHistoryForStudentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+  }) {
+    return _then(_$loadBookingHistoryForStudentImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$loadBookingHistoryForStudentImpl
+    implements _loadBookingHistoryForStudent {
+  const _$loadBookingHistoryForStudentImpl({required this.userId});
+
+  @override
+  final String userId;
+
+  @override
+  String toString() {
+    return 'RoomDetailsEvent.loadBookingHistoryForStudent(userId: $userId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$loadBookingHistoryForStudentImpl &&
+            (identical(other.userId, userId) || other.userId == userId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userId);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$loadBookingHistoryForStudentImplCopyWith<
+          _$loadBookingHistoryForStudentImpl>
+      get copyWith => __$$loadBookingHistoryForStudentImplCopyWithImpl<
+          _$loadBookingHistoryForStudentImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
+        addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
+    required TResult Function(String userId) loadBookingHistoryForStudent,
+    required TResult Function(String bookingId) cancelBookingEvent,
+  }) {
+    return loadBookingHistoryForStudent(userId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    TResult? Function(String userId)? loadBookingHistoryForStudent,
+    TResult? Function(String bookingId)? cancelBookingEvent,
+  }) {
+    return loadBookingHistoryForStudent?.call(userId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    TResult Function(String userId)? loadBookingHistoryForStudent,
+    TResult Function(String bookingId)? cancelBookingEvent,
+    required TResult orElse(),
+  }) {
+    if (loadBookingHistoryForStudent != null) {
+      return loadBookingHistoryForStudent(userId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_loadBookingHistoryForStudent value)
+        loadBookingHistoryForStudent,
+    required TResult Function(_CancelBookingEvent value) cancelBookingEvent,
+  }) {
+    return loadBookingHistoryForStudent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult? Function(_CancelBookingEvent value)? cancelBookingEvent,
+  }) {
+    return loadBookingHistoryForStudent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult Function(_CancelBookingEvent value)? cancelBookingEvent,
+    required TResult orElse(),
+  }) {
+    if (loadBookingHistoryForStudent != null) {
+      return loadBookingHistoryForStudent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _loadBookingHistoryForStudent implements RoomDetailsEvent {
+  const factory _loadBookingHistoryForStudent({required final String userId}) =
+      _$loadBookingHistoryForStudentImpl;
+
+  String get userId;
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$loadBookingHistoryForStudentImplCopyWith<
+          _$loadBookingHistoryForStudentImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CancelBookingEventImplCopyWith<$Res> {
+  factory _$$CancelBookingEventImplCopyWith(_$CancelBookingEventImpl value,
+          $Res Function(_$CancelBookingEventImpl) then) =
+      __$$CancelBookingEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String bookingId});
+}
+
+/// @nodoc
+class __$$CancelBookingEventImplCopyWithImpl<$Res>
+    extends _$RoomDetailsEventCopyWithImpl<$Res, _$CancelBookingEventImpl>
+    implements _$$CancelBookingEventImplCopyWith<$Res> {
+  __$$CancelBookingEventImplCopyWithImpl(_$CancelBookingEventImpl _value,
+      $Res Function(_$CancelBookingEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? bookingId = null,
+  }) {
+    return _then(_$CancelBookingEventImpl(
+      bookingId: null == bookingId
+          ? _value.bookingId
+          : bookingId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CancelBookingEventImpl implements _CancelBookingEvent {
+  const _$CancelBookingEventImpl({required this.bookingId});
+
+  @override
+  final String bookingId;
+
+  @override
+  String toString() {
+    return 'RoomDetailsEvent.cancelBookingEvent(bookingId: $bookingId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CancelBookingEventImpl &&
+            (identical(other.bookingId, bookingId) ||
+                other.bookingId == bookingId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, bookingId);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CancelBookingEventImplCopyWith<_$CancelBookingEventImpl> get copyWith =>
+      __$$CancelBookingEventImplCopyWithImpl<_$CancelBookingEventImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
+        addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
+    required TResult Function(String userId) loadBookingHistoryForStudent,
+    required TResult Function(String bookingId) cancelBookingEvent,
+  }) {
+    return cancelBookingEvent(bookingId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    TResult? Function(String userId)? loadBookingHistoryForStudent,
+    TResult? Function(String bookingId)? cancelBookingEvent,
+  }) {
+    return cancelBookingEvent?.call(bookingId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    TResult Function(String userId)? loadBookingHistoryForStudent,
+    TResult Function(String bookingId)? cancelBookingEvent,
+    required TResult orElse(),
+  }) {
+    if (cancelBookingEvent != null) {
+      return cancelBookingEvent(bookingId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_loadBookingHistoryForStudent value)
+        loadBookingHistoryForStudent,
+    required TResult Function(_CancelBookingEvent value) cancelBookingEvent,
+  }) {
+    return cancelBookingEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult? Function(_CancelBookingEvent value)? cancelBookingEvent,
+  }) {
+    return cancelBookingEvent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_loadBookingHistoryForStudent value)?
+        loadBookingHistoryForStudent,
+    TResult Function(_CancelBookingEvent value)? cancelBookingEvent,
+    required TResult orElse(),
+  }) {
+    if (cancelBookingEvent != null) {
+      return cancelBookingEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CancelBookingEvent implements RoomDetailsEvent {
+  const factory _CancelBookingEvent({required final String bookingId}) =
+      _$CancelBookingEventImpl;
+
+  String get bookingId;
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CancelBookingEventImplCopyWith<_$CancelBookingEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$RoomDetailsState {
   bool get isSubmitting => throw _privateConstructorUsedError;
+  String get processingBookingId => throw _privateConstructorUsedError;
   Option<Either<FormFailures, Unit>> get successOrFailureOption =>
       throw _privateConstructorUsedError;
   Option<Either<FormFailures, List<Map<String, dynamic>>>>
@@ -795,6 +1240,7 @@ abstract class $RoomDetailsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isSubmitting,
+      String processingBookingId,
       Option<Either<FormFailures, Unit>> successOrFailureOption,
       Option<Either<FormFailures, List<Map<String, dynamic>>>>
           fetchSuccessOrFailureOption});
@@ -816,6 +1262,7 @@ class _$RoomDetailsStateCopyWithImpl<$Res, $Val extends RoomDetailsState>
   @override
   $Res call({
     Object? isSubmitting = null,
+    Object? processingBookingId = null,
     Object? successOrFailureOption = null,
     Object? fetchSuccessOrFailureOption = null,
   }) {
@@ -824,6 +1271,10 @@ class _$RoomDetailsStateCopyWithImpl<$Res, $Val extends RoomDetailsState>
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
               as bool,
+      processingBookingId: null == processingBookingId
+          ? _value.processingBookingId
+          : processingBookingId // ignore: cast_nullable_to_non_nullable
+              as String,
       successOrFailureOption: null == successOrFailureOption
           ? _value.successOrFailureOption
           : successOrFailureOption // ignore: cast_nullable_to_non_nullable
@@ -846,6 +1297,7 @@ abstract class _$$RoomDetailsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isSubmitting,
+      String processingBookingId,
       Option<Either<FormFailures, Unit>> successOrFailureOption,
       Option<Either<FormFailures, List<Map<String, dynamic>>>>
           fetchSuccessOrFailureOption});
@@ -865,6 +1317,7 @@ class __$$RoomDetailsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isSubmitting = null,
+    Object? processingBookingId = null,
     Object? successOrFailureOption = null,
     Object? fetchSuccessOrFailureOption = null,
   }) {
@@ -873,6 +1326,10 @@ class __$$RoomDetailsStateImplCopyWithImpl<$Res>
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
               as bool,
+      processingBookingId: null == processingBookingId
+          ? _value.processingBookingId
+          : processingBookingId // ignore: cast_nullable_to_non_nullable
+              as String,
       successOrFailureOption: null == successOrFailureOption
           ? _value.successOrFailureOption
           : successOrFailureOption // ignore: cast_nullable_to_non_nullable
@@ -890,11 +1347,14 @@ class __$$RoomDetailsStateImplCopyWithImpl<$Res>
 class _$RoomDetailsStateImpl implements _RoomDetailsState {
   _$RoomDetailsStateImpl(
       {required this.isSubmitting,
+      required this.processingBookingId,
       required this.successOrFailureOption,
       required this.fetchSuccessOrFailureOption});
 
   @override
   final bool isSubmitting;
+  @override
+  final String processingBookingId;
   @override
   final Option<Either<FormFailures, Unit>> successOrFailureOption;
   @override
@@ -903,7 +1363,7 @@ class _$RoomDetailsStateImpl implements _RoomDetailsState {
 
   @override
   String toString() {
-    return 'RoomDetailsState(isSubmitting: $isSubmitting, successOrFailureOption: $successOrFailureOption, fetchSuccessOrFailureOption: $fetchSuccessOrFailureOption)';
+    return 'RoomDetailsState(isSubmitting: $isSubmitting, processingBookingId: $processingBookingId, successOrFailureOption: $successOrFailureOption, fetchSuccessOrFailureOption: $fetchSuccessOrFailureOption)';
   }
 
   @override
@@ -913,6 +1373,8 @@ class _$RoomDetailsStateImpl implements _RoomDetailsState {
             other is _$RoomDetailsStateImpl &&
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
+            (identical(other.processingBookingId, processingBookingId) ||
+                other.processingBookingId == processingBookingId) &&
             (identical(other.successOrFailureOption, successOrFailureOption) ||
                 other.successOrFailureOption == successOrFailureOption) &&
             (identical(other.fetchSuccessOrFailureOption,
@@ -923,7 +1385,7 @@ class _$RoomDetailsStateImpl implements _RoomDetailsState {
 
   @override
   int get hashCode => Object.hash(runtimeType, isSubmitting,
-      successOrFailureOption, fetchSuccessOrFailureOption);
+      processingBookingId, successOrFailureOption, fetchSuccessOrFailureOption);
 
   /// Create a copy of RoomDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -938,12 +1400,15 @@ class _$RoomDetailsStateImpl implements _RoomDetailsState {
 abstract class _RoomDetailsState implements RoomDetailsState {
   factory _RoomDetailsState(
       {required final bool isSubmitting,
+      required final String processingBookingId,
       required final Option<Either<FormFailures, Unit>> successOrFailureOption,
       required final Option<Either<FormFailures, List<Map<String, dynamic>>>>
           fetchSuccessOrFailureOption}) = _$RoomDetailsStateImpl;
 
   @override
   bool get isSubmitting;
+  @override
+  String get processingBookingId;
   @override
   Option<Either<FormFailures, Unit>> get successOrFailureOption;
   @override

@@ -68,44 +68,39 @@ abstract class IHostelProcessFacade {
     required String hostelId,
   });
 
+  Future<Either<FormFailures, List<Map<String, dynamic>>>>
+      getRoomsFromFirestore({
+    required String hostelId,
+  });
 
-  Future<Either<FormFailures, List<Map<String, dynamic>>>> getRoomsFromFirestore({
-  required String hostelId,
-});
+  Future<Either<FormFailures, Unit>> bookRoomsInFirestore({
+    required String userId,
+    required String hostelName,
+    required String hostelOwnerUserId,
+    required String hostelId,
+    required List<Map<String, dynamic>> selectedRooms,
+    required String userName,
+    required String userPhone,
+  });
 
+  Future<Either<FormFailures, List<Map<String, dynamic>>>>
+      getBookingsFromFirestore({
+    String? studentUserId,
+    String? hostelOwnerUserId,
+  });
 
-Future<Either<FormFailures, Unit>> bookRoomsInFirestore({
-  required String userId,
-   required String hostelOwnerUserId,
-  required String hostelId,
-  required List<Map<String, dynamic>> selectedRooms,
-  required String userName,
-  required String userPhone,
-});
-
-Future<Either<FormFailures, List<Map<String, dynamic>>>> getBookingsFromFirestore({
-  String? studentUserId,
-  String? hostelOwnerUserId,
-});
-
-Future<Either<FormFailures, Unit>> cancelBooking({
-  required String userId,
-  required String hostelOwnerUserId,
+  Future<Either<FormFailures, Unit>> cancelBooking({
     required String bookingId,
-  required String hostelId,
-});
+  });
 
-
-Future<Either<FormFailures, Unit>> editRoomInFirestore({
-  required String hostelId,
-  required Map<String, dynamic> updatedRoom,
-});
+  Future<Either<FormFailures, Unit>> editRoomInFirestore({
+    required String hostelId,
+    required Map<String, dynamic> updatedRoom,
+  });
 
   Future<void> updateRoomVacancy({
-  required String hostelId,
-  required String roomNumber,
-  required int bookedBeds,
-});
-
-
+    required String hostelId,
+    required String roomNumber,
+    required int bookedBeds,
+  });
 }

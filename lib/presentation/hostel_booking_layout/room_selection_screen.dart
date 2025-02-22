@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_student.dart';
 import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -151,6 +152,7 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                   context.read<RoomDetailsBloc>().add(
                       RoomDetailsEvent.bookNowButtonPressed(
                           userId: userId,
+                          hostelName:hostelResp.hostelName,
                           hostelOwnerUserId: hostelResp.hostelOwnerUserId,
                           hostelId: hostelResp.hostelId,
                           selectedRooms: selectedRooms,
@@ -254,7 +256,7 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                               Text("Some error Occured...Try again later")));
                     }, (s) {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (ctx) => StudentHomeScreen()));
+                          builder: (ctx) => BottomNavigationBarStudentWidget()));
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Booking successfull")));
                     });

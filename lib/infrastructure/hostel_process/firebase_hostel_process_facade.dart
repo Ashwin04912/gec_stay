@@ -723,6 +723,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   @override
   Future<Either<FormFailures, Unit>> bookRoomsInFirestore({
     required String userId,
+    required String hostelName,
     required String hostelId,
     required String hostelOwnerUserId,
     required List<Map<String, dynamic>> selectedRooms,
@@ -735,6 +736,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
 
       Map<String, dynamic> bookingData = {
         "bookingId": bookingId,
+        "hostelName":hostelName,
         "studentUserId": userId,
         "hostelOwnerUserId": hostelOwnerUserId,
         "hostelId": hostelId,
@@ -771,6 +773,8 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     String? studentUserId,
     String? hostelOwnerUserId,
   }) async {
+
+    debugPrint("student = ${studentUserId}, owner = ${hostelOwnerUserId}");
     try {
       if (studentUserId == null && hostelOwnerUserId == null) {
         return left(FormFailures.serverError()); // Custom failure for clarity
@@ -804,10 +808,8 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
 
   @override
   Future<Either<FormFailures, Unit>> cancelBooking({
-    required String userId,
     required String bookingId,
-    required String hostelOwnerUserId,
-    required String hostelId,
+    
   }) async {
     try {
       QuerySnapshot querySnapshot = await fireStore

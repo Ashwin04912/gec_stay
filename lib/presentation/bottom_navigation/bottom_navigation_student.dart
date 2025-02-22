@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
+import 'package:gecw_lakx/presentation/cart/cart_screen.dart';
 import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../student_profile/student_profile_screen.dart';
 
 class BottomNavigationBarStudentWidget extends StatefulWidget {
@@ -18,10 +22,6 @@ class BottomNavigationBarStudentWidgetState
 
   final List<Widget> _pages = [
     StudentHomeScreen(), // Home screen
-    // Scaffold(
-    //   body:
-    //       Center(child: Text("Edit Screen")), // Settings screen placeholder
-    // ),
     Scaffold(
       body: Center(
           child: Text(
@@ -29,7 +29,7 @@ class BottomNavigationBarStudentWidgetState
         style: TextStyle(color: Colors.white),
       )), // Notifications screen placeholder
     ),
-    StudentProfileScreen(),
+    CartScreen(),
   ];
 
   void _onNavBarItemTapped(int index) {
@@ -81,9 +81,28 @@ class BottomNavigationBarStudentWidgetState
                   onPressed: () => _onNavBarItemTapped(1),
                 ),
                 NavBarIcon(
+                  text: "Cart",
+                  icon: Icons.shopping_cart,
+                  isSelected: _selectedIndex == 2,
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    final String? userId = prefs.getString('owner_userid');
+                    if (userId != null) {
+                      context.read<RoomDetailsBloc>().add(
+                          RoomDetailsEvent.loadBookingHistoryForStudent(
+                              userId: userId));
+                      _onNavBarItemTapped(2);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text("Some error occured..try again later")));
+                    }
+                  },
+                ),
+                NavBarIcon(
                   text: "Log Out",
                   icon: Icons.logout,
-                  isSelected: _selectedIndex == 2,
+                  isSelected: _selectedIndex == 3,
                   onPressed: () async {
                     bool confirmSignOut = await showDialog(
                       context: context,

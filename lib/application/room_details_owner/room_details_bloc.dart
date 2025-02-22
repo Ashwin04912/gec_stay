@@ -67,6 +67,7 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
         ));
         final resp = await ihostelFacade.bookRoomsInFirestore(
           hostelId: value.hostelId,
+          hostelName : value.hostelName,
           hostelOwnerUserId: value.hostelOwnerUserId,
           selectedRooms: value.selectedRooms,
           userId: value.userId,
@@ -87,7 +88,50 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
             successOrFailureOption: some(right(s)),
           ));
         });
-      });
+      }, loadBookingHistoryForStudent: (_loadBookingHistoryForStudent value) async{ 
+         emit(state.copyWith(
+          isSubmitting: true,
+          successOrFailureOption: none(),
+          fetchSuccessOrFailureOption: none(),
+        ));
+        final resp = await ihostelFacade.getBookingsFromFirestore(studentUserId: value.userId);
+
+        resp.fold((f) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            fetchSuccessOrFailureOption: some(left(f)),
+            successOrFailureOption:none(),
+          ));
+        }, (s) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            fetchSuccessOrFailureOption:some(right(s)),
+            successOrFailureOption: none(),
+          ));
+        });
+       }, cancelBookingEvent: (_CancelBookingEvent value) async{ 
+           emit(state.copyWith(
+          isSubmitting: true,
+          processingBookingId: value.bookingId,
+          successOrFailureOption: none(),
+          // fetchSuccessOrFailureOption: none(),
+        ));
+        final resp = await ihostelFacade.cancelBooking(bookingId: value.bookingId);
+
+        resp.fold((f) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            // fetchSuccessOrFailureOption:none(),
+            successOrFailureOption:some(left(f)),
+          ));
+        }, (s) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            // fetchSuccessOrFailureOption:none(),
+            successOrFailureOption: some(right(s)),
+          ));
+        });
+        });
     });
   }
 }
