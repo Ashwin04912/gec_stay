@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/hostel_process/widget/select_location_screen.dart';
-import 'package:gecw_lakx/presentation/room_details/room_details_screen_owner.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_owner.dart';
 import 'package:latlong2/latlong.dart';
@@ -85,7 +84,9 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
             final String? userId = prefs.getString('owner_userid');
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (ctx) => BottomNavigationBarOwnerWidget(userId: userId.toString(),),
+                builder: (ctx) => BottomNavigationBarOwnerWidget(
+                  userId: userId.toString(),
+                ),
               ),
               (route) => false,
             );
@@ -110,8 +111,28 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                   children: [
                     _buildTextField(ownerNameController, 'Owner Name'),
                     const SizedBox(height: 12),
-                    _buildTextField(phoneNumberController, 'Phone Number',
-                        inputType: TextInputType.phone),
+                   TextFormField(
+      controller: phoneNumberController,
+      keyboardType: TextInputType.phone,
+      // maxLines: maxLines,
+      decoration: InputDecoration(
+        labelText: "Phone Number",
+        labelStyle: const TextStyle(color: Colors.white70),
+        filled: true,
+        fillColor: Colors.grey[900],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      style: const TextStyle(color: Colors.white),
+      validator: (value) {
+        if (value == null || value.isEmpty || value.length<10 ||value.length >10) {
+          return 'Please enter a valid phone number';
+        }
+       
+        return null;
+      },
+    ),
                     const SizedBox(height: 12),
                     _buildTextField(hostelNameController, 'Hostel Name'),
                     _buildHostelSelection(),
@@ -244,15 +265,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                         : ElevatedButton(
                             onPressed: () async {
                               // Check if location is selected before proceeding
-                              if (_selectedLocation == null) {
-                                // Show a message or Snackbar prompting the user to select a location
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text('Please select a location')),
-                                );
-                                return; // Prevent form submission
-                              }
+                              
 
                               if (widget.isEdit == true) {
                                 print(
@@ -260,9 +273,10 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                 context.read<CommonHostelProcessBloc>().add(
                                       CommonHostelProcessEvent
                                           .submitButtonPressed(
-                                            reason: '',
-                                            rating: state.hostelDataById.rating,
-                                            hostelOwnerUserId: state.hostelDataById.hostelOwnerUserId,
+                                        reason: '',
+                                        rating: state.hostelDataById.rating,
+                                        hostelOwnerUserId: state
+                                            .hostelDataById.hostelOwnerUserId,
                                         hostelId: state.hostelDataById.hostelId,
                                         hostelName: hostelNameController.text,
                                         ownerName: ownerNameController.text,
@@ -285,17 +299,35 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
                                       ),
                                     );
                               } else {
+                                if (_selectedLocation == null) {
+                                // Show a message or Snackbar prompting the user to select a location
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('Please select a location')),
+                                );
+                                return; // Prevent form submission
+                              }
+                                if (_imageFiles == null ||
+                                    _imageFiles!.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Please select at least one image')),
+                                  );
+                                  return; // Prevent form submission
+                                }
                                 print("ui some is working");
                                 if (_formKey.currentState!.validate() &&
-                                    _selectedLocation != null) {
+                                    _selectedLocation != null ) {
                                   if (_imageFiles == null) {
                                     print('add_images');
                                   } else {
                                     context.read<CommonHostelProcessBloc>().add(
                                           CommonHostelProcessEvent
                                               .submitButtonPressed(
-                                                rating: '0',
-                                                reason: '',
+                                            rating: '0',
+                                            reason: '',
                                             approvalType: 'pending',
                                             hostelOwnerUserId: '',
                                             hostelName:
@@ -431,7 +463,7 @@ class _CreateHostelScreenState extends State<CreateHostelScreen> {
         if (value == null || value.isEmpty) {
           return 'Please enter $label';
         }
-        if (label == "Phone Number" && value.length < 10) {
+        if (label == "Phone Number" && value.length < 10 && value.length>10) {
           return 'Please enter a valid phone number';
         }
         return null;

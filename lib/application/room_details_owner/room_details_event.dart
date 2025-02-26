@@ -12,18 +12,22 @@ class RoomDetailsEvent with _$RoomDetailsEvent {
   }) = _getHostelRoomDetailsById;
 
   const factory RoomDetailsEvent.bookNowButtonPressed({
-     required String userId,
-     required String hostelName,
-   required String hostelOwnerUserId,
-  required String hostelId,
-  required List<Map<String, dynamic>> selectedRooms,
-  required String userName,
-  required String userPhone,
+    required String userId,
+    required String hostelName,
+    required String hostelOwnerUserId,
+    required String hostelId,
+    required List<Map<String, dynamic>> selectedRooms,
+    required String userName,
+    required String userPhone,
   }) = _bookNowButtonPressed;
 
-  const factory RoomDetailsEvent.loadBookingHistoryForStudent({required String userId,}) = _loadBookingHistoryForStudent;
-
-  const factory RoomDetailsEvent.cancelBookingEvent({required String bookingId}) = _CancelBookingEvent;
-  
-  
+  // const factory RoomDetailsEvent.loadBookingHistoryForStudent({
+  //   required String userId,
+  // }) = _loadBookingHistoryForStudent;
+  // const factory RoomDetailsEvent.cancelBookingEvent({
+  //   required String bookingId,
+  // }) = _CancelBookingEvent;
+  // const factory RoomDetailsEvent.loadBookingHistoryForOnwer({
+  //   required String userId,
+  // }) = _loadBookingHistoryForOwner;
 }

@@ -257,8 +257,8 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                     }, (s) {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (ctx) => BottomNavigationBarStudentWidget()));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Booking successfull")));
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(content: Text("Booking successfull")));
                     });
                   });
                 },

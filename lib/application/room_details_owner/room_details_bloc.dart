@@ -14,124 +14,153 @@ class RoomDetailsBloc extends Bloc<RoomDetailsEvent, RoomDetailsState> {
   final IHostelProcessFacade ihostelFacade;
   RoomDetailsBloc(this.ihostelFacade) : super(RoomDetailsState.initial()) {
     on<RoomDetailsEvent>((event, emit) async {
-      await event.map(addRoomsToFirestore: (value) async {
-        emit(state.copyWith(
-          isSubmitting: true,
-          successOrFailureOption: none(),
-          fetchSuccessOrFailureOption: none(),
-        ));
-        final resp = await ihostelFacade.addRoomsToFirestore(
-            roomData: value.rooms, hostelId: value.hostelId);
-
-        resp.fold((f) {
+      await event.map(
+        addRoomsToFirestore: (value) async {
           emit(state.copyWith(
-            isSubmitting: false,
-            fetchSuccessOrFailureOption: none(),
-            successOrFailureOption: some(left(f)),
-          ));
-        }, (s) {
-          emit(state.copyWith(
-            isSubmitting: false,
-            fetchSuccessOrFailureOption: none(),
-            successOrFailureOption: some(right(s)),
-          ));
-        });
-      }, getHostelRoomDetailsById: (_getHostelRoomDetailsById value) async {
-        emit(state.copyWith(
-          isSubmitting: true,
-          successOrFailureOption: none(),
-          fetchSuccessOrFailureOption: none(),
-        ));
-        final resp =
-            await ihostelFacade.getRoomsFromFirestore(hostelId: value.hostelId);
-
-        resp.fold((f) {
-          emit(state.copyWith(
-            isSubmitting: false,
-
-            fetchSuccessOrFailureOption: some(left(f)),
+            isSubmitting: true,
             successOrFailureOption: none(),
-          ));
-        }, (s) {
-          emit(state.copyWith(
-            isSubmitting: false,
-            fetchSuccessOrFailureOption: some(right(s)),
-            successOrFailureOption:none(),
-          ));
-        });
-      }, bookNowButtonPressed: (_bookNowButtonPressed value) async {
-        emit(state.copyWith(
-          isSubmitting: true,
-          successOrFailureOption: none(),
-          fetchSuccessOrFailureOption: none(),
-        ));
-        final resp = await ihostelFacade.bookRoomsInFirestore(
-          hostelId: value.hostelId,
-          hostelName : value.hostelName,
-          hostelOwnerUserId: value.hostelOwnerUserId,
-          selectedRooms: value.selectedRooms,
-          userId: value.userId,
-          userName: value.userName,
-          userPhone: value.userPhone,
-        );
-
-        resp.fold((f) {
-          emit(state.copyWith(
-            isSubmitting: false,
             fetchSuccessOrFailureOption: none(),
-            successOrFailureOption: some(left(f)),
           ));
-        }, (s) {
-          emit(state.copyWith(
-            isSubmitting: false,
-            fetchSuccessOrFailureOption: none(),
-            successOrFailureOption: some(right(s)),
-          ));
-        });
-      }, loadBookingHistoryForStudent: (_loadBookingHistoryForStudent value) async{ 
-         emit(state.copyWith(
-          isSubmitting: true,
-          successOrFailureOption: none(),
-          fetchSuccessOrFailureOption: none(),
-        ));
-        final resp = await ihostelFacade.getBookingsFromFirestore(studentUserId: value.userId);
+          final resp = await ihostelFacade.addRoomsToFirestore(
+              roomData: value.rooms, hostelId: value.hostelId);
 
-        resp.fold((f) {
+          resp.fold((f) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              fetchSuccessOrFailureOption: none(),
+              successOrFailureOption: some(left(f)),
+            ));
+          }, (s) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              fetchSuccessOrFailureOption: none(),
+              successOrFailureOption: some(right(s)),
+            ));
+          });
+        },
+        getHostelRoomDetailsById: (_getHostelRoomDetailsById value) async {
           emit(state.copyWith(
-            isSubmitting: false,
-            fetchSuccessOrFailureOption: some(left(f)),
-            successOrFailureOption:none(),
-          ));
-        }, (s) {
-          emit(state.copyWith(
-            isSubmitting: false,
-            fetchSuccessOrFailureOption:some(right(s)),
+            isSubmitting: true,
             successOrFailureOption: none(),
+            fetchSuccessOrFailureOption: none(),
           ));
-        });
-       }, cancelBookingEvent: (_CancelBookingEvent value) async{ 
-           emit(state.copyWith(
-          isSubmitting: true,
-          processingBookingId: value.bookingId,
-          successOrFailureOption: none(),
-          // fetchSuccessOrFailureOption: none(),
-        ));
-        final resp = await ihostelFacade.cancelBooking(bookingId: value.bookingId);
+          final resp = await ihostelFacade.getRoomsFromFirestore(
+              hostelId: value.hostelId);
 
-        resp.fold((f) {
+          resp.fold((f) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              fetchSuccessOrFailureOption: some(left(f)),
+              successOrFailureOption: none(),
+            ));
+          }, (s) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              fetchSuccessOrFailureOption: some(right(s)),
+              successOrFailureOption: none(),
+            ));
+          });
+        },
+        bookNowButtonPressed: (_bookNowButtonPressed value) async {
           emit(state.copyWith(
-            isSubmitting: false,
-            // fetchSuccessOrFailureOption:none(),
-            successOrFailureOption:some(left(f)),
+            isSubmitting: true,
+            successOrFailureOption: none(),
+            fetchSuccessOrFailureOption: none(),
           ));
-        }, (s) {
-          emit(state.copyWith(
-            isSubmitting: false,
-            // fetchSuccessOrFailureOption:none(),
-            successOrFailureOption: some(right(s)),
-          ));
-        });
-        });
+          final resp = await ihostelFacade.bookRoomsInFirestore(
+            hostelId: value.hostelId,
+            hostelName: value.hostelName,
+            hostelOwnerUserId: value.hostelOwnerUserId,
+            selectedRooms: value.selectedRooms,
+            userId: value.userId,
+            userName: value.userName,
+            userPhone: value.userPhone,
+          );
+
+          resp.fold((f) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              fetchSuccessOrFailureOption: none(),
+              successOrFailureOption: some(left(f)),
+            ));
+          }, (s) {
+            emit(state.copyWith(
+              isSubmitting: false,
+              fetchSuccessOrFailureOption: none(),
+              successOrFailureOption: some(right(s)),
+            ));
+          });
+        },
+        // loadBookingHistoryForStudent: (_loadBookingHistoryForStudent value) async{
+        //    emit(state.copyWith(
+        //     isSubmitting: true,
+        //     successOrFailureOption: none(),
+        //     fetchSuccessOrFailureOption: none(),
+        //   ));
+        //   final resp = await ihostelFacade.getBookingsFromFirestore(studentUserId: value.userId);
+
+        //   resp.fold((f) {
+        //     emit(state.copyWith(
+        //       isSubmitting: false,
+        //       fetchSuccessOrFailureOption: some(left(f)),
+        //       successOrFailureOption:none(),
+        //     ));
+        //   }, (s) {
+        //     emit(state.copyWith(
+        //       isSubmitting: false,
+        //       fetchSuccessOrFailureOption:some(right(s)),
+        //       successOrFailureOption: none(),
+        //     ));
+        //   });
+        //  },
+        // cancelBookingEvent: (_CancelBookingEvent value) async {
+        //   emit(state.copyWith(
+        //     isSubmitting: true,
+        //     processingBookingId: value.bookingId,
+        //     successOrFailureOption: none(),
+        //     // fetchSuccessOrFailureOption: none(),
+        //   ));
+        //   final resp =
+        //       await ihostelFacade.cancelBooking(bookingId: value.bookingId);
+
+        //   resp.fold((f) {
+        //     emit(state.copyWith(
+        //       isSubmitting: false,
+        //       // fetchSuccessOrFailureOption:none(),
+        //       successOrFailureOption: some(left(f)),
+        //     ));
+        //   }, (s) {
+        //     emit(state.copyWith(
+        //       isSubmitting: false,
+        //       // fetchSuccessOrFailureOption:none(),
+        //       successOrFailureOption: some(right(s)),
+        //     ));
+        //   });
+        // },
+        // loadBookingHistoryForOnwer: (_loadBookingHistoryForOwner value) async {
+        //   emit(state.copyWith(
+        //     isSubmitting: true,
+        //     successOrFailureOption: none(),
+        //     fetchSuccessOrFailureOption: none(),
+        //   ));
+        //   final resp = await ihostelFacade.getBookingsFromFirestore(
+        //       hostelOwnerUserId: value.userId);
+
+        //   resp.fold((f) {
+        //     emit(state.copyWith(
+        //       isSubmitting: false,
+        //       fetchSuccessOrFailureOption: some(left(f)),
+        //       successOrFailureOption: none(),
+        //     ));
+        //   }, (s) {
+        //     emit(state.copyWith(
+        //       isSubmitting: false,
+        //       fetchSuccessOrFailureOption: some(right(s)),
+        //       successOrFailureOption: none(),
+        //     ));
+        //   });
+        // },
+      );
     });
   }
 }

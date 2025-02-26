@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/cart/cart_listing_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
+import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
+import 'package:gecw_lakx/presentation/cart/cart_screen_owner_app.dart';
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_owner_app_screen.dart';
 import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,19 +40,17 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
     // });
 
     if (userId != null) {
-      if (!context.mounted) return ;
-        context
-          .read<CommonHostelProcessBloc>()
-          .add(CommonHostelProcessEvent.getOwnersHostelList(userId: userId.toString()));
+      if (!context.mounted) return;
+      context.read<CommonHostelProcessBloc>().add(
+          CommonHostelProcessEvent.getOwnersHostelList(
+              userId: userId.toString()));
     } else {
-      if (!context.mounted) return ;
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("No data found. Please log in again.")),
       );
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,13 +113,24 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
               });
             },
           ),
+          IconButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                final String? userId = prefs.getString('owner_userid');
+                if (userId != null) {
+                  context.read<CartListingBloc>().add(CartListingEvent.loadBookingHistoryForOnwer(userId: userId));
+                }
+
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => CartScreenOwnerApp()));
+              },
+              icon: Icon(Icons.book_outlined))
         ],
       ),
-      body: 
-      
-      
-      BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
-        listenWhen: (previous, current) => previous.hostelGetFailureOrSuccess != current.hostelGetFailureOrSuccess,
+      body: BlocConsumer<CommonHostelProcessBloc, CommonHostelProcessState>(
+        listenWhen: (previous, current) =>
+            previous.hostelGetFailureOrSuccess !=
+            current.hostelGetFailureOrSuccess,
         listener: (context, state) {
           state.hostelGetFailureOrSuccess.fold(() {}, (either) {
             either.fold((failure) {
@@ -147,7 +159,6 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
           });
         },
         builder: (context, state) {
-          
           if (hostelResponseModel == null && noHostelDataPresent != true) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.deepPurple),
@@ -270,14 +281,16 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                 ? CachedNetworkImage(
                                     height: 150,
                                     imageUrl: hostel.hostelImages[0],
-                                    width: MediaQuery.of(context).size.width - 40,
+                                    width:
+                                        MediaQuery.of(context).size.width - 40,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Center(
                                       child: CircularProgressIndicator(
                                         color: Colors.deepPurpleAccent,
                                       ),
                                     ),
-                                    errorWidget: (context, url, error) => Container(
+                                    errorWidget: (context, url, error) =>
+                                        Container(
                                       color: Colors.grey[850],
                                       child: const Icon(
                                         Icons.broken_image,
@@ -288,7 +301,8 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                                   )
                                 : Container(
                                     height: 150,
-                                    width: MediaQuery.of(context).size.width - 40,
+                                    width:
+                                        MediaQuery.of(context).size.width - 40,
                                     color: Colors.grey[850],
                                     child: const Icon(
                                       Icons.hotel,
@@ -302,7 +316,11 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Approval : ${hostel.approval.type}',style: TextStyle(color: Colors.red,fontSize: 18),),
+                                Text(
+                                  'Approval : ${hostel.approval.type}',
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 18),
+                                ),
                                 Row(
                                   children: [
                                     Expanded(
@@ -406,4 +424,3 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
     );
   }
 }
-

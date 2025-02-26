@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/approval_process/approval_process_bloc.dart';
 import 'package:gecw_lakx/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:gecw_lakx/application/cart/cart_listing_bloc.dart';
+import 'package:gecw_lakx/application/hostel_prediction/hostel_prediction_bloc.dart';
 import 'package:gecw_lakx/application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/firebase_options.dart';
@@ -39,7 +41,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<ApprovalProcessBloc>(create: (context)=>getIt<ApprovalProcessBloc>()),
         BlocProvider<CommonHostelProcessBloc>(create: (context)=>getIt<CommonHostelProcessBloc>()),
         BlocProvider<RoomDetailsBloc>(create: (context)=>getIt<RoomDetailsBloc>()),
-        
+        BlocProvider<HostelPredictionBloc>(create: (context)=>getIt<HostelPredictionBloc>()),
+        BlocProvider<CartListingBloc>(create: (context)=>getIt<CartListingBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

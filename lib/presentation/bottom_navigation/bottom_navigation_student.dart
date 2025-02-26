@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gecw_lakx/application/cart/cart_listing_bloc.dart';
 import 'package:gecw_lakx/application/room_details_owner/room_details_bloc.dart';
 import 'package:gecw_lakx/presentation/auth/sign_in_screen.dart';
-import 'package:gecw_lakx/presentation/cart/cart_screen.dart';
+import 'package:gecw_lakx/presentation/cart/cart_screen_student_app.dart';
+import 'package:gecw_lakx/presentation/hostel_prediction/hostel_prediction_screen.dart';
 import 'package:gecw_lakx/presentation/student_home/student_home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../student_profile/student_profile_screen.dart';
 
 class BottomNavigationBarStudentWidget extends StatefulWidget {
   const BottomNavigationBarStudentWidget({super.key});
@@ -22,14 +23,8 @@ class BottomNavigationBarStudentWidgetState
 
   final List<Widget> _pages = [
     StudentHomeScreen(), // Home screen
-    Scaffold(
-      body: Center(
-          child: Text(
-        "probability checkout Screen",
-        style: TextStyle(color: Colors.white),
-      )), // Notifications screen placeholder
-    ),
-    CartScreen(),
+    HostelPredictionScreen(),
+    CartScreenStudentApp(),
   ];
 
   void _onNavBarItemTapped(int index) {
@@ -88,9 +83,7 @@ class BottomNavigationBarStudentWidgetState
                     final prefs = await SharedPreferences.getInstance();
                     final String? userId = prefs.getString('owner_userid');
                     if (userId != null) {
-                      context.read<RoomDetailsBloc>().add(
-                          RoomDetailsEvent.loadBookingHistoryForStudent(
-                              userId: userId));
+                      context.read<CartListingBloc>().add(CartListingEvent.loadBookingHistoryForStudent(userId: userId));
                       _onNavBarItemTapped(2);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
