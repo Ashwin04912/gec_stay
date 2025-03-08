@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +10,6 @@ import 'package:gecw_lakx/presentation/bottom_navigation/bottom_navigation_stude
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_student_app_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app_links/app_links.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
