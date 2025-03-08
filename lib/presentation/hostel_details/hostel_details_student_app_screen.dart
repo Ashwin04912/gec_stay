@@ -15,6 +15,7 @@ import 'package:gecw_lakx/presentation/hostel_details/widgets/build_detail_widge
 import 'package:gecw_lakx/presentation/hostel_details/widgets/build_review_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:share_plus/share_plus.dart'; // Add this package
 import 'package:url_launcher/url_launcher.dart';
 
 @immutable
@@ -22,8 +23,11 @@ class HostelDetailsStudentAppScreen extends StatefulWidget {
   final HostelResponseModel hostelResp;
   final String userId;
 
-  const HostelDetailsStudentAppScreen(
-      {super.key, required this.userId, required this.hostelResp});
+  const HostelDetailsStudentAppScreen({
+    super.key,
+    required this.userId,
+    required this.hostelResp,
+  });
 
   @override
   HostelDetailsStudentAppScreenState createState() =>
@@ -41,6 +45,13 @@ class HostelDetailsStudentAppScreenState
     context.read<CommonHostelProcessBloc>().add(
         CommonHostelProcessEvent.getAllratingsAndReview(
             hostelId: widget.hostelResp.hostelId));
+  }
+
+  // Function to generate a deep link for the hostel
+  String generateHostelDeepLink(String hostelId) {
+    // Use the App Link (https) or Deep Link (custom scheme) based on your preference
+    return "https://deep-link-redirect.onrender.com/hostel?hostelId=$hostelId"; // App Link
+    // return "flutterDeepLink://gecstay/hostel?hostelId=$hostelId"; // Deep Link
   }
 
   void _openAddReviewModal() {
@@ -185,13 +196,11 @@ class HostelDetailsStudentAppScreenState
                 IconButton(
                   icon: const Icon(Icons.call),
                   onPressed: () async {
-                    final phoneNumber = widget.hostelResp
-                        .phoneNumber; // Use your desired phone number
+                    final phoneNumber = widget.hostelResp.phoneNumber;
                     final url = 'tel:$phoneNumber';
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
-                      // Handle the error if the URL can't be launched
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Could not launch the phone dialer.'),
@@ -204,10 +213,21 @@ class HostelDetailsStudentAppScreenState
                 IconButton(
                   icon: const Icon(Icons.chat),
                   onPressed: () {
-                    // Chat button functionality
                     _handlePressed(
-                        types.User(id: widget.hostelResp.hostelOwnerUserId),
-                        context);
+                      types.User(id: widget.hostelResp.hostelOwnerUserId),
+                      context,
+                    );
+                  },
+                  color: Colors.white,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.share),
+                  onPressed: () async {
+                    final deepLink = generateHostelDeepLink(widget.hostelResp.hostelId);
+                    await Share.share(
+                      'Check out this hostel: $deepLink',
+                      subject: 'Hostel Link',
+                    );
                   },
                   color: Colors.white,
                 ),
@@ -312,7 +332,6 @@ class HostelDetailsStudentAppScreenState
           buildDetail("Owner Name", widget.hostelResp.ownerName),
           buildDetail("Rent", "₹${widget.hostelResp.rent}/month"),
           buildDetail("Rooms Available", widget.hostelResp.rooms),
-          // buildDetail("Vacancy", widget.hostelResp.vacancy),
           buildDetail("Monthly Rent", "₹${widget.hostelResp.rent} per person"),
           buildDetail("Mess Availability",
               " ${widget.hostelResp.isMessAvailable.toLowerCase() == "yes" ? "Available" : "Not Available"}"),
@@ -415,8 +434,6 @@ class HostelDetailsStudentAppScreenState
     );
   }
 
-
-
   Widget _buildBookNowButton() {
     return BlocListener<RoomDetailsBloc, RoomDetailsState>(
       listener: (context, state) {
@@ -426,7 +443,7 @@ class HostelDetailsStudentAppScreenState
                 content: Text('No rooms available or try again later..')));
           }, (s) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RoomSelectionScreen(rooms: s,hostelResp: widget.hostelResp  ,)));
+                builder: (ctx) => RoomSelectionScreen(rooms: s, hostelResp: widget.hostelResp)));
           });
         });
       },

@@ -736,7 +736,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
 
       Map<String, dynamic> bookingData = {
         "bookingId": bookingId,
-        "hostelName":hostelName,
+        "hostelName": hostelName,
         "studentUserId": userId,
         "hostelOwnerUserId": hostelOwnerUserId,
         "hostelId": hostelId,
@@ -754,6 +754,7 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
         int bookedBeds = room['selectedBedsCount'] ?? 0;
 
         await updateRoomVacancy(
+          isBooking: true,
           hostelId: hostelId,
           roomNumber: roomNumber,
           bookedBeds: bookedBeds,
@@ -773,7 +774,6 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     String? studentUserId,
     String? hostelOwnerUserId,
   }) async {
-
     debugPrint("student = ${studentUserId}, owner = ${hostelOwnerUserId}");
     try {
       if (studentUserId == null && hostelOwnerUserId == null) {
@@ -809,7 +809,6 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
   @override
   Future<Either<FormFailures, Unit>> cancelBooking({
     required String bookingId,
-    
   }) async {
     try {
       QuerySnapshot querySnapshot = await fireStore
@@ -819,11 +818,37 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        DocumentReference bookingRef = querySnapshot.docs.first.reference;
+        DocumentSnapshot bookingDoc = querySnapshot.docs.first;
+        DocumentReference bookingRef = bookingDoc.reference;
 
-        await bookingRef.set({
-          "status": "canceled",
-        }, SetOptions(merge: true));
+        // Extract booking details before cancellation
+        Map<String, dynamic> bookingData =
+            bookingDoc.data() as Map<String, dynamic>;
+        String hostelId = bookingData['hostelId'];
+        List<dynamic> rooms = bookingData['rooms'] ?? [];
+
+        if (rooms.isEmpty) {
+          debugPrint("Error: No rooms found in booking data.");
+          return left(FormFailures.noDataFound());
+        }
+
+        // Update Firestore to set the booking status as canceled
+        await bookingRef.update({"status": "canceled"});
+
+        // Increase vacancy when canceling
+        for (var room in rooms) {
+          String roomNumber = room['roomNumber'].toString();
+          int bookedBeds = room['selectedBedsCount'] ?? 0;
+
+          debugPrint("Canceling: Room $roomNumber, Releasing $bookedBeds beds");
+
+          await updateRoomVacancy(
+            hostelId: hostelId,
+            roomNumber: roomNumber,
+            bookedBeds: bookedBeds,
+            isBooking: false, // Flag for cancellation operation
+          );
+        }
 
         return right(unit);
       } else {
@@ -836,52 +861,74 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
     }
   }
 
- @override
-Future<void> updateRoomVacancy({
-  required String hostelId,
-  required String roomNumber,
-  required int bookedBeds, 
-}) async {
-  try {
-    print("${hostelId},${roomNumber},${bookedBeds}");
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final DocumentReference docRef =
-        firestore.collection('room_details').doc(hostelId);
+  @override
+  Future<void> updateRoomVacancy({
+    required String hostelId,
+    required String roomNumber,
+    required int bookedBeds,
+    required bool isBooking, // New flag to determine booking/canceling
+  }) async {
+    try {
+      debugPrint(
+          "Updating Room Vacancy -> Hostel: $hostelId, Room: $roomNumber, Beds: $bookedBeds, isBooking: $isBooking");
 
-    // Get the document snapshot
-    DocumentSnapshot docSnapshot = await docRef.get();
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final DocumentReference docRef =
+          firestore.collection('room_details').doc(hostelId);
 
-    if (!docSnapshot.exists) {
-      debugPrint("Error: Hostel document not found.");
-      return;
+      // Get the document snapshot
+      DocumentSnapshot docSnapshot = await docRef.get();
+
+      if (!docSnapshot.exists) {
+        debugPrint("Error: Hostel document not found.");
+        return;
+      }
+
+      // Get the existing room data
+      Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+      List<dynamic> rooms = data['rooms'];
+
+      // Find the index of the room with the given roomNumber
+      int roomIndex = rooms
+          .indexWhere((room) => room['roomNumber'].toString() == roomNumber);
+
+      if (roomIndex == -1) {
+        debugPrint("Error: Room not found.");
+        return;
+      }
+
+      int currentVacancy = rooms[roomIndex]['vacancy'] ?? 0;
+      int totalBeds = rooms[roomIndex]['beds'] ?? 0; // Ensure max limit
+
+      // Adjust vacancy: decrease when booking, increase when canceling
+      int finalVacancy;
+      if (isBooking) {
+        finalVacancy = (currentVacancy - bookedBeds).clamp(0, currentVacancy);
+      } else {
+        finalVacancy = (currentVacancy + bookedBeds).clamp(0, totalBeds);
+      }
+
+// Debug logs
+      debugPrint(
+          "Before Update -> Current Vacancy: $currentVacancy, Total Beds: $totalBeds, Booked Beds: $bookedBeds");
+      debugPrint("Final Vacancy after update: $finalVacancy");
+
+// Ensure vacancy is never negative or incorrectly set to 0
+      if (!isBooking && finalVacancy == 0) {
+        debugPrint(
+            "⚠️ Warning: Vacancy shouldn't be 0 when canceling a booking.");
+      }
+
+      // Update the vacancy field
+      rooms[roomIndex]['vacancy'] = finalVacancy;
+
+      // Update Firestore
+      await docRef.update({'rooms': rooms});
+
+      debugPrint(
+          "Vacancy updated successfully for Room $roomNumber. New Vacancy: $finalVacancy");
+    } catch (e) {
+      debugPrint("Error updating room vacancy: $e");
     }
-
-    // Get the existing room data
-    Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
-    List<dynamic> rooms = data['rooms'];
-
-    // Find the index of the room with the given roomNumber
-    int roomIndex = rooms.indexWhere(
-        (room) => room['roomNumber'].toString() == roomNumber);
-
-    if (roomIndex == -1) {
-      debugPrint("Error: Room not found.");
-      return;
-    }
-
-    int currentVacancy = rooms[roomIndex]['vacancy'] ?? 0;
-    int finalVacancy = (currentVacancy - bookedBeds).clamp(0, currentVacancy); // Prevents negative values
-
-    // Update the vacancy field
-    rooms[roomIndex]['vacancy'] = finalVacancy;
-
-    // Update Firestore
-    await docRef.update({'rooms': rooms});
-
-    debugPrint("Vacancy updated successfully for Room $roomNumber.");
-  } catch (e) {
-    debugPrint("Error updating room vacancy: $e");
   }
-}
-
 }

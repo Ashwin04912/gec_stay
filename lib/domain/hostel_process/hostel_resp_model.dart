@@ -84,6 +84,30 @@ class HostelResponseModel {
         "rating": rating,
         "approval": approval.toJson(),
       };
+
+  static HostelResponseModel fromMap(Map<String, dynamic> map) {
+    return HostelResponseModel(
+      description: map["description"] ?? "", // Provide a default value if null
+      hostelName: map["hostel_name"] ?? "",
+      hostelId: map["hostelId"] ?? "",
+      location:
+          Location.fromJson(map["location"] ?? {}), // Handle null location
+      ownerName: map["owner_name"] ?? "",
+      distFromCollege: map["dist_from_college"] ?? "",
+      isMessAvailable: map["isMess_available"] ?? "",
+      isMensHostel: map["isMensHostel"] ?? "",
+      phoneNumber: map["phone_number"] ?? "",
+      rent: map["rent"] ?? "",
+      rooms: map["rooms"] ?? "",
+      vacancy: map["vacancy"] ?? "",
+      hostelImages: List<String>.from(
+          map["imageList"]?.map((x) => x) ?? []), // Handle null imageList
+      hostelOwnerUserId: map["hostelOwnerUserId"] ?? "",
+      rating: map["rating"] ?? "0.0", // Default rating if null
+      approval:
+          Approval.fromJson(map["approval"] ?? {}), // Handle null approval
+    );
+  }
 }
 
 class Location {
@@ -106,23 +130,22 @@ class Location {
       };
 }
 
-
 class Approval {
-    String reason;
-    String type;
+  String reason;
+  String type;
 
-    Approval({
-        required this.reason,
-        required this.type,
-    });
+  Approval({
+    required this.reason,
+    required this.type,
+  });
 
-    factory Approval.fromJson(Map<String, dynamic> json) => Approval(
+  factory Approval.fromJson(Map<String, dynamic> json) => Approval(
         reason: json["reason"],
         type: json["type"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "reason": reason,
         "type": type,
-    };
+      };
 }

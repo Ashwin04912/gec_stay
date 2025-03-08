@@ -99,6 +99,7 @@ abstract class IHostelProcessFacade {
   });
 
   Future<void> updateRoomVacancy({
+    required bool isBooking,
     required String hostelId,
     required String roomNumber,
     required int bookedBeds,

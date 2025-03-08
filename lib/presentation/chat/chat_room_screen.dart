@@ -16,55 +16,42 @@ class ChatRoomScreen extends StatefulWidget {
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   // Handle the user tap to create a chat room and navigate to the chat page
   void _handlePressed(types.Room room, BuildContext context) async {
-    // Set last seen timestamp when navigating to the chat room
     await _setLastSeenTimestamp(room.id, DateTime.now());
-
-    // Navigate to the ChatPage
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ChatPage(room: room),
       ),
     );
-
-    // Refresh the state when returning to the chat room screen
     setState(() {});
   }
 
-  // Function to store the last seen message timestamp
   Future<void> _setLastSeenTimestamp(String roomId, DateTime timestamp) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('last_seen_$roomId', timestamp.millisecondsSinceEpoch);
   }
 
-  // Function to get the last seen message timestamp
   Future<DateTime?> _getLastSeenTimestamp(String roomId) async {
     final prefs = await SharedPreferences.getInstance();
     final lastSeen = prefs.getInt('last_seen_$roomId');
     return lastSeen != null ? DateTime.fromMillisecondsSinceEpoch(lastSeen) : null;
   }
 
-  // Function to calculate unread messages from the opposite person
   Future<int> _getUnreadCount(String roomId, String currentUserId) async {
-    // Get the last seen timestamp for the room
     DateTime? lastSeenTimestamp = await _getLastSeenTimestamp(roomId);
 
-    // Fetch messages from Firestore for this room
     final messagesSnapshot = await FirebaseFirestore.instance
-        .collection('rooms') // Use your collection name here
+        .collection('rooms')
         .doc(roomId)
         .collection('messages')
-        .orderBy('createdAt', descending: true) // Assuming 'createdAt' is the timestamp field for messages
+        .orderBy('createdAt', descending: true)
         .get();
 
     int unreadCount = 0;
-
-    // Loop through messages and count unread ones from the opposite person
     for (var doc in messagesSnapshot.docs) {
-      DateTime messageTimestamp = doc['createdAt'].toDate(); // Assuming 'createdAt' is a field in your message doc
-      String authorId = doc['authorId']; // Assuming 'authorId' is a field in your message doc
+      DateTime messageTimestamp = doc['createdAt'].toDate();
+      String authorId = doc['authorId'];
 
-      // Only count messages from the opposite person that are unread
       if (authorId != currentUserId && (lastSeenTimestamp == null || messageTimestamp.isAfter(lastSeenTimestamp))) {
         unreadCount++;
       }
@@ -73,10 +60,23 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     return unreadCount;
   }
 
+  // Function to delete a chat room
+  Future<void> _deleteChatRoom(String roomId) async {
+    try {
+      await FirebaseFirestore.instance.collection('rooms').doc(roomId).delete();
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Chat deleted successfully')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting chat: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get the current user ID from the widget
-    print(widget.userId);
     final currentUserId = widget.userId;
 
     return Scaffold(
@@ -88,7 +88,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       ),
       backgroundColor: Colors.black,
       body: StreamBuilder<List<types.Room>>(
-        stream: FirebaseChatCore.instance.rooms(), // Use `rooms()` stream for chat rooms
+        stream: FirebaseChatCore.instance.rooms(),
         initialData: const [],
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -112,7 +112,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
               final room = rooms[index];
 
               return FutureBuilder<int>(
-                future: _getUnreadCount(room.id, currentUserId), // Fetch unread count for the current user
+                future: _getUnreadCount(room.id, currentUserId),
                 builder: (context, unreadSnapshot) {
                   if (unreadSnapshot.connectionState == ConnectionState.waiting) {
                     return const ListTile(
@@ -133,7 +133,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                             style: const TextStyle(color: Colors.white),
                           ),
                         ),
-                        if (unreadCount > 0) // Show the red dot if unread messages exist from the opposite person
+                        if (unreadCount > 0)
                           Positioned(
                             top: 0,
                             right: 0,
@@ -153,10 +153,29 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       style: const TextStyle(color: Colors.white),
                     ),
                     onTap: () async {
-                      // Set last seen timestamp when navigating to the chat room
                       await _setLastSeenTimestamp(room.id, DateTime.now());
                       _handlePressed(room, context);
                     },
+                    trailing: PopupMenuButton<String>(
+                      color: Colors.grey[800],
+                      onSelected: (value) {
+                        if (value == 'delete') {
+                          _deleteChatRoom(room.id);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete, color: Colors.red),
+                              SizedBox(width: 10),
+                              Text('Delete', style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );

@@ -4,73 +4,11 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
-// // class ChatPage extends StatelessWidget {
-// //   final types.Room room;
-
-// //   const ChatPage({
-// //     Key? key,
-// //     required this.room,
-// //   }) : super(key: key);
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         title: Text(room.name ?? 'Chat'),
-// //         backgroundColor: Colors.black,
-// //       ),
-// //       backgroundColor: Colors.black,
-// //       body: StreamBuilder<List<types.Message>>(
-// //         initialData: const [],
-// //         stream: FirebaseChatCore.instance.messages(room),
-// //         builder: (context, snapshot) {
-// //           if (snapshot.connectionState == ConnectionState.waiting) {
-// //             return const Center(child: CircularProgressIndicator(color: Colors.white));
-// //           }
-
-// //           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-// //             return const Center(
-// //               child: Text(
-// //                 'No messages yet.',
-// //                 style: TextStyle(color: Colors.white70),
-// //               ),
-// //             );
-// //           }
-
-// //           final messages = snapshot.data!;
-// //           return Chat(
-// //             messages: messages,
-// //             onSendPressed: _handleSendPressed,
-// //             user: types.User(id: FirebaseChatCore.instance.firebaseUser?.uid ?? ''),
-// //             showUserAvatars: true, // Displays user avatars
-// //             showUserNames: true,  // Displays user names
-// //             theme: const DarkChatTheme(),
-// //           );
-// //         },
-// //       ),
-// //     );
-// //   }
-
-//   void _handleSendPressed(types.PartialText message) {
-//     FirebaseChatCore.instance.sendMessage(
-//       types.PartialText(
-//         text: message.text,
-//       ),
-//       room.id,
-//     );
-//   }
-// }
-
-
-
 
 class ChatPage extends StatefulWidget {
   final types.Room room;
 
-  const ChatPage({
-    Key? key,
-    required this.room,
-  }) : super(key: key);
+  const ChatPage({Key? key, required this.room}) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -87,13 +25,11 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _loadMessages() {
-    // Subscribe to the messages stream
     FirebaseChatCore.instance.messages(widget.room).listen((messages) {
       setState(() {
         _messages
           ..clear()
           ..addAll(messages);
-        // Ensure messages are sorted by creation time (newest first)
         _messages.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       });
     });
@@ -113,16 +49,46 @@ class _ChatPageState extends State<ChatPage> {
           onSendPressed: _handleSendPressed,
           user: _user,
           theme: const DarkChatTheme(),
+          onMessageLongPress: _handleLongPress, // Handle long press
         ),
       );
 
   void _handleSendPressed(types.PartialText message) {
     FirebaseChatCore.instance.sendMessage(
-      types.PartialText(
-        text: message.text,
-      ),
+      types.PartialText(text: message.text),
       widget.room.id,
     );
   }
-}
 
+  // Handle long press to delete message
+  void _handleLongPress(BuildContext context, types.Message message) {
+    if (message.author.id == _user.id) {
+      // Show confirmation dialog
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Delete Message"),
+          content: const Text("Are you sure you want to delete this message?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                _deleteMessage(message);
+                Navigator.pop(context);
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  // Delete message from Firestore
+  void _deleteMessage(types.Message message) async {
+    await FirebaseChatCore.instance.deleteMessage(widget.room.id, message.id);
+  }
+}

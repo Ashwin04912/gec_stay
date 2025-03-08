@@ -235,10 +235,10 @@ class HostelDetailsOwnerAppScreen extends StatelessWidget {
               "Rooms Available: ${hostelResp.rooms}",
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
-            Text(
-              "Vacancy: ${hostelResp.vacancy}",
-              style: const TextStyle(color: Colors.white70, fontSize: 16),
-            ),
+            // Text(
+            //   "Vacancy: ${hostelResp.vacancy}",
+            //   style: const TextStyle(color: Colors.white70, fontSize: 16),
+            // ),
             Text(
               "Monthly Rent: \$${hostelResp.rent} per person",
               style: TextStyle(color: Colors.white70, fontSize: 16),

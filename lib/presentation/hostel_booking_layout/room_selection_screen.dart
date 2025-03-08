@@ -106,7 +106,7 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
               SizedBox(
                 height: 10,
               ),
-              TextField(
+              TextFormField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 style: const TextStyle(color: Colors.white),
@@ -124,6 +124,17 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter your phone number";
+                  }
+                  final RegExp phoneRegex =
+                      RegExp(r'^[0-9]{10}$'); // 10-digit number validation
+                  if (!phoneRegex.hasMatch(value)) {
+                    return "Enter a valid 10-digit phone number";
+                  }
+                  return null; // Valid input
+                },
               ),
             ],
           ),
@@ -152,7 +163,7 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                   context.read<RoomDetailsBloc>().add(
                       RoomDetailsEvent.bookNowButtonPressed(
                           userId: userId,
-                          hostelName:hostelResp.hostelName,
+                          hostelName: hostelResp.hostelName,
                           hostelOwnerUserId: hostelResp.hostelOwnerUserId,
                           hostelId: hostelResp.hostelId,
                           selectedRooms: selectedRooms,
@@ -256,7 +267,8 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
                               Text("Some error Occured...Try again later")));
                     }, (s) {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (ctx) => BottomNavigationBarStudentWidget()));
+                          builder: (ctx) =>
+                              BottomNavigationBarStudentWidget()));
                       // ScaffoldMessenger.of(context).showSnackBar(
                       //     SnackBar(content: Text("Booking successfull")));
                     });
