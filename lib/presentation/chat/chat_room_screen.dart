@@ -61,19 +61,19 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   // Function to delete a chat room
-  Future<void> _deleteChatRoom(String roomId) async {
-    try {
-      await FirebaseFirestore.instance.collection('rooms').doc(roomId).delete();
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Chat deleted successfully')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error deleting chat: $e')),
-      );
-    }
-  }
+  // Future<void> _deleteChatRoom(String roomId) async {
+  //   try {
+  //     await FirebaseFirestore.instance.collection('rooms').doc(roomId).delete();
+  //     setState(() {});
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Chat deleted successfully')),
+  //     );
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error deleting chat: $e')),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -156,26 +156,26 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       await _setLastSeenTimestamp(room.id, DateTime.now());
                       _handlePressed(room, context);
                     },
-                    trailing: PopupMenuButton<String>(
-                      color: Colors.grey[800],
-                      onSelected: (value) {
-                        if (value == 'delete') {
-                          _deleteChatRoom(room.id);
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          value: 'delete',
-                          child: Row(
-                            children: [
-                              Icon(Icons.delete, color: Colors.red),
-                              SizedBox(width: 10),
-                              Text('Delete', style: TextStyle(color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    // trailing: PopupMenuButton<String>(
+                    //   color: Colors.grey[800],
+                    //   onSelected: (value) {
+                    //     if (value == 'delete') {
+                    //       _deleteChatRoom(room.id);
+                    //     }
+                    //   },
+                    //   itemBuilder: (context) => [
+                    //     const PopupMenuItem(
+                    //       value: 'delete',
+                    //       child: Row(
+                    //         children: [
+                    //           Icon(Icons.delete, color: Colors.red),
+                    //           SizedBox(width: 10),
+                    //           Text('Delete', style: TextStyle(color: Colors.white)),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   );
                 },
               );

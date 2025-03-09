@@ -49,7 +49,7 @@ class _ChatPageState extends State<ChatPage> {
           onSendPressed: _handleSendPressed,
           user: _user,
           theme: const DarkChatTheme(),
-          onMessageLongPress: _handleLongPress, // Handle long press
+          // onMessageLongPress: _handleLongPress, // Handle long press
         ),
       );
 
@@ -61,34 +61,34 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   // Handle long press to delete message
-  void _handleLongPress(BuildContext context, types.Message message) {
-    if (message.author.id == _user.id) {
-      // Show confirmation dialog
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Delete Message"),
-          content: const Text("Are you sure you want to delete this message?"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                _deleteMessage(message);
-                Navigator.pop(context);
-              },
-              child: const Text("Delete", style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        ),
-      );
-    }
-  }
+  // void _handleLongPress(BuildContext context, types.Message message) {
+  //   if (message.author.id == _user.id) {
+  //     // Show confirmation dialog
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: const Text("Delete Message"),
+  //         content: const Text("Are you sure you want to delete this message?"),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.pop(context),
+  //             child: const Text("Cancel"),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               _deleteMessage(message);
+  //               Navigator.pop(context);
+  //             },
+  //             child: const Text("Delete", style: TextStyle(color: Colors.red)),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+  // }
 
   // Delete message from Firestore
-  void _deleteMessage(types.Message message) async {
-    await FirebaseChatCore.instance.deleteMessage(widget.room.id, message.id);
-  }
+  // void _deleteMessage(types.Message message) async {
+  //   await FirebaseChatCore.instance.deleteMessage(widget.room.id, message.id);
+  // }
 }
