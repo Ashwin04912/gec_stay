@@ -21,11 +21,11 @@ class _HostelPredictionScreenState extends State<HostelPredictionScreen> {
   final List<String> _districts = [
     'Trivandrum', 'Kollam', 'Pathanamthitta', 'Alappuzha', 'Kottayam',
     'Idukki', 'Ernakulam', 'Trichur', 'Palakkad', 'Malappuram', 'Calicut',
-    'Kannur', 'Kasaragod', 'Wayanad'
+    'Kannur', 'Kasaragod', 'Wayanad', 'Out Side Kerala'
   ];
-  final List<String> _categories = ['GEN', 'BPL', 'SC', 'ST'];
+  final List<String> _categories = ['GENERAL', 'BPL', 'SC', 'ST','OEC','OBC'];
   final List<String> _genders = ['Male', 'Female'];
-  final List<String> _semesters = ['S3', 'S5', 'S7'];
+  final List<String> _semesters = ['S1','S3', 'S5', 'S7'];
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _HostelPredictionScreenState extends State<HostelPredictionScreen> {
                   children: [
                     _buildTextField(_incomeController, 'Income', 
                         'Enter your income', TextInputType.number, Icons.money),
-                    _buildTextField(_sgpaController, 'SGPA', 
+                    _buildTextField(_sgpaController, 'SGPA/KEAM RANK', 
                         'Enter your SGPA', TextInputType.number, Icons.school),
                     _buildDropdownField('District', _districts, _selectedDistrict, 
                         (value) => _selectedDistrict = value),

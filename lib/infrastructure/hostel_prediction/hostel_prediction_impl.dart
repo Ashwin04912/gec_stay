@@ -27,6 +27,7 @@ class HostelPredictionImpl extends IHostelPrediction {
         data: {
           "income": double.tryParse(income) ?? 0.0,
           "sgpa": double.tryParse(sgpa) ?? 0.0,
+          "keam_rank": double.tryParse(sgpa) ?? 0.0,
           "district": district,
           "category": category,
           "gender": gender.toLowerCase(),

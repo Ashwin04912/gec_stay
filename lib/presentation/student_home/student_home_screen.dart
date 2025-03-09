@@ -4,11 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/domain/hostel_process/hostel_resp_model.dart';
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_student_app_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../application/hostel_process/common_hostel_process/common_hostel_process_bloc.dart';
 
 class StudentHomeScreen extends StatefulWidget {
-  const StudentHomeScreen({super.key});
+
+  final GlobalKey filterKey;
+
+  final GlobalKey hostelKey;
+
+  final GlobalKey searchKey;
+
+  final GlobalKey ratingKey;
+
+   const StudentHomeScreen({super.key, required this.filterKey, required this.hostelKey, required this.searchKey, required this.ratingKey, });
 
   @override
   State<StudentHomeScreen> createState() => _StudentHomeScreenState();
@@ -22,10 +32,13 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   String _searchQuery = "";
   bool? noDataFound;
 
+
+
   @override
   void initState() {
     super.initState();
     _loadHostels();
+   
   }
 
   Future<void> _loadHostels() async {
@@ -310,123 +323,127 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     onRefresh: () async {
       context.read<CommonHostelProcessBloc>().add(CommonHostelProcessEvent.getAllHostelList());
     },
-      child: ListView.separated(
-        padding: const EdgeInsets.all(12),
-        itemCount: filteredHostels.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 10),
-        itemBuilder: (context, index) {
-          final hostel = filteredHostels[index];
-          return GestureDetector(
-            onTap: () async {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              String? userId = prefs.getString("owner_userid");
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => HostelDetailsStudentAppScreen(
-                       hostelResp: hostel,
-                       userId: userId.toString(),
-                      )));
-            },
-            child: Card(
-              color: Colors.grey[850],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                    child: CachedNetworkImage(
-                      height: 150,
-                      imageUrl: hostel.hostelImages[0],
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.deepPurpleAccent,
-                        ),
+      child: Showcase(
+        key: widget.hostelKey,
+        description: "Hostel's Will list here. You can open and view the details..",
+        child: ListView.separated(
+          padding: const EdgeInsets.all(12),
+          itemCount: filteredHostels.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
+          itemBuilder: (context, index) {
+            final hostel = filteredHostels[index];
+            return GestureDetector(
+              onTap: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                String? userId = prefs.getString("owner_userid");
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => HostelDetailsStudentAppScreen(
+                         hostelResp: hostel,
+                         userId: userId.toString(),
+                        )));
+              },
+              child: Card(
+                color: Colors.grey[850],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(12),
                       ),
-                      errorWidget: (context, url, error) => Container(
-                        color: Colors.grey[850],
-                        child: const Icon(
-                          Icons.broken_image,
-                          color: Colors.white70,
-                          size: 50,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          hostel.hostelName,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                      child: CachedNetworkImage(
+                        height: 150,
+                        imageUrl: hostel.hostelImages[0],
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.deepPurpleAccent,
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          hostel.description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.grey[850],
+                          child: const Icon(
+                            Icons.broken_image,
                             color: Colors.white70,
+                            size: 50,
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: '₹${hostel.rent}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.deepPurpleAccent,
-                                ),
-                                children: const [
-                                  TextSpan(
-                                    text: ' /month',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white70,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            hostel.hostelName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            hostel.description,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white70,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: '₹${hostel.rent}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.deepPurpleAccent,
+                                  ),
+                                  children: const [
+                                    TextSpan(
+                                      text: ' /month',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white70,
+                                      ),
                                     ),
+                                  ],
+                                ),
+                              ),
+                               Row(
+                                children: [
+                                  Icon(Icons.star, color: Colors.amber, size: 20),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    double.parse(hostel.rating).toStringAsFixed(2),
+                                   
+                                    style: TextStyle(
+                                        color: Colors.white70, fontSize: 14),
                                   ),
                                 ],
-                              ),
-                            ),
-                             Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.amber, size: 20),
-                                SizedBox(width: 4),
-                                Text(
-                                  double.parse(hostel.rating).toStringAsFixed(2),
-                                 
-                                  style: TextStyle(
-                                      color: Colors.white70, fontSize: 14),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
+                                                             )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -476,21 +493,31 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       color: Colors.white),
                 ),
           actions: [
-            IconButton(
-              icon: Icon(_isSearching ? Icons.clear : Icons.search),
-              onPressed: () {
-                setState(() {
-                  if (_isSearching) {
-                    _searchController.clear();
-                    _searchQuery = "";
-                  }
-                  _isSearching = !_isSearching;
-                });
-              },
+            Showcase(
+              key: widget.searchKey,
+              title: "Search",
+              description: "You can search for the hostels here",
+              child: IconButton(
+                icon: Icon(_isSearching ? Icons.clear : Icons.search),
+                onPressed: () {
+                  setState(() {
+                    if (_isSearching) {
+                      _searchController.clear();
+                      _searchQuery = "";
+                    }
+                    _isSearching = !_isSearching;
+                  });
+                },
+              ),
             ),
-            IconButton(
-              icon: const Icon(Icons.filter_list),
-              onPressed: _openFilterModal,
+            Showcase(
+              key: widget.filterKey,
+              title: "Filter option",
+              description: "You can filter the hostels here",
+              child: IconButton(
+                icon: const Icon(Icons.filter_list),
+                onPressed: _openFilterModal,
+              ),
             ),
           ],
         ),

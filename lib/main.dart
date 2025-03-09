@@ -17,6 +17,7 @@ import 'package:gecw_lakx/injection.dart';
 import 'package:gecw_lakx/presentation/hostel_details/hostel_details_student_app_screen.dart';
 import 'package:gecw_lakx/presentation/splash_screen/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -31,7 +32,7 @@ void main() async {
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1rc3hvaWl6Z3VuYmF0d2dqZ3J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDUwODMsImV4cCI6MjA1MjMyMTA4M30.flRm8k5nPQOoi1F63dZaL-BLvZXMLoP14cEpPur0mzA',
   );
 
-  runApp(const MyApp());
+  runApp(ShowCaseWidget(builder: (context)=> MyApp()));
 }
 
 // Global navigator key for navigation outside the widget tree

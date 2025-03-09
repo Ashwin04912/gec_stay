@@ -5,7 +5,7 @@ import 'package:gecw_lakx/presentation/chat/chat_room_screen.dart';
 import 'package:gecw_lakx/presentation/hostel_process/create_hostel_screen.dart';
 import 'package:gecw_lakx/presentation/owner_home/owner_home_screen.dart';
 
-import '../owner_profile/owner_profile_screen.dart';
+import '../../deleted/owner_profile/owner_profile_screen.dart';
 
 class BottomNavigationBarOwnerWidget extends StatefulWidget {
   final String? userId;
