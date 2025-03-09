@@ -104,4 +104,11 @@ abstract class IHostelProcessFacade {
     required String roomNumber,
     required int bookedBeds,
   });
+
+    Future<Either<FormFailures, Unit>> updateRoomVacancyByOwner({
+    required String hostelId,
+    required String roomNumber,
+    required int updatedVacancy,
+     required String totalBeds,
+  });
 }

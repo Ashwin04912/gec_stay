@@ -57,10 +57,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i481.ApprovalProcessBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i1039.CommonHostelProcessBloc>(
         () => _i1039.CommonHostelProcessBloc(gh<_i922.IHostelProcessFacade>()));
-    gh.factory<_i898.RoomDetailsBloc>(
-        () => _i898.RoomDetailsBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i799.CartListingBloc>(
         () => _i799.CartListingBloc(gh<_i922.IHostelProcessFacade>()));
+    gh.factory<_i898.RoomDetailsBloc>(
+        () => _i898.RoomDetailsBloc(gh<_i922.IHostelProcessFacade>()));
     gh.factory<_i966.SignInFormBloc>(
         () => _i966.SignInFormBloc(gh<_i878.IAuthFacade>()));
     return this;

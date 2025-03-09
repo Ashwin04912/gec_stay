@@ -931,4 +931,63 @@ class FirebaseHostelProcessFacade extends IHostelProcessFacade {
       debugPrint("Error updating room vacancy: $e");
     }
   }
+
+
+ @override
+Future<Either<FormFailures, Unit>> updateRoomVacancyByOwner({
+  required String hostelId,
+  required String roomNumber,
+  required String totalBeds,
+  required int updatedVacancy,
+}) async {
+  try {
+    print("$roomNumber , $totalBeds, $updatedVacancy");
+
+    DocumentReference hostelDoc =
+        fireStore.collection("room_details").doc(hostelId);
+
+    DocumentSnapshot snapshot = await hostelDoc.get();
+
+    if (!snapshot.exists) {
+      return left(FormFailures.noDataFound()); // Handle missing hostel
+    }
+
+    List<Map<String, dynamic>> rooms =
+        List<Map<String, dynamic>>.from(snapshot["rooms"] ?? []);
+
+    bool roomUpdated = false;
+
+    // Find the room and update vacancy
+    List<Map<String, dynamic>> updatedRooms = rooms.map((room) {
+      if (room["roomNumber"] == roomNumber) {
+        roomUpdated = true;
+        return {
+          ...room,
+          "vacancy": updatedVacancy, // Update only vacancy field
+          "beds": int.tryParse(totalBeds) ?? room["beds"], // Ensure integer conversion
+        };
+      }
+      return room;
+    }).toList();
+
+    if (!roomUpdated) {
+      return left(FormFailures.noDataFound()); // If room is not found, handle error
+    }
+
+    // Update Firestore document
+    await hostelDoc.set({
+      "timestamp": FieldValue.serverTimestamp(),
+      "hostelId": hostelId,
+      "rooms": updatedRooms,
+    }, SetOptions(merge: true)); // Ensure it merges with existing data
+
+    return right(unit);
+  } catch (e) {
+    debugPrint("Error updating room vacancy: $e");
+    return left(FormFailures.serverError());
+  }
+}
+
+
+
 }

@@ -3,12 +3,15 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class SelectLocationScreen extends StatefulWidget {
+  const SelectLocationScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _SelectLocationScreenState createState() => _SelectLocationScreenState();
 }
 
 class _SelectLocationScreenState extends State<SelectLocationScreen> {
-  LatLng _pickedLocation = LatLng(11.83399,75.97021); // Default: Bangalore
+  LatLng _pickedLocation = LatLng(11.83399,75.97021); // Default: gecw
 
   @override
   Widget build(BuildContext context) {

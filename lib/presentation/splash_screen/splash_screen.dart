@@ -18,69 +18,76 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   String? role;
   final AppLinks _appLinks = AppLinks();
   StreamSubscription<Uri>? _linkSubscription;
   Uri? _deepLinkUri;
+  bool _showWelcomeMessage = true;
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _fadeAnimation =
+        CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
+    _fadeController.forward().then((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          _showWelcomeMessage = false;
+        });
+        _checkLoginStatus();
+      });
+    });
     _initDeepLinks();
-    _checkLoginStatus();
   }
 
   @override
   void dispose() {
     _linkSubscription?.cancel();
+    _fadeController.dispose();
     super.dispose();
   }
 
   void _initDeepLinks() async {
-    // Listen for deep links
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
       setState(() {
-        _deepLinkUri = uri; // Store the deep link URI
+        _deepLinkUri = uri;
       });
       _handleDeepLink(uri);
     });
-
-    // Check for initial deep link (if the app was opened via a deep link)
     final initialUri = await _appLinks.getInitialLink();
     if (initialUri != null) {
       setState(() {
-        _deepLinkUri = initialUri; // Store the initial deep link URI
+        _deepLinkUri = initialUri;
       });
       _handleDeepLink(initialUri);
     }
   }
 
   Future<void> _checkLoginStatus() async {
-    // Simulate a splash delay
     await Future.delayed(const Duration(seconds: 2));
-
     try {
-      // Retrieve the saved role from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       role = prefs.getString('role');
-
-      // Get the current Firebase user
       User? user = FirebaseAuth.instance.currentUser;
 
       if (user != null) {
-        print("User logged in");
-        // If user exists, navigate based on role
         if (role == 'Student') {
           if (_deepLinkUri != null) {
-            // Handle deep link for students
             _handleDeepLinkForStudent(user.uid);
           } else {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const BottomNavigationBarStudentWidget(),
-              ),
+                  builder: (context) =>
+                      const BottomNavigationBarStudentWidget()),
             );
           }
         } else if (role == 'Hostel_Owner') {
@@ -90,25 +97,22 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => BottomNavigationBarOwnerWidget(userId: user.uid),
-            ),
+                builder: (context) =>
+                    BottomNavigationBarOwnerWidget(userId: user.uid)),
           );
         } else {
-          // Handle unexpected role (optional)
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (ctx) => SignInScreen()),
           );
         }
       } else {
-        // If no user is logged in, navigate to login or another fallback screen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (ctx) => SignInScreen()),
         );
       }
     } catch (e) {
-      // Handle any exceptions
       _showError("An error occurred: $e");
     }
   }
@@ -116,7 +120,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void _handleDeepLinkForStudent(String userId) async {
     final hostelId = _deepLinkUri?.queryParameters['hostelId'];
     if (hostelId != null) {
-      // Fetch hostel details from Firestore using hostelId
       final hostelResp = await fetchHostelDetails(hostelId);
       if (hostelResp != null) {
         Navigator.pushReplacement(
@@ -142,13 +145,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _handleDeepLink(Uri uri) {
-    // Example: Extract hostelId from the deep link
     final hostelId = uri.queryParameters['hostelId'];
     if (hostelId != null) {
-      // Fetch hostel details from Firestore using hostelId
       fetchHostelDetails(hostelId).then((hostelResp) {
         if (hostelResp != null) {
-          // Navigate to the hostel details screen
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -160,7 +160,6 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         }
       }).catchError((error) {
-        // Handle errors (e.g., show a snackbar or log the error)
         _showError("Error fetching hostel details: $error");
       });
     }
@@ -176,7 +175,7 @@ class _SplashScreenState extends State<SplashScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text("OK", style: TextStyle(color: Colors.purple)),
             ),
@@ -189,22 +188,28 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Dark background color
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // You can add a logo here if needed
-            // Image.asset('assets/logo.png', height: 100, width: 100),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(color: Colors.purple), // Purple loading indicator for dark theme
-            const SizedBox(height: 20),
-            const Text(
-              "Checking login status...",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white), // White text
-            ),
-          ],
-        ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/home.jpg',
+            fit: BoxFit.cover,
+          ),
+          Center(
+            child: _showWelcomeMessage
+                ? FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: const Text(
+                      "Welcome to GECStay",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  )
+                : const CircularProgressIndicator(color: Colors.purple),
+          ),
+        ],
       ),
     );
   }

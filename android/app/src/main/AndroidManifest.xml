@@ -31,7 +31,7 @@
                 android:name="flutter_deeplinking_enabled"
                 android:value="true" />
 
-                
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -43,7 +43,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="deep-link-redirect.onrender.com" />
-                <data android:scheme = "https"/>
+                <data android:scheme="https" />
             </intent-filter>
 
             <!-- Deep Link sample -->
@@ -69,11 +69,13 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- chat -->
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT" />
             <data android:mimeType="text/plain" />
         </intent>
 
+        <!-- call -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="tel" />

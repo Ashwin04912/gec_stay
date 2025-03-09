@@ -21,6 +21,14 @@ class RoomDetailsEvent with _$RoomDetailsEvent {
     required String userPhone,
   }) = _bookNowButtonPressed;
 
+  const factory RoomDetailsEvent.updateRoomDetailsByOwner({
+      required String hostelId,
+    required String roomNumber,
+     required String totalBeds,
+    required int updatedVacancy,
+  }) = _updateRoomDetailsByOwner;
+  
+
   // const factory RoomDetailsEvent.loadBookingHistoryForStudent({
   //   required String userId,
   // }) = _loadBookingHistoryForStudent;

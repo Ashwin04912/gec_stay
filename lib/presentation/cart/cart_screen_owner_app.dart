@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gecw_lakx/application/cart/cart_listing_bloc.dart';
 import 'package:gecw_lakx/domain/core/formfailures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CartScreenOwnerApp extends StatefulWidget {
   const CartScreenOwnerApp({super.key});
@@ -128,6 +129,8 @@ class _CartScreenOwnerAppState extends State<CartScreenOwnerApp> {
                               (hostel['status'] ?? 'unknown').toString();
                           final String bookingId =
                               (hostel['bookingId'] ?? '').toString();
+                          final String phoneNumber =
+                              (hostel['userPhone'] ?? '').toString();
 
                           return AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
@@ -154,8 +157,6 @@ class _CartScreenOwnerAppState extends State<CartScreenOwnerApp> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        debugPrint(
-                                            "$cancellingBookingId == $bookingId");
                                         if (status == 'booked' &&
                                             cancellingBookingId == null) {
                                           _showCancelConfirmation(
@@ -220,20 +221,20 @@ class _CartScreenOwnerAppState extends State<CartScreenOwnerApp> {
                                 const SizedBox(height: 12),
                                 Text(
                                   'Booked by: ${hostel['userName']}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
+                                const SizedBox(height: 8),
 
-                                 Text(
-                                  'Booked Phone Number: ${hostel['userPhone']}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                                // Call Button
+                                IconButton(
+                                  icon: const Icon(Icons.call,
+                                      color: Colors.green),
+                                  onPressed: () =>
+                                      _makePhoneCall(phoneNumber),
                                 ),
                               ],
                             ),
@@ -252,5 +253,14 @@ class _CartScreenOwnerAppState extends State<CartScreenOwnerApp> {
       noDataFound: (_) => "No bookings available",
       orElse: () => "Something went wrong",
     );
+  }
+}
+
+void _makePhoneCall(String phoneNumber) async {
+  final Uri url = Uri.parse('tel:$phoneNumber');
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    debugPrint("Could not launch $url");
   }
 }

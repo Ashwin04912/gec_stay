@@ -31,6 +31,9 @@ mixin _$RoomDetailsEvent {
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String hostelId, String roomNumber,
+            String totalBeds, int updatedVacancy)
+        updateRoomDetailsByOwner,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +50,9 @@ mixin _$RoomDetailsEvent {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +69,9 @@ mixin _$RoomDetailsEvent {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -72,6 +81,8 @@ mixin _$RoomDetailsEvent {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_updateRoomDetailsByOwner value)
+        updateRoomDetailsByOwner,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -80,6 +91,8 @@ mixin _$RoomDetailsEvent {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_updateRoomDetailsByOwner value)?
+        updateRoomDetailsByOwner,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +100,7 @@ mixin _$RoomDetailsEvent {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_updateRoomDetailsByOwner value)? updateRoomDetailsByOwner,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -234,6 +248,9 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String hostelId, String roomNumber,
+            String totalBeds, int updatedVacancy)
+        updateRoomDetailsByOwner,
   }) {
     return addRoomsToFirestore(rooms, hostelId);
   }
@@ -253,6 +270,9 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
   }) {
     return addRoomsToFirestore?.call(rooms, hostelId);
   }
@@ -272,6 +292,9 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -287,6 +310,8 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_updateRoomDetailsByOwner value)
+        updateRoomDetailsByOwner,
   }) {
     return addRoomsToFirestore(this);
   }
@@ -298,6 +323,8 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_updateRoomDetailsByOwner value)?
+        updateRoomDetailsByOwner,
   }) {
     return addRoomsToFirestore?.call(this);
   }
@@ -308,6 +335,7 @@ class _$addRoomsToFirestoreImpl implements _addRoomsToFirestore {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_updateRoomDetailsByOwner value)? updateRoomDetailsByOwner,
     required TResult orElse(),
   }) {
     if (addRoomsToFirestore != null) {
@@ -420,6 +448,9 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String hostelId, String roomNumber,
+            String totalBeds, int updatedVacancy)
+        updateRoomDetailsByOwner,
   }) {
     return getHostelRoomDetailsById(hostelId);
   }
@@ -439,6 +470,9 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
   }) {
     return getHostelRoomDetailsById?.call(hostelId);
   }
@@ -458,6 +492,9 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
     required TResult orElse(),
   }) {
     if (getHostelRoomDetailsById != null) {
@@ -473,6 +510,8 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_updateRoomDetailsByOwner value)
+        updateRoomDetailsByOwner,
   }) {
     return getHostelRoomDetailsById(this);
   }
@@ -484,6 +523,8 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_updateRoomDetailsByOwner value)?
+        updateRoomDetailsByOwner,
   }) {
     return getHostelRoomDetailsById?.call(this);
   }
@@ -494,6 +535,7 @@ class _$getHostelRoomDetailsByIdImpl implements _getHostelRoomDetailsById {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_updateRoomDetailsByOwner value)? updateRoomDetailsByOwner,
     required TResult orElse(),
   }) {
     if (getHostelRoomDetailsById != null) {
@@ -685,6 +727,9 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
             String userName,
             String userPhone)
         bookNowButtonPressed,
+    required TResult Function(String hostelId, String roomNumber,
+            String totalBeds, int updatedVacancy)
+        updateRoomDetailsByOwner,
   }) {
     return bookNowButtonPressed(userId, hostelName, hostelOwnerUserId, hostelId,
         selectedRooms, userName, userPhone);
@@ -705,6 +750,9 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult? Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
   }) {
     return bookNowButtonPressed?.call(userId, hostelName, hostelOwnerUserId,
         hostelId, selectedRooms, userName, userPhone);
@@ -725,6 +773,9 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
             String userName,
             String userPhone)?
         bookNowButtonPressed,
+    TResult Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
     required TResult orElse(),
   }) {
     if (bookNowButtonPressed != null) {
@@ -741,6 +792,8 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     required TResult Function(_getHostelRoomDetailsById value)
         getHostelRoomDetailsById,
     required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_updateRoomDetailsByOwner value)
+        updateRoomDetailsByOwner,
   }) {
     return bookNowButtonPressed(this);
   }
@@ -752,6 +805,8 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     TResult? Function(_getHostelRoomDetailsById value)?
         getHostelRoomDetailsById,
     TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_updateRoomDetailsByOwner value)?
+        updateRoomDetailsByOwner,
   }) {
     return bookNowButtonPressed?.call(this);
   }
@@ -762,6 +817,7 @@ class _$bookNowButtonPressedImpl implements _bookNowButtonPressed {
     TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
     TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
     TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_updateRoomDetailsByOwner value)? updateRoomDetailsByOwner,
     required TResult orElse(),
   }) {
     if (bookNowButtonPressed != null) {
@@ -795,6 +851,249 @@ abstract class _bookNowButtonPressed implements RoomDetailsEvent {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$bookNowButtonPressedImplCopyWith<_$bookNowButtonPressedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$updateRoomDetailsByOwnerImplCopyWith<$Res>
+    implements $RoomDetailsEventCopyWith<$Res> {
+  factory _$$updateRoomDetailsByOwnerImplCopyWith(
+          _$updateRoomDetailsByOwnerImpl value,
+          $Res Function(_$updateRoomDetailsByOwnerImpl) then) =
+      __$$updateRoomDetailsByOwnerImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String hostelId,
+      String roomNumber,
+      String totalBeds,
+      int updatedVacancy});
+}
+
+/// @nodoc
+class __$$updateRoomDetailsByOwnerImplCopyWithImpl<$Res>
+    extends _$RoomDetailsEventCopyWithImpl<$Res, _$updateRoomDetailsByOwnerImpl>
+    implements _$$updateRoomDetailsByOwnerImplCopyWith<$Res> {
+  __$$updateRoomDetailsByOwnerImplCopyWithImpl(
+      _$updateRoomDetailsByOwnerImpl _value,
+      $Res Function(_$updateRoomDetailsByOwnerImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hostelId = null,
+    Object? roomNumber = null,
+    Object? totalBeds = null,
+    Object? updatedVacancy = null,
+  }) {
+    return _then(_$updateRoomDetailsByOwnerImpl(
+      hostelId: null == hostelId
+          ? _value.hostelId
+          : hostelId // ignore: cast_nullable_to_non_nullable
+              as String,
+      roomNumber: null == roomNumber
+          ? _value.roomNumber
+          : roomNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      totalBeds: null == totalBeds
+          ? _value.totalBeds
+          : totalBeds // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedVacancy: null == updatedVacancy
+          ? _value.updatedVacancy
+          : updatedVacancy // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$updateRoomDetailsByOwnerImpl implements _updateRoomDetailsByOwner {
+  const _$updateRoomDetailsByOwnerImpl(
+      {required this.hostelId,
+      required this.roomNumber,
+      required this.totalBeds,
+      required this.updatedVacancy});
+
+  @override
+  final String hostelId;
+  @override
+  final String roomNumber;
+  @override
+  final String totalBeds;
+  @override
+  final int updatedVacancy;
+
+  @override
+  String toString() {
+    return 'RoomDetailsEvent.updateRoomDetailsByOwner(hostelId: $hostelId, roomNumber: $roomNumber, totalBeds: $totalBeds, updatedVacancy: $updatedVacancy)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$updateRoomDetailsByOwnerImpl &&
+            (identical(other.hostelId, hostelId) ||
+                other.hostelId == hostelId) &&
+            (identical(other.roomNumber, roomNumber) ||
+                other.roomNumber == roomNumber) &&
+            (identical(other.totalBeds, totalBeds) ||
+                other.totalBeds == totalBeds) &&
+            (identical(other.updatedVacancy, updatedVacancy) ||
+                other.updatedVacancy == updatedVacancy));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, hostelId, roomNumber, totalBeds, updatedVacancy);
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$updateRoomDetailsByOwnerImplCopyWith<_$updateRoomDetailsByOwnerImpl>
+      get copyWith => __$$updateRoomDetailsByOwnerImplCopyWithImpl<
+          _$updateRoomDetailsByOwnerImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> rooms, String hostelId)
+        addRoomsToFirestore,
+    required TResult Function(String hostelId) getHostelRoomDetailsById,
+    required TResult Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)
+        bookNowButtonPressed,
+    required TResult Function(String hostelId, String roomNumber,
+            String totalBeds, int updatedVacancy)
+        updateRoomDetailsByOwner,
+  }) {
+    return updateRoomDetailsByOwner(
+        hostelId, roomNumber, totalBeds, updatedVacancy);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult? Function(String hostelId)? getHostelRoomDetailsById,
+    TResult? Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    TResult? Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
+  }) {
+    return updateRoomDetailsByOwner?.call(
+        hostelId, roomNumber, totalBeds, updatedVacancy);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> rooms, String hostelId)?
+        addRoomsToFirestore,
+    TResult Function(String hostelId)? getHostelRoomDetailsById,
+    TResult Function(
+            String userId,
+            String hostelName,
+            String hostelOwnerUserId,
+            String hostelId,
+            List<Map<String, dynamic>> selectedRooms,
+            String userName,
+            String userPhone)?
+        bookNowButtonPressed,
+    TResult Function(String hostelId, String roomNumber, String totalBeds,
+            int updatedVacancy)?
+        updateRoomDetailsByOwner,
+    required TResult orElse(),
+  }) {
+    if (updateRoomDetailsByOwner != null) {
+      return updateRoomDetailsByOwner(
+          hostelId, roomNumber, totalBeds, updatedVacancy);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_addRoomsToFirestore value) addRoomsToFirestore,
+    required TResult Function(_getHostelRoomDetailsById value)
+        getHostelRoomDetailsById,
+    required TResult Function(_bookNowButtonPressed value) bookNowButtonPressed,
+    required TResult Function(_updateRoomDetailsByOwner value)
+        updateRoomDetailsByOwner,
+  }) {
+    return updateRoomDetailsByOwner(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult? Function(_getHostelRoomDetailsById value)?
+        getHostelRoomDetailsById,
+    TResult? Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult? Function(_updateRoomDetailsByOwner value)?
+        updateRoomDetailsByOwner,
+  }) {
+    return updateRoomDetailsByOwner?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_addRoomsToFirestore value)? addRoomsToFirestore,
+    TResult Function(_getHostelRoomDetailsById value)? getHostelRoomDetailsById,
+    TResult Function(_bookNowButtonPressed value)? bookNowButtonPressed,
+    TResult Function(_updateRoomDetailsByOwner value)? updateRoomDetailsByOwner,
+    required TResult orElse(),
+  }) {
+    if (updateRoomDetailsByOwner != null) {
+      return updateRoomDetailsByOwner(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _updateRoomDetailsByOwner implements RoomDetailsEvent {
+  const factory _updateRoomDetailsByOwner(
+      {required final String hostelId,
+      required final String roomNumber,
+      required final String totalBeds,
+      required final int updatedVacancy}) = _$updateRoomDetailsByOwnerImpl;
+
+  @override
+  String get hostelId;
+  String get roomNumber;
+  String get totalBeds;
+  int get updatedVacancy;
+
+  /// Create a copy of RoomDetailsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$updateRoomDetailsByOwnerImplCopyWith<_$updateRoomDetailsByOwnerImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
