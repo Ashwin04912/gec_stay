@@ -28,7 +28,8 @@
 ## 🛠️ Tech Stack
 
 - **Flutter** – Frontend (Mobile App)
-- **Firebase** – Authentication, Firestore, Storage, Cloud Messaging
+- **Firebase** – Authentication, Firestore, Cloud Messaging
+- **Supabase** - Storage
 - **BLoC** – State Management
 - **DDD Architecture** – Clean and scalable project structure
 
